@@ -45,4 +45,5 @@ dependencies {
     //rxjava回收
     compile 'com.uber.autodispose:autodispose:0.6.1'
     compile 'com.uber.autodispose:autodispose-android-archcomponents:0.6.1'
+    compile 'org.jetbrains:annotations-java5:15.0'
 }
