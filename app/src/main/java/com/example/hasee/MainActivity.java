@@ -1,4 +1,4 @@
-package com.example.hasee.myapplication;
+package com.example.hasee;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
