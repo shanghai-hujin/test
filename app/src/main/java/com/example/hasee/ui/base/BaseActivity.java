@@ -98,10 +98,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         return mRootView;
     }
 
-    @Override
-    public int getContentLayout() {
-        return 0;
-    }
 
 
 
