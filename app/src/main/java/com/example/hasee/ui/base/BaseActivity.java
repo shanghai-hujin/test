@@ -11,9 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hasee.http.RxLifecycleUtils;
+import com.orhanobut.logger.Logger;
 import com.uber.autodispose.AutoDisposeConverter;
 
 import org.jetbrains.annotations.NotNull;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Demo ${CLASS}
@@ -26,6 +30,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     private View mRootView;
     protected P basePresenter;
+    private Unbinder unbinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,10 +58,14 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         initData();
     }
 
+
     @CallSuper
     @MainThread
     protected void initLifecycleObserver(@NotNull Lifecycle lifecycle) {
-        lifecycle.addObserver(basePresenter);
+        if(basePresenter != null){
+            lifecycle.addObserver(basePresenter);
+        }
+
     }
 
     private void attachView() {
@@ -64,7 +73,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         if (basePresenter != null) {
             basePresenter.attachView(this);
         }else {
-            throw new NullPointerException("P为空...");
+            Logger.e("P为空");
         }
     }
 
@@ -77,7 +86,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //已经交给RxLifecyc处理
+        unbinder.unbind();
+        //rx已经交给RxLifecyc处理
     }
 
 
@@ -90,6 +100,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = getLayoutInflater().inflate(getContentLayout(), container);
         //存放静态页面，后续添加
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 

@@ -32,6 +32,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //UI控件部分
+    compile 'com.android.support:design:26.1.0'
     //retrofit网络
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     //网络日志
@@ -46,4 +48,9 @@ dependencies {
     compile 'com.uber.autodispose:autodispose:0.6.1'
     compile 'com.uber.autodispose:autodispose-android-archcomponents:0.6.1'
     compile 'org.jetbrains:annotations-java5:15.0'
+    //logger日志
+    compile 'com.orhanobut:logger:2.1.1'
+    //快速注射id
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }

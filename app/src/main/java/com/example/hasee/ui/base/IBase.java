@@ -23,6 +23,9 @@ public interface IBase {
 
     View getView();
 
+    /**
+     * @return 拿到布局id
+     */
     int getContentLayout();
 
 

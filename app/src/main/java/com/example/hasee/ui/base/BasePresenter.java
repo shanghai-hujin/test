@@ -81,6 +81,9 @@ public class BasePresenter <T extends BaseContract.BaseView> implements BaseCont
     @CallSuper
     @MainThread
     @Override
+    /**
+     * 解除绑定
+     */
     public void onDestroy(@NotNull LifecycleOwner owner) {
         this.view = null;
     }
