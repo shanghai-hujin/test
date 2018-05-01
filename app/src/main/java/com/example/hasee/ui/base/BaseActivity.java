@@ -1,5 +1,6 @@
 package com.example.hasee.ui.base;
 
+import android.app.Dialog;
 import android.arch.lifecycle.Lifecycle;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
@@ -9,8 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.hasee.R;
 import com.example.hasee.http.RxLifecycleUtils;
+import com.example.hasee.utils.DialogHelper;
 import com.orhanobut.logger.Logger;
 import com.uber.autodispose.AutoDisposeConverter;
 
@@ -31,6 +35,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     private View mRootView;
     protected P basePresenter;
     private Unbinder unbinder;
+    private Dialog mLoadingDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,7 +46,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         attachView();
         bindView(mRootView, savedInstanceState);
         initStateView();
-
+        mLoadingDialog = DialogHelper.getLoadingDialog(this);
     }
 
     /**
@@ -137,5 +142,24 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     public void onRetry() {
 
+    }
+
+    protected void showLoadingDialog() {
+        if (mLoadingDialog != null)
+            mLoadingDialog.show();
+    }
+
+    protected void showLoadingDialog(String str) {
+        if (mLoadingDialog != null) {
+            TextView tv = (TextView) mLoadingDialog.findViewById(R.id.tv_load_dialog);
+            tv.setText(str);
+            mLoadingDialog.show();
+        }
+    }
+
+    protected void hideLoadingDialog() {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+        }
     }
 }
