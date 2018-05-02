@@ -1,11 +1,7 @@
 package com.example.hasee.ui.news;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.hasee.R;
 import com.example.hasee.ui.base.BaseFragment;
@@ -42,4 +38,13 @@ public class NewsFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void showErrorMsg(String errorMsg) {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
 }

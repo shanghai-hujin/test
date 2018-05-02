@@ -11,4 +11,14 @@ public interface PersonGroupView {
     interface LoginView extends BaseContract.BaseView{
         void loadData(String string);
     }
+
+    interface  LoginModle{
+        interface OnLoginFinishedListener{
+            void onUserError();
+
+            void onSuccess();
+        }
+
+        void Login(String name, String password, OnLoginFinishedListener loginFinishedListener);
+    }
 }

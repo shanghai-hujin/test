@@ -15,6 +15,8 @@ import com.orhanobut.logger.Logger;
 
 public class MyApplication extends Application {
 
+    private static MyApplication instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,5 +27,9 @@ public class MyApplication extends Application {
                 return BuildConfig.DEBUG;
             }
         });
+    }
+
+    public static MyApplication getInstance() {
+        return instance;
     }
 }

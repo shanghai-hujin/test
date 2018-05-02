@@ -1,11 +1,8 @@
 package com.example.hasee.ui.base;
 
-import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.OnLifecycleEvent;
 
-import org.jetbrains.annotations.NotNull;
+import com.trello.rxlifecycle2.LifecycleTransformer;
 
 /**
  * Demo ${CLASS}
@@ -22,34 +19,6 @@ public interface BaseContract {
          */
         void attachView(T view);
 
-
-
-
-        @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-        void onCreate(@NotNull LifecycleOwner owner);
-
-        @OnLifecycleEvent(Lifecycle.Event.ON_START)
-        void onStart(@NotNull LifecycleOwner owner);
-
-        @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-        void onResume(@NotNull LifecycleOwner owner);
-
-        @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-        void onPause(@NotNull LifecycleOwner owner);
-
-        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-        void onStop(@NotNull LifecycleOwner owner);
-
-        /**
-         * 解除绑定
-         */
-        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-        void onDestroy(@NotNull LifecycleOwner owner);
-
-
-        @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
-        void onLifecycleChanged(@NotNull LifecycleOwner owner,
-                                @NotNull Lifecycle.Event event);
     }
 
 
@@ -80,5 +49,25 @@ public interface BaseContract {
          * 重试
          */
         void onRetry();
+
+        /**
+         * 绑定生命周期
+         *
+         * @param <T>
+         * @return
+         */
+        <T> LifecycleTransformer<T> bindToLife();
+
+        /**
+         * Show error message
+         *
+         * @param errorMsg error message
+         */
+        void showErrorMsg(String errorMsg);
+
+        /**
+         * Show error
+         */
+        void showError();
     }
 }

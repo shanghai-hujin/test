@@ -1,24 +1,17 @@
 package com.example.hasee.ui.base;
 
 import android.app.Dialog;
-import android.arch.lifecycle.Lifecycle;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hasee.R;
-import com.example.hasee.http.RxLifecycleUtils;
 import com.example.hasee.utils.DialogHelper;
 import com.orhanobut.logger.Logger;
-import com.uber.autodispose.AutoDisposeConverter;
-
-import org.jetbrains.annotations.NotNull;
+import com.trello.rxlifecycle2.LifecycleTransformer;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -30,7 +23,7 @@ import butterknife.Unbinder;
  * @date 2018/4/26 15:00
  */
 
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements IBase,BaseContract.BaseView {
+public abstract class BaseActivity<P extends BasePresenter> extends SupportActivity implements IBase,BaseContract.BaseView {
 
     private View mRootView;
     protected P basePresenter;
@@ -42,7 +35,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.onCreate(savedInstanceState);
         mRootView = createView(null, null, savedInstanceState);
         setContentView(mRootView);
-        initLifecycleObserver(getLifecycle());
         attachView();
         bindView(mRootView, savedInstanceState);
         initStateView();
@@ -64,14 +56,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
 
-    @CallSuper
-    @MainThread
-    protected void initLifecycleObserver(@NotNull Lifecycle lifecycle) {
-        if(basePresenter != null){
-            lifecycle.addObserver(basePresenter);
-        }
 
-    }
 
     private void attachView() {
         basePresenter = createPresenter();
@@ -92,12 +77,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        //rx已经交给RxLifecyc处理
-    }
-
-
-    protected <T> AutoDisposeConverter<T> bindLifecycle() {
-        return RxLifecycleUtils.bindLifecycle(this);
+        if(basePresenter != null){
+            basePresenter.detachView();
+        }
     }
 
 
@@ -115,7 +97,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
 
-
+    @Override
+    public <T> LifecycleTransformer<T> bindToLife() {
+        return this.<T>bindToLifecycle();
+    }
 
 
 
@@ -145,8 +130,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     protected void showLoadingDialog() {
-        if (mLoadingDialog != null)
+        if (mLoadingDialog != null) {
             mLoadingDialog.show();
+        }
     }
 
     protected void showLoadingDialog(String str) {

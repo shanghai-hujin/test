@@ -1,23 +1,17 @@
 package com.example.hasee.ui.base;
 
 import android.app.Dialog;
-import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.TextView;
 
 import com.example.hasee.R;
 import com.example.hasee.utils.DialogHelper;
-
-import org.jetbrains.annotations.NotNull;
+import com.trello.rxlifecycle2.LifecycleTransformer;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -26,7 +20,7 @@ import butterknife.Unbinder;
  * Created by HASEE on 2018/4/28.
  */
 
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment
+public abstract class BaseFragment<P extends BasePresenter> extends SupportFragment
         implements IBase,BaseContract.BaseView {
 
     private View mRootView;
@@ -86,11 +80,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
         //rx已经交给RxLifecyc处理
     }
 
-    @CallSuper
-    @MainThread
-    protected void initLifecycleObserver(@NotNull Lifecycle lifecycle) {
-        lifecycle.addObserver(null);
-    }
+
 
 
 
@@ -124,10 +114,16 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
     }
 
+    @Override
+    public <T> LifecycleTransformer<T> bindToLife() {
+        return this.<T>bindToLifecycle();
+    }
+
 
     protected void showLoadingDialog() {
-        if (mLoadingDialog != null)
+        if (mLoadingDialog != null) {
             mLoadingDialog.show();
+        }
     }
 
     protected void showLoadingDialog(String str) {
@@ -143,4 +139,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
             mLoadingDialog.dismiss();
         }
     }
+
+
 }

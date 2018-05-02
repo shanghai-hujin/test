@@ -16,6 +16,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 allprojects {
@@ -42,14 +47,12 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     //数据解析
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    //rxjava
+    //http
     compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
-    //rxjava回收
-    compile 'com.uber.autodispose:autodispose:0.6.1'
-    compile 'com.uber.autodispose:autodispose-android-archcomponents:0.6.1'
-    compile 'org.jetbrains:annotations-java5:15.0'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.6'
+    compile 'com.trello.rxlifecycle2:rxlifecycle:2.1.0'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
     //logger日志
     compile 'com.orhanobut:logger:2.1.1'
     //快速注射id
@@ -57,4 +60,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //banner
     compile  'com.youth.banner:banner:1.4.9'
+    //fragmentation
+    compile  'me.yokeyword:fragmentation:1.0.0'
 }

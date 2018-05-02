@@ -1,9 +1,12 @@
 package com.example.hasee.http;
 
+import com.example.hasee.bean.LoginResponse;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import java.io.ObjectStreamException;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -25,7 +28,13 @@ public class HttpApi {
     private final Retrofit retrofit;
     private final HttpSevies httpSevies;
 
-    public HttpApi() {
+    //私有构造函数
+    private HttpApi() {
+
+        // 防止反射获取多个对象的漏洞
+        if (null != HelperSinger.sSingletonTest) {
+            throw new RuntimeException("单例被反射");
+        }
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -40,6 +49,7 @@ public class HttpApi {
 
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
+                .baseUrl(Common.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -48,4 +58,31 @@ public class HttpApi {
 
 
     }
+
+    //静态内部类,
+    private static class HelperSinger{
+        private static HttpApi sSingletonTest = new HttpApi();
+    }
+
+
+    public static HttpApi getInstace(){
+        return HelperSinger.sSingletonTest;
+    }
+
+    //防止反序列化产生多个对象
+    private Object readResolve() throws ObjectStreamException {
+        return HttpApi.getInstace();
+    }
+
+
+    /**
+     * 返回被观察者对象
+     * @param username
+     * @param password
+     * @return
+     */
+    public Observable<LoginResponse> getLoginData(String username, String password) {
+        return httpSevies.getLoginData(username, password);
+    }
+
 }
