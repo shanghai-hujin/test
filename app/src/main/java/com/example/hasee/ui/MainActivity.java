@@ -1,7 +1,6 @@
 package com.example.hasee.ui;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -51,9 +50,9 @@ public class MainActivity extends BaseActivity {
     public void bindView(View view, Bundle savedInstanceState) {
         StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this,0, null);
         if(savedInstanceState == null) {
-            contentContainer.setBackgroundColor(Color.RED);
+            //contentContainer.setBackgroundColor(Color.RED);
 
-            /*new CountDownTimer(1000,3000) {
+            new CountDownTimer(1000,3000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
 
@@ -63,7 +62,7 @@ public class MainActivity extends BaseActivity {
                 public void onFinish() {
                     startActivity(new Intent(MainActivity.this,LoginActivity.class));
                 }
-            }.start();*/
+            }.start();
 
             baseFragments[0] = NewsFragment.newInstance("0");
             baseFragments[1] = BookFragment.newInstance("1");

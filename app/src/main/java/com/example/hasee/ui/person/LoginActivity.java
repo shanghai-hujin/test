@@ -3,19 +3,21 @@ package com.example.hasee.ui.person;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.hasee.R;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.ui.base.BasePresenter;
-import com.example.hasee.ui.base.IBase;
 
 /**
- * Created by HASEE on 2018/4/30.
+ *
+ * @author HASEE
+ * @date 2018/4/30
  */
 
 public class LoginActivity<P extends LoginPresenter> extends BaseActivity
         implements PersonGroupView.LoginView{
     @Override
     public int getContentLayout() {
-        return 0;
+        return R.layout.activity_login;
     }
 
     @Override
