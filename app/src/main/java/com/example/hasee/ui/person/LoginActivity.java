@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.hasee.R;
+import com.example.hasee.bean.LoginResponse;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.utils.StatusBarUtil;
 
@@ -74,16 +75,14 @@ public class LoginActivity<P extends LoginPresenter> extends BaseActivity
         return new LoginPresenter();
     }
 
-    @Override
-    public void loadData(String string) {
-
-    }
 
 
-    @OnClick({R.id.bt_go, R.id.fab, R.id.ib_login_weibo, R.id.ib_login_wx, R.id.ib_login_qq, R.id.ib_login_csdn, R.id.ll_login_options, R.id.ll_login_pull})
+    @OnClick({R.id.bt_go, R.id.fab, R.id.ib_login_weibo, R.id.ib_login_wx,
+            R.id.ib_login_qq, R.id.ib_login_csdn, R.id.ll_login_options, R.id.ll_login_pull})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_go:
+
                 break;
             case R.id.fab:
                 break;
@@ -203,12 +202,7 @@ public class LoginActivity<P extends LoginPresenter> extends BaseActivity
 
 
     @Override
-    public void showErrorMsg(String errorMsg) {
-
-    }
-
-    @Override
-    public void showError() {
+    public void loadData(LoginResponse loginResponse) {
 
     }
 }

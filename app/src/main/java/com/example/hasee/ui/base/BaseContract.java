@@ -19,6 +19,10 @@ public interface BaseContract {
          */
         void attachView(T view);
 
+        /**
+         * 回收View
+         */
+        void detachView();
     }
 
 

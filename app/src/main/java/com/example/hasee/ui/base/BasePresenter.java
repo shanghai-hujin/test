@@ -9,22 +9,22 @@ package com.example.hasee.ui.base;
 
 public class BasePresenter <T extends BaseContract.BaseView> implements BaseContract.BasePresenter<T> {
     public T getMvpView() {
-        return view;
+        return mView;
     }
 
-    private  T view;
+    protected   T mView;
 
     @Override
     /**
      * 绑定view
      */
     public void attachView(T view) {
-        this.view = view;
+        this.mView = view;
     }
 
     public void detachView(){
-        if(view != null){
-            view = null;
+        if(mView != null){
+            mView = null;
         }
     }
 

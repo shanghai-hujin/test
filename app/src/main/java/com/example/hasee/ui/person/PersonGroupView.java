@@ -1,5 +1,6 @@
 package com.example.hasee.ui.person;
 
+import com.example.hasee.bean.LoginResponse;
 import com.example.hasee.ui.base.BaseContract;
 
 /**
@@ -9,7 +10,7 @@ import com.example.hasee.ui.base.BaseContract;
 public interface PersonGroupView {
 
     interface LoginView extends BaseContract.BaseView{
-        void loadData(String string);
+        void loadData(LoginResponse loginResponse);
     }
 
     interface  LoginModle{

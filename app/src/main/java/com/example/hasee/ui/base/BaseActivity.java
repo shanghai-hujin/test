@@ -102,6 +102,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends SupportActiv
         return this.<T>bindToLifecycle();
     }
 
+    @Override
+    public void showErrorMsg(String errorMsg) {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
 
 
     @Override
