@@ -7,7 +7,18 @@
                 android:background="@mipmap/grsm"
                 android:fitsSystemWindows="true">
 
-
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:background="@null">
+        <TextView
+            android:text="登录"
+            android:textSize="21sp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.CardView
         android:id="@+id/cv"
@@ -140,7 +151,7 @@
 
         <View
             android:id="@+id/ll_login_layer"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:alpha="0"
             android:background="#80000000"/>

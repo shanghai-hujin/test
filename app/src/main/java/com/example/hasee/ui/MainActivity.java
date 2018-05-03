@@ -1,5 +1,6 @@
 package com.example.hasee.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -11,6 +12,7 @@ import com.example.hasee.ui.base.BasePresenter;
 import com.example.hasee.ui.book.BookFragment;
 import com.example.hasee.ui.movie.MovieFragment;
 import com.example.hasee.ui.news.NewsFragment;
+import com.example.hasee.ui.person.LoginActivity;
 import com.example.hasee.ui.setting.MyFragment;
 import com.example.hasee.utils.StatusBarUtil;
 import com.example.hasee.widget.BottomBar;
@@ -47,6 +49,8 @@ public class MainActivity extends BaseActivity {
      */
     public void bindView(View view, Bundle savedInstanceState) {
         StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this,0, null);
+        startActivity(new Intent(this, LoginActivity.class));
+
         if(savedInstanceState == null) {
 
             baseFragments[0] = NewsFragment.newInstance("0");
