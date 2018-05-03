@@ -1,7 +1,5 @@
 package com.example.hasee.ui.base;
 
-import android.arch.lifecycle.LifecycleObserver;
-
 import com.trello.rxlifecycle2.LifecycleTransformer;
 
 /**
@@ -13,7 +11,7 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 
 public interface BaseContract {
 
-    interface BasePresenter<T extends BaseContract.BaseView> extends LifecycleObserver{
+    interface BasePresenter<T extends BaseContract.BaseView> {
         /**
          * @param view  绑定view
          */

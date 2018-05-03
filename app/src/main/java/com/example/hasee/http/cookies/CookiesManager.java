@@ -2,8 +2,6 @@ package com.example.hasee.http.cookies;
 
 import android.support.annotation.NonNull;
 
-import com.example.hasee.http.cookies.PersistentCookieStore;
-
 import java.util.List;
 
 import okhttp3.Cookie;

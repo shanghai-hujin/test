@@ -23,7 +23,7 @@ import butterknife.Unbinder;
  * @date 2018/4/26 15:00
  */
 
-public abstract class BaseActivity<P extends BasePresenter> extends SupportActivity implements IBase,BaseContract.BaseView {
+public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends SupportActivity implements IBase,BaseContract.BaseView {
 
     private View mRootView;
     protected P basePresenter;

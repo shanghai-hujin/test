@@ -22,6 +22,7 @@ public class BasePresenter <T extends BaseContract.BaseView> implements BaseCont
         this.mView = view;
     }
 
+    @Override
     public void detachView(){
         if(mView != null){
             mView = null;

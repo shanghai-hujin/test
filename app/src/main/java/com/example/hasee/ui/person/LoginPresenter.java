@@ -11,20 +11,25 @@ import com.example.hasee.utils.RxUtils;
  * Created by HASEE on 2018/4/30.
  */
 
-class LoginPresenter extends BasePresenter<PersonGroupView.LoginView>
-        implements PersonGroupView.LoginModle,PersonGroupView.LoginModle.OnLoginFinishedListener{
+public class LoginPresenter extends BasePresenter<LoginContract.LoginView>
+        implements  LoginContract.LoginPresenter{
 
 
     @Override
-    public void Login(String name, String password, OnLoginFinishedListener loginFinishedListener) {
+    public void Login(String name, String password) {
         //这里请求网络
         HttpApi.getInstace().getLoginData(name,password)
                 .compose(RxUtils.rxSchedulerHelper())
-                .subscribeWith(new BaseObserver<LoginResponse>(mView) {
+                .compose(mView.<LoginResponse>bindToLife())
+                .subscribe(new BaseObserver<LoginResponse>(mView) {
+
+
                     @Override
                     public void onNext(LoginResponse loginResponse) {
                         if(loginResponse.getErrorCode() == BaseResponce.SUCCESS){
                             mView.loadData(loginResponse);
+                        }else {
+                            mView.loginFail(loginResponse.getErrorMsg());
                         }
                     }
                 });
@@ -32,16 +37,7 @@ class LoginPresenter extends BasePresenter<PersonGroupView.LoginView>
 
 
 
-
     }
 
-    @Override
-    public void onUserError() {
 
-    }
-
-    @Override
-    public void onSuccess() {
-
-    }
 }

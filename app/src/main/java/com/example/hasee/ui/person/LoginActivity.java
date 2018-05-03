@@ -16,6 +16,7 @@ import com.example.hasee.R;
 import com.example.hasee.bean.LoginResponse;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.utils.StatusBarUtil;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,8 +26,8 @@ import butterknife.OnClick;
  * @date 2018/4/30
  */
 
-public class LoginActivity<P extends LoginPresenter> extends BaseActivity
-        implements PersonGroupView.LoginView {
+public class LoginActivity extends BaseActivity<LoginPresenter>
+        implements LoginContract.LoginView {
     @BindView(R.id.et_username)
     EditText etUsername;
     @BindView(R.id.et_password)
@@ -82,7 +83,7 @@ public class LoginActivity<P extends LoginPresenter> extends BaseActivity
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_go:
-
+                basePresenter.Login(etUsername.getText().toString().trim(),etPassword.getText().toString().trim());
                 break;
             case R.id.fab:
                 break;
@@ -202,7 +203,15 @@ public class LoginActivity<P extends LoginPresenter> extends BaseActivity
 
 
     @Override
+    /**
+     * P层 返回的数据
+     */
     public void loadData(LoginResponse loginResponse) {
+        Logger.e("成功回掉",loginResponse);
+    }
 
+    @Override
+    public void loginFail(String errormsg) {
+        Logger.e("失败回掉"+errormsg);
     }
 }

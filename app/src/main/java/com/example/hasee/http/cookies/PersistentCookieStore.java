@@ -13,9 +13,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;
@@ -29,12 +31,12 @@ public class PersistentCookieStore {
 
     private static final String LOG_TAG = "PersistentCookieStore";
     private static final String COOKIE_PREFS = "Cookies_Prefs";
-    private final Map<String, ConcurrentHashMap<Object, Object>> cookies;
+    private final Map<String, ConcurrentMap<String, Cookie>> cookies;
     private final SharedPreferences cookiePrefs;
 
     PersistentCookieStore() {
         cookiePrefs = MyApplication.getInstance().getSharedPreferences(COOKIE_PREFS, 0);
-        cookies = new HashMap<String, ConcurrentHashMap<Object, Object>>();
+        cookies = new HashMap<>();
 
         //将持久化的cookies缓存到内存中 即map cookies
         Map<String, ?> prefsMap = cookiePrefs.getAll();
@@ -81,8 +83,8 @@ public class PersistentCookieStore {
         prefsWriter.apply();
     }
 
-    public ArrayList<Object> get(HttpUrl url) {
-        ArrayList<Object> ret = new ArrayList<>();
+    public List<Cookie> get(HttpUrl url) {
+        ArrayList<Cookie> ret = new ArrayList<>();
         if (cookies.containsKey(url.host())) {
             ret.addAll(cookies.get(url.host()).values());
         }
@@ -115,8 +117,8 @@ public class PersistentCookieStore {
         }
     }
 
-    ArrayList<Object> getCookies() {
-        ArrayList<Object> ret = new ArrayList<>();
+    List<Cookie> getCookies() {
+        ArrayList<Cookie> ret = new ArrayList<>();
         for (String key : cookies.keySet()) {
             ret.addAll(cookies.get(key).values());
         }

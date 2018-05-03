@@ -1,6 +1,5 @@
 package com.example.hasee.bean;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -21,7 +20,7 @@ public class LoginResponse extends BaseResponce {
         this.data = data;
     }
 
-    class LoginData implements Serializable {
+    class LoginData  {
 
         private String username;
         private String password;

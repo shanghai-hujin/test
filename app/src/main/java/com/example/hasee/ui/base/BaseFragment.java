@@ -20,12 +20,12 @@ import butterknife.Unbinder;
  * Created by HASEE on 2018/4/28.
  */
 
-public abstract class BaseFragment<P extends BasePresenter> extends SupportFragment
+public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends SupportFragment
         implements IBase,BaseContract.BaseView {
 
     private View mRootView;
     private Unbinder unbinder;
-    private P mPresenter;
+    protected P mPresenter;
     protected Context mContext;
     private Dialog loadingDialog;
     private Dialog mLoadingDialog;
@@ -78,11 +78,22 @@ public abstract class BaseFragment<P extends BasePresenter> extends SupportFragm
         super.onDestroy();
         unbinder.unbind();
         //rx已经交给RxLifecyc处理
+        if (mPresenter != null) {
+            mPresenter.detachView();
+        }
     }
 
 
 
+    @Override
+    public void showErrorMsg(String errorMsg) {
 
+    }
+
+    @Override
+    public void showError() {
+
+    }
 
     @Override
     public void initData() {

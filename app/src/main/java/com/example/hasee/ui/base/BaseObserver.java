@@ -4,10 +4,12 @@ import android.text.TextUtils;
 
 import com.example.hasee.R;
 import com.example.hasee.ui.MyApplication;
-import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.orhanobut.logger.Logger;
 
-import io.reactivex.observers.ResourceObserver;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import retrofit2.HttpException;
 
 /**
  * Demo ${CLASS}
@@ -16,7 +18,7 @@ import io.reactivex.observers.ResourceObserver;
  * @date 2018/5/2 17:36
  */
 
-public abstract class BaseObserver<T> extends ResourceObserver<T> {
+public abstract class BaseObserver<T> implements Observer<T> {
     private BaseContract.BaseView baseView;
     private String mErrorMsg;
     private boolean isShowError = true;
@@ -41,6 +43,10 @@ public abstract class BaseObserver<T> extends ResourceObserver<T> {
         this.isShowError = isShowError;
     }
 
+    @Override
+    public void onSubscribe(@NonNull Disposable d) {
+
+    }
 
 
     @Override
