@@ -23,7 +23,7 @@ public class BottomBarTab extends LinearLayout {
     private static boolean ifshow = false;
 
     public BottomBarTab(Context context, @DrawableRes int icon, String title) {
-        this(context, null, icon,  title);
+        this(context, null, icon, title);
     }
 
 
@@ -38,7 +38,7 @@ public class BottomBarTab extends LinearLayout {
 
     private void init(Context context, int icon, String title) {
         mContext = context;
-        this.icon =icon;
+        this.icon = icon;
        /* TypedArray typedArray = context.obtainStyledAttributes(new int[]{R.attr.selectableItemBackgroundBorderless});
         Drawable drawable = typedArray.getDrawable(0);
         setBackgroundDrawable(drawable);
@@ -72,11 +72,43 @@ public class BottomBarTab extends LinearLayout {
     public void setSelected(boolean selected) {
         super.setSelected(selected);
         if (selected) {
-            mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.colorPrimary));
-            mTextView.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
 
+            mTextView.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+            switch (mTabPosition) {
+                case 0:
+                    mIcon.setImageResource(R.mipmap.bootom_news_sel);
+                    break;
+                case 1:
+                    mIcon.setImageResource(R.mipmap.bootom_book_sel);
+                    break;
+                case 2:
+                    mIcon.setImageResource(R.mipmap.bootom_movie_sel);
+                    break;
+                case 3:
+                    mIcon.setImageResource(R.mipmap.bootom_my_sel);
+                    break;
+                default:
+                    break;
+
+            }
         } else {
-            mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.tab_unselect));
+            switch (mTabPosition) {
+                case 0:
+                    mIcon.setImageResource(R.mipmap.bootom_news);
+                    break;
+                case 1:
+                    mIcon.setImageResource(R.mipmap.bootom_book);
+                    break;
+                case 2:
+                    mIcon.setImageResource(R.mipmap.bootom_movie);
+                    break;
+                case 3:
+                    mIcon.setImageResource(R.mipmap.bootom_my);
+                    break;
+                default:
+                    break;
+
+            }
             mTextView.setTextColor(ContextCompat.getColor(mContext, R.color.tab_unselect));
         }
     }

@@ -11,12 +11,12 @@ import com.example.hasee.ui.base.BasePresenter;
  * Created by HASEE on 2018/4/29.
  */
 
-public class SettingFragment extends BaseFragment {
+public class MyFragment extends BaseFragment {
     private View mRootView;
 
-    public static SettingFragment newInstance(String param1){
+    public static MyFragment newInstance(String param1){
         Bundle args = new Bundle();
-        SettingFragment newsFragment = new SettingFragment();
+        MyFragment newsFragment = new MyFragment();
         args.putString("param1",param1);
         newsFragment.setArguments(args);
         return newsFragment;
