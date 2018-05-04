@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    android:gravity="bottom"
+    android:paddingLeft="16dp"
+    android:paddingTop="25dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/ic_user"
+        android:layout_width="74dp"
+        android:layout_height="74dp"
+        fresco:roundedCornerRadius="5dp"
+        fresco:roundTopLeft="true"
+        fresco:roundTopRight="true"
+        fresco:roundBottomLeft="true"
+        fresco:roundBottomRight="true"
+        fresco:placeholderImage="@mipmap/shuaige"
+        fresco:failureImage="@mipmap/shuaige"
+        fresco:actualImageScaleType="center"
+    />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="hujin"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/ic_user"/>
+
+    <TextView
+        android:id="@+id/tv_lv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:gravity="center"
+        android:text="LV6"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_name"/>
+
+    <TextView
+        android:id="@+id/tv_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:padding="3dp"
+        android:text="普通会员"
+        android:textSize="10sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"/>
+
+    <TextView
+        android:id="@+id/tv_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:padding="3dp"
+        android:text="硬币:10"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_state"/>
+    <TextView
+        android:id="@+id/tv_b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:text="B币:10"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintStart_toEndOf="@id/tv_icon"
+        app:layout_constraintTop_toTopOf="@+id/tv_icon"/>
+
+    <ImageView
+        android:id="@+id/iv_head_noftiy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:src="@mipmap/ic_navigation_header_notification"
+        app:layout_constraintEnd_toStartOf="@+id/iv_head_switch_mode"
+        app:layout_constraintTop_toTopOf="@+id/ic_user"/>
+
+
+    <ImageView
+        android:id="@+id/iv_head_switch_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:src="@mipmap/ic_switch_night"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ic_user"/>
+
+
+</android.support.constraint.ConstraintLayout>

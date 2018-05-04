@@ -2,6 +2,7 @@ package com.example.hasee.ui;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.BuildConfig;
 import com.orhanobut.logger.Logger;
@@ -29,6 +30,9 @@ public class MyApplication extends Application {
                 return BuildConfig.DEBUG;
             }
         });
+
+        //初始化图片加载库
+        Fresco.initialize(this);
     }
 
     public static MyApplication getInstance() {
