@@ -5,14 +5,12 @@ import android.view.View;
 
 import com.example.hasee.R;
 import com.example.hasee.ui.base.BaseFragment;
-import com.example.hasee.ui.base.BasePresenter;
 
 /**
  * Created by HASEE on 2018/4/29.
  */
 
-public class NewsFragment extends BaseFragment {
-    private View mRootView;
+public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsContract.NewsView {
 
     public static NewsFragment newInstance(String param1){
         Bundle args = new Bundle();
@@ -23,13 +21,13 @@ public class NewsFragment extends BaseFragment {
     }
 
     @Override
-    public BasePresenter createPresenter() {
-        return null;
+    public NewsPresenter createPresenter() {
+        return new NewsPresenter();
     }
 
     @Override
     public int getContentLayout() {
-        return R.layout.activity_main;
+        return R.layout.fragment_news;
     }
 
     @Override

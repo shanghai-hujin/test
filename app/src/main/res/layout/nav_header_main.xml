@@ -2,9 +2,10 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_header"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     android:gravity="bottom"
     android:paddingLeft="16dp"

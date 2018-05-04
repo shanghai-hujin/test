@@ -27,7 +27,6 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
     private Unbinder unbinder;
     protected P mPresenter;
     protected Context mContext;
-    private Dialog loadingDialog;
     private Dialog mLoadingDialog;
 
     @Nullable
@@ -43,7 +42,6 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
         }
 
         mContext = mRootView.getContext();
-        loadingDialog = DialogHelper.getLoadingDialog(getActivity());
         return mRootView;
     }
 
@@ -76,14 +74,19 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
         unbinder.unbind();
         //rx已经交给RxLifecyc处理
         if (mPresenter != null) {
             mPresenter.detachView();
         }
     }
-
-
 
     @Override
     public void showErrorMsg(String errorMsg) {

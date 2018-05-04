@@ -10,4 +10,6 @@ package com.example.hasee.http;
 public class Common {
 
     public static final String BASE_URL="http://www.wanandroid.com/";
+
+    public static final String GetNewsArticleCmppApi = "http://api.3g.ifeng.com/";
 }
