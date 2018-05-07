@@ -37,5 +37,10 @@ public class MyFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void initData() {
+
+    }
+
 
 }

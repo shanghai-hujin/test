@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:textSize="55sp"
-        android:text="news"
-        android:layout_width="match_parent" android:layout_height="match_parent"/>
-</android.support.constraint.ConstraintLayout>
+    <include layout="@layout/layout_news_toolbar"/>
+</FrameLayout>

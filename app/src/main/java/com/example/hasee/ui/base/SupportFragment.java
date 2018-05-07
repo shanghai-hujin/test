@@ -48,6 +48,7 @@ public class SupportFragment extends RxFragment implements ISupportFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);//支持menu
         mDelegate.onCreate(savedInstanceState);
     }
 

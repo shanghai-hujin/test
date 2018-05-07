@@ -45,7 +45,7 @@ public abstract class BaseObserver<T> implements Observer<T> {
 
     @Override
     public void onSubscribe(@NonNull Disposable d) {
-
+       // baseView.showLoading();
     }
 
 

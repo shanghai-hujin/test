@@ -40,12 +40,10 @@ public interface HttpSevies {
     Observable<LoginResponse> getLoginData(@Field("username") String username, @Field("password") String password);
 
 
-
-
-
     //由于api的base地址不一样，以下为其他接口地址
-    @GET("ClientNews")
-    Observable<List<NewsDetail>> getNewsDetail(@Query("id") String id,
+    @GET
+    Observable<List<NewsDetail>> getNewsDetail(@Url String url,
+                                               @Query("id") String id,
                                                @Query("action") String action,
                                                @Query("pullNum") int pullNum
     );

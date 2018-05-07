@@ -22,8 +22,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView>
                 .compose(RxUtils.rxSchedulerHelper())
                 .compose(mView.<LoginResponse>bindToLife())
                 .subscribe(new BaseObserver<LoginResponse>(mView) {
-
-
                     @Override
                     public void onNext(LoginResponse loginResponse) {
                         if(loginResponse.getErrorCode() == BaseResponce.SUCCESS){
@@ -33,10 +31,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView>
                         }
                     }
                 });
-
-
-
-
     }
 
 

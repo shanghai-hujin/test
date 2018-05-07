@@ -37,5 +37,10 @@ public class MovieFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void initData() {
+
+    }
+
 
 }

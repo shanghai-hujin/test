@@ -29,6 +29,17 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
     protected Context mContext;
     private Dialog mLoadingDialog;
 
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        initData();
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -98,10 +109,7 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
 
     }
 
-    @Override
-    public void initData() {
 
-    }
 
     @Override
     public void showLoading() {

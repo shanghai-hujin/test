@@ -37,6 +37,10 @@ public class BookFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void initData() {
+
+    }
 
 
 }
