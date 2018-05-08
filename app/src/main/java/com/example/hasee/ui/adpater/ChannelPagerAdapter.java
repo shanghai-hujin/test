@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.hasee.bean.Channel;
 import com.example.hasee.ui.base.BaseFragment;
-import com.example.hasee.ui.book.BookFragment;
+import com.example.hasee.ui.news.DetailFragment;
 
 import java.util.List;
 
@@ -30,8 +30,7 @@ public class ChannelPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public BaseFragment getItem(int position) {
-       return BookFragment.newInstance("2");
-        // return DetailFragment.newInstance(mChannels.get(position).getChannelId(), position);
+         return DetailFragment.newInstance(mChannels.get(position).getChannelId(), position);
 
     }
 

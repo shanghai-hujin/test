@@ -54,7 +54,7 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
                 parent.removeView(mRootView);
             }
         }
-
+        mLoadingDialog = DialogHelper.getLoadingDialog(getActivity());
         mContext = mRootView.getContext();
         return mRootView;
     }
@@ -75,7 +75,7 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
         super.onViewCreated(view, savedInstanceState);
         attachView();
         bindView(view,savedInstanceState);
-        mLoadingDialog = DialogHelper.getLoadingDialog(getActivity());
+
     }
 
     private void attachView() {

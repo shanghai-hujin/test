@@ -4,6 +4,10 @@
     <string name="http_error">网络异常</string>
     <string name="unKnown_error">未知错误</string>
 
+    <string name="news_commentsize">%1$s评论</string>
+    <string name="detail_header_tv">下拉一下，看点儿不一样的</string>
+    <string name="news_toast">已为您推荐了%1$s条新资讯</string>
+
     <string-array name="news_channel">
         <item>头条</item>
         <item>娱乐</item>
