@@ -19,7 +19,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView>
     public void Login(String name, String password) {
         //这里请求网络
         HttpApi.getInstace().getLoginData(name,password)
-                .compose(RxUtils.rxSchedulerHelper())
+                .compose(RxUtils.<LoginResponse>rxSchedulerHelper())
                 .compose(mView.<LoginResponse>bindToLife())
                 .subscribe(new BaseObserver<LoginResponse>(mView) {
                     @Override

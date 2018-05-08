@@ -1,11 +1,12 @@
 package com.example.hasee.ui;
 
-import android.app.Application;
-
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.BuildConfig;
 import com.orhanobut.logger.Logger;
+
+import org.litepal.LitePal;
+import org.litepal.LitePalApplication;
 
 /**
  * Demo ${CLASS}
@@ -14,7 +15,7 @@ import com.orhanobut.logger.Logger;
  * @date 2018/4/28 16:12
  */
 
-public class MyApplication extends Application {
+public class MyApplication extends LitePalApplication {
 
     private static MyApplication instance;
 
@@ -33,6 +34,8 @@ public class MyApplication extends Application {
 
         //初始化图片加载库
         Fresco.initialize(this);
+        //数据库初始化
+        LitePal.initialize(this);
     }
 
     public static MyApplication getInstance() {

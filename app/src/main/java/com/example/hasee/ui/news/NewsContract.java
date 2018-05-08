@@ -1,6 +1,9 @@
 package com.example.hasee.ui.news;
 
+import com.example.hasee.bean.Channel;
 import com.example.hasee.ui.base.BaseContract;
+
+import java.util.List;
 
 /**
  * Demo ${CLASS}
@@ -13,9 +16,11 @@ public interface NewsContract {
 
     interface NewsView extends BaseContract.BaseView{
 
+        void loadData(List<Channel> myChannels, List<Channel> otherChannels);
     }
 
     interface NewsPresenter extends BaseContract.BasePresenter<NewsView>{
+        void getChannel();
 
     }
 

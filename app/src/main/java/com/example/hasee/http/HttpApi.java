@@ -1,12 +1,20 @@
 package com.example.hasee.http;
 
+import android.support.annotation.StringDef;
+
 import com.example.hasee.bean.LoginResponse;
+import com.example.hasee.bean.NewsDetail;
 import com.example.hasee.http.cookies.CookiesManager;
 
 import java.io.ObjectStreamException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -28,6 +36,16 @@ public class HttpApi {
     private final OkHttpClient okHttpClient;
     private final Retrofit retrofit;
     private final HttpSevies httpSevies;
+
+    public static final String ACTION_DEFAULT = "default";
+    public static final String ACTION_DOWN = "down";
+    public static final String ACTION_UP = "up";
+
+    @StringDef({ACTION_DEFAULT,ACTION_DOWN,ACTION_UP})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Actions{
+
+    }
 
     //私有构造函数
     private HttpApi() {
@@ -84,6 +102,23 @@ public class HttpApi {
      */
     public Observable<LoginResponse> getLoginData(String username, String password) {
         return httpSevies.getLoginData(username, password);
+    }
+
+    /**
+     * 获取新闻
+     * @param id 新闻类型id
+     * @param action 用户动作：默认、下拉、上拉
+     * @param pullNum 推送数量
+     * @return 通过flatmap转换
+     */
+    public Observable<NewsDetail> getNewsDetail(String id, @Actions String action, int pullNum){
+        return httpSevies.getNewsDetail(Common.GetNewsArticleCmppApi+"ClientNews", id, action, pullNum)
+                .flatMap(new Function<List<NewsDetail>, ObservableSource<NewsDetail>>() {
+                    @Override
+                    public ObservableSource<NewsDetail> apply(List<NewsDetail> newsDetails) throws Exception {
+                        return Observable.fromIterable(newsDetails);
+                    }
+                });
     }
 
 }

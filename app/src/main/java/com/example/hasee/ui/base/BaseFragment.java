@@ -15,6 +15,7 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by HASEE on 2018/4/28.
@@ -22,6 +23,8 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends SupportFragment
         implements IBase,BaseContract.BaseView {
+
+
 
     private View mRootView;
     private Unbinder unbinder;
@@ -135,6 +138,11 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
     public void onRetry() {
 
     }
+
+    protected void errToast(String err){
+        Toasty.error(getActivity(),err,1).show();
+    }
+
 
     @Override
     public <T> LifecycleTransformer<T> bindToLife() {
