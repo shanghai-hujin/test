@@ -11,6 +11,7 @@ import com.example.hasee.utils.FrescoUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -48,8 +49,9 @@ public class NewsDetailAdapter extends BaseMultiItemQuickAdapter<NewsDetail.Item
         ViewHelper.setScaleY(baseViewHolder.itemView, 0.6f);
         ViewPropertyAnimator.animate(baseViewHolder.itemView).scaleX(1).setDuration(350).setInterpolator(new OvershootInterpolator()).start();
         ViewPropertyAnimator.animate(baseViewHolder.itemView).scaleY(1).setDuration(350).setInterpolator(new OvershootInterpolator()).start();
-
+        Logger.e("TAG","类型="+baseViewHolder.getItemViewType()+"");
         switch (baseViewHolder.getItemViewType()) {
+
             case NewsDetail.ItemBean.TYPE_DOC_TITLEIMG:
                 baseViewHolder.setText(R.id.tv_title,item.getTitle());
                 baseViewHolder.setText(R.id.tv_source,item.getSource());

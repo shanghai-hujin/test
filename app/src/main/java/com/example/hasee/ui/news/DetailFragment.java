@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.example.hasee.R;
 import com.example.hasee.bean.NewsDetail;
 import com.example.hasee.bean.NewsUtils;
+import com.example.hasee.http.Common;
 import com.example.hasee.http.HttpApi;
 import com.example.hasee.ui.MyApplication;
 import com.example.hasee.ui.adpater.NewsDetailAdapter;
@@ -24,6 +25,9 @@ import com.example.hasee.widget.SimpleImageView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -55,6 +59,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
     private Banner mBanner;
     private boolean isRemoveHeaderView = false;
 
+
     public static DetailFragment newInstance(String newsid, int position) {
         Bundle args = new Bundle();
         args.putString("newsid", newsid);
@@ -77,6 +82,24 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         mNewBannersList = new ArrayList<>();
         mNewsDetailAdapter = new NewsDetailAdapter(mNewsList, getActivity());
         mRecyclerView.setAdapter(mNewsDetailAdapter);
+
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                mRefreshLayout.finishRefresh(2500);
+                setRefreshThemeColor();
+                mPresenter.getData(mNewsid,HttpApi.ACTION_DOWN,downPullNum);
+            }
+        });
+        mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
+                mRefreshLayout.finishRefresh(2500);
+
+            }
+        });
+
+
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -140,6 +163,20 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                 }
             }
         });
+    }
+
+    private int themeCount = 0;
+    private void setRefreshThemeColor() {
+        themeCount++;
+        if (themeCount % 4 == 1) {
+            mRefreshLayout.setPrimaryColorsId(Common.BLUE_THEME, R.color.white);
+        } else if (themeCount % 4 == 2) {
+            mRefreshLayout.setPrimaryColorsId(Common.GREEN_THEME, R.color.white);
+        } else if (themeCount % 4 == 3) {
+            mRefreshLayout.setPrimaryColorsId(Common.RED_THEME, R.color.white);
+        } else if (themeCount % 4 == 0) {
+            mRefreshLayout.setPrimaryColorsId(Common.ORANGE_THEME, R.color.white);
+        }
     }
 
     private void bannerToRead(NewsDetail.ItemBean itemBean) {
