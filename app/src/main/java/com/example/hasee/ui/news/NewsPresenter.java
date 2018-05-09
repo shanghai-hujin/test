@@ -47,8 +47,8 @@ class NewsPresenter extends BasePresenter<NewsContract.NewsView> implements News
                 //只有第1个，index为0的为不能移除
                 channel.setChannelType(i< 1 ? 1 : 0);
                 //最后四个默认不在tab上面
-                channel.setChannelSelect(i < channelId.size()-4);
-                if (i < channelId.size() - 4) {
+                channel.setChannelSelect(i < channelId.size()-3);
+                if (i < channelId.size() - 3) {
                     myChannels.add(channel);
                 } else {
                     otherChannels.add(channel);

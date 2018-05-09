@@ -53,7 +53,7 @@ public class NewsDetailAdapter extends BaseMultiItemQuickAdapter<NewsDetail.Item
             case NewsDetail.ItemBean.TYPE_DOC_TITLEIMG:
                 baseViewHolder.setText(R.id.tv_title,item.getTitle());
                 baseViewHolder.setText(R.id.tv_source,item.getSource());
-                baseViewHolder.setText(R.id.tv_commnetsize, String.format("%1%s评论",item.getCommentsall()));
+                baseViewHolder.setText(R.id.tv_commnetsize,  String.format(mContext.getResources().getString(R.string.news_commentsize), item.getCommentsall()));
                 FrescoUtils.setController(item.getThumbnail(),((SimpleDraweeView)baseViewHolder.getView(R.id.iv_logo)));
                 baseViewHolder.addOnClickListener(R.id.iv_logo);
                 break;

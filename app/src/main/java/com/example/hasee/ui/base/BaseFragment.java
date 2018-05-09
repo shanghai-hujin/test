@@ -43,6 +43,8 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
         super.onSupportVisible();
     }
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,6 +61,10 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
         return mRootView;
     }
 
+    @Override
+    public View getView() {
+        return mRootView;
+    }
 
     public abstract  P createPresenter();
 

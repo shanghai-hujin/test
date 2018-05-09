@@ -77,7 +77,7 @@
 
 
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/iv_close"
         android:layout_width="15dp"
         android:layout_height="15dp"
@@ -87,9 +87,6 @@
         app:layout_constraintRight_toRightOf="@+id/tv_title"
         android:layout_marginRight="0dp"
         android:layout_marginBottom="8dp"
-        fresco:placeholderImage="@mipmap/shuaige"
-        fresco:failureImage="@mipmap/shuaige"
-        fresco:actualImageScaleType="center"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"/>
 
     <LinearLayout

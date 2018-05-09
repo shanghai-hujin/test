@@ -1,9 +1,11 @@
 package com.example.hasee.ui.news;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,12 +13,20 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.example.hasee.R;
 import com.example.hasee.bean.NewsDetail;
+import com.example.hasee.bean.NewsUtils;
+import com.example.hasee.http.HttpApi;
 import com.example.hasee.ui.MyApplication;
 import com.example.hasee.ui.adpater.NewsDetailAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.ContextUtils;
+import com.example.hasee.utils.FrescoUtils;
+import com.example.hasee.widget.SimpleImageView;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +51,9 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
     private NewsDetailAdapter mNewsDetailAdapter;
     private int upPullNum = 1;
     private int downPullNum = 1;
+    private View view_Focus;
+    private Banner mBanner;
+    private boolean isRemoveHeaderView = false;
 
     public static DetailFragment newInstance(String newsid, int position) {
         Bundle args = new Bundle();
@@ -70,6 +83,30 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
 
             }
         });
+        view_Focus = getView().inflate(getActivity(), R.layout.news_detail_headerview, null);
+        mBanner = (Banner) view_Focus.findViewById(R.id.banner);
+        //设置banner样式
+        mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
+                .setImageLoader(new SimpleImageView() {
+                    @Override
+                    public void displayImage(Context context, Object path, View imageView) {
+                        //加载图片
+                        FrescoUtils.setController((String) path, ((SimpleDraweeView) imageView));
+                    }
+
+                })
+                .setDelayTime(3000)
+                .setIndicatorGravity(BannerConfig.RIGHT);
+        mBanner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                if (mNewBannersList.size() < 1) {
+                    return;
+                }
+                bannerToRead(mNewBannersList.get(position));
+            }
+        });
+
 
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
@@ -105,13 +142,31 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         });
     }
 
+    private void bannerToRead(NewsDetail.ItemBean itemBean) {
+        if (itemBean == null) {
+            return;
+        }
+        switch (itemBean.getType()) {
+            case NewsUtils.TYPE_DOC:
+                break;
+            case NewsUtils.TYPE_SLIDE:
+                break;
+            case NewsUtils.TYPE_ADVERT:
+                break;
+            case NewsUtils.TYPE_PHVIDEO:
+                break;
+            default:
+                break;
+        }
+    }
+
     @Override
     public void initData() {
         showLoadingDialog();
         if (getArguments() != null) {
             mNewsid = getArguments().getString("newsid");
             mPosition = getArguments().getInt("position");
-            mPresenter.getData(mNewsid, "default", 1);
+            mPresenter.getData(mNewsid, HttpApi.ACTION_DEFAULT, 1);
         }
     }
 
@@ -122,12 +177,30 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
 
     @Override
     public void loadBannerData(NewsDetail newsDetail) {
-
+        Logger.e("TAG", "loadBannerData: " + newsDetail.toString());
+        List<String> mTitleList = new ArrayList<>();
+        List<String> mUrlList = new ArrayList<>();
+        mNewBannersList.clear();
+        for (NewsDetail.ItemBean bean : newsDetail.getItem()) {
+            if (!TextUtils.isEmpty(bean.getThumbnail())) {
+                mTitleList.add(bean.getTitle());
+                mNewBannersList.add(bean);
+                mUrlList.add(bean.getThumbnail());
+            }
+        }
+        if (mUrlList.size() > 0) {
+            mBanner.setImages(mUrlList);
+            mBanner.setBannerTitles(mTitleList);
+            mBanner.start();
+            if (mNewsDetailAdapter.getHeaderLayoutCount() < 1) {
+                mNewsDetailAdapter.addHeaderView(view_Focus);
+            }
+        }
     }
 
     @Override
     public void loadTopNewsData(NewsDetail newsDetail) {
-
+        Logger.e("TAG", "loadTopNewsData: " + newsDetail.toString());
     }
 
     @Override
@@ -137,14 +210,11 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
             showFaild();
         } else {
             downPullNum++;
-           /* if (isRemoveHeaderView) {
-                detailAdapter.removeAllHeaderView();
-            }*/
+            if (isRemoveHeaderView) {
+                mNewsDetailAdapter.removeAllHeaderView();
+            }
             mNewsDetailAdapter.setNewData(itemBeanList);
-          //  showToast(itemBeanList.size(), true);
-           // mPtrFrameLayout.refreshComplete();
-         //   showSuccess();
-         //   Log.i(TAG, "loadData: " + itemBeanList.toString());
+
         }
     }
 

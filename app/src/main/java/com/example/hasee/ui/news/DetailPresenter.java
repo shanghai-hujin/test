@@ -27,7 +27,6 @@ class DetailPresenter extends BasePresenter<DetailContract.DetailVew>{
     public void getData(String newsid, String action, int pullNum) {
         HttpApi.getInstace().getNewsDetail(newsid, action, pullNum)
                 .compose(RxUtils.<NewsDetail>rxSchedulerHelper())
-                .compose(mView.<NewsDetail>bindToLife())
                 .filter(new Predicate<NewsDetail>() {
                     @Override
                     public boolean test(@NonNull NewsDetail newsDetail) throws Exception {
@@ -92,6 +91,7 @@ class DetailPresenter extends BasePresenter<DetailContract.DetailVew>{
                         return newsDetail.getItem();
                     }
                 })
+                .compose(mView.<List<NewsDetail.ItemBean>>bindToLife())
                 .subscribe(new BaseObserver<List<NewsDetail.ItemBean>>(mView) {
                     @Override
                     public void onNext(List<NewsDetail.ItemBean> itemBeans) {
