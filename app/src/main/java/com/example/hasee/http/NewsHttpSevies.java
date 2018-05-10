@@ -1,6 +1,5 @@
 package com.example.hasee.http;
 
-import com.example.hasee.bean.LoginResponse;
 import com.example.hasee.bean.NewsArticleBean;
 import com.example.hasee.bean.NewsCmppVideoBean;
 import com.example.hasee.bean.NewsDetail;
@@ -11,10 +10,7 @@ import com.example.hasee.bean.VideoDetailBean;
 import java.util.List;
 
 import io.reactivex.Observable;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
@@ -25,25 +21,13 @@ import retrofit2.http.Url;
  * @date 2018/4/26 13:40
  */
 
-public interface HttpSevies {
+public interface NewsHttpSevies {
 
-    /**
-     * 登陆
-     * http://www.wanandroid.com/user/login
-     *
-     * @param username user name
-     * @param password password
-     * @return Observable<LoginResponse>
-     */
-    @POST("user/login")
-    @FormUrlEncoded
-    Observable<LoginResponse> getLoginData(@Field("username") String username, @Field("password") String password);
 
 
     //由于api的base地址不一样，以下为其他接口地址
-    @GET
-    Observable<List<NewsDetail>> getNewsDetail(@Url String url,
-                                               @Query("id") String id,
+    @GET("ClientNews")
+    Observable<List<NewsDetail>> getNewsDetail(@Query("id") String id,
                                                @Query("action") String action,
                                                @Query("pullNum") int pullNum
     );

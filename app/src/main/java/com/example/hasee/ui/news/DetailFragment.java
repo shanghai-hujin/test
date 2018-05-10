@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -15,7 +16,7 @@ import com.example.hasee.R;
 import com.example.hasee.bean.NewsDetail;
 import com.example.hasee.bean.NewsUtils;
 import com.example.hasee.http.Common;
-import com.example.hasee.http.HttpApi;
+import com.example.hasee.http.NewsHttpApi;
 import com.example.hasee.ui.MyApplication;
 import com.example.hasee.ui.adpater.NewsDetailAdapter;
 import com.example.hasee.ui.base.BaseFragment;
@@ -88,14 +89,16 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
             public void onRefresh(RefreshLayout refreshLayout) {
                 mRefreshLayout.finishRefresh(2500);
                 setRefreshThemeColor();
-                mPresenter.getData(mNewsid,HttpApi.ACTION_DOWN,downPullNum);
+                isRemoveHeaderView = true;
+                mPresenter.getData(mNewsid, NewsHttpApi.ACTION_DOWN,downPullNum);
             }
         });
         mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
-                mRefreshLayout.finishRefresh(2500);
 
+                mPresenter.getData(mNewsid, NewsHttpApi.ACTION_UP,upPullNum);
+                mRefreshLayout.finishLoadMore(2000);
             }
         });
 
@@ -203,7 +206,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         if (getArguments() != null) {
             mNewsid = getArguments().getString("newsid");
             mPosition = getArguments().getInt("position");
-            mPresenter.getData(mNewsid, HttpApi.ACTION_DEFAULT, 1);
+            mPresenter.getData(mNewsid, NewsHttpApi.ACTION_DEFAULT, 1);
         }
     }
 
@@ -257,7 +260,14 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
 
     @Override
     public void loadMoreData(List<NewsDetail.ItemBean> itemBeanList) {
-
+        if (itemBeanList == null) {
+            mNewsDetailAdapter.loadMoreFail();
+        } else {
+            upPullNum++;
+            mNewsDetailAdapter.addData(itemBeanList);
+            mNewsDetailAdapter.loadMoreComplete();
+            Log.i("TAG", "loadMoreData: " + itemBeanList.toString());
+        }
     }
 
 

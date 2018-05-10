@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.example.hasee.bean.NewsDetail;
 import com.example.hasee.bean.NewsUtils;
-import com.example.hasee.http.HttpApi;
+import com.example.hasee.http.NewsHttpApi;
 import com.example.hasee.ui.base.BaseObserver;
 import com.example.hasee.ui.base.BasePresenter;
 import com.example.hasee.utils.RxUtils;
@@ -25,7 +25,7 @@ import io.reactivex.functions.Predicate;
 
 class DetailPresenter extends BasePresenter<DetailContract.DetailVew>{
     public void getData(String newsid, String action, int pullNum) {
-        HttpApi.getInstace().getNewsDetail(newsid, action, pullNum)
+        NewsHttpApi.getInstace().getNewsDetail(newsid, action, pullNum)
                 .compose(RxUtils.<NewsDetail>rxSchedulerHelper())
                 .filter(new Predicate<NewsDetail>() {
                     @Override
@@ -95,7 +95,7 @@ class DetailPresenter extends BasePresenter<DetailContract.DetailVew>{
                 .subscribe(new BaseObserver<List<NewsDetail.ItemBean>>(mView) {
                     @Override
                     public void onNext(List<NewsDetail.ItemBean> itemBeans) {
-                        if(!action.equals(HttpApi.ACTION_UP)){
+                        if(!action.equals(NewsHttpApi.ACTION_UP)){
                             mView.loadData(itemBeans);
                         }else {
                             mView.loadMoreData(itemBeans);
@@ -107,7 +107,7 @@ class DetailPresenter extends BasePresenter<DetailContract.DetailVew>{
                     public void onError(Throwable e) {
                         super.onError(e);
                         Logger.e("TAG", "onFail: " + e.getMessage().toString());
-                        if (!action.equals(HttpApi.ACTION_UP)) {
+                        if (!action.equals(NewsHttpApi.ACTION_UP)) {
                             mView.loadData(null);
                         } else {
                             mView.loadMoreData(null);
