@@ -110,7 +110,7 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
 
     @Override
     public void showErrorMsg(String errorMsg) {
-
+        Toasty.normal(getActivity(),errorMsg).show();
     }
 
     @Override

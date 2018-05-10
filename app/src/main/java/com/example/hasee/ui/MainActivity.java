@@ -23,7 +23,9 @@ import com.example.hasee.ui.book.BookFragment;
 import com.example.hasee.ui.movie.MovieFragment;
 import com.example.hasee.ui.news.NewsFragment;
 import com.example.hasee.ui.setting.MyFragment;
+import com.example.hasee.utils.Event;
 import com.example.hasee.utils.PerfectClickListener;
+import com.example.hasee.utils.RxBus;
 import com.example.hasee.utils.StatusBarUtil;
 import com.example.hasee.widget.BottomBar;
 import com.example.hasee.widget.BottomBarTab;
@@ -149,9 +151,31 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 初始化数据数据
      */
     public void initData() {
+        //监听事件
+        RxBus.INSTANCE.toFlowable(Event.StartNavigationEvent.class)
+                .compose(bindToLifecycle())
+                .subscribe(event -> {
+                    if (event.start) {
+                        toggleDrawer();//打开
+                    }
+                });
+
         initToolbar();
         initHttpData();
         initNav();
+
+
+    }
+
+    /**
+     * DrawerLayout侧滑菜单开关
+     */
+    public void toggleDrawer() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            drawerLayout.openDrawer(GravityCompat.START);
+        }
     }
 
     /**

@@ -15,6 +15,8 @@ import com.example.hasee.R;
 import com.example.hasee.bean.Channel;
 import com.example.hasee.ui.adpater.ChannelPagerAdapter;
 import com.example.hasee.ui.base.BaseFragment;
+import com.example.hasee.utils.Event;
+import com.example.hasee.utils.RxBus;
 import com.example.hasee.widget.NoScrollViewPager;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -170,15 +172,20 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     }
 
 
-
     @OnClick({R.id.toolbar_user_avatar, R.id.ll_navigation, R.id.iv_edit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_user_avatar:
                 break;
             case R.id.ll_navigation:
+                //打开侧滑菜单
+                Event.StartNavigationEvent event = new Event.StartNavigationEvent();
+                event.start = true;
+                RxBus.INSTANCE.post(event);
                 break;
             case R.id.iv_edit:
+                break;
+            default:
                 break;
         }
     }

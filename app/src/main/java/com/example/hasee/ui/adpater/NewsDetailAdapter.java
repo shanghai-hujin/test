@@ -1,7 +1,6 @@
 package com.example.hasee.ui.adpater;
 
 import android.content.Context;
-import android.view.animation.OvershootInterpolator;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -9,8 +8,6 @@ import com.example.hasee.R;
 import com.example.hasee.bean.NewsDetail;
 import com.example.hasee.utils.FrescoUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.nineoldandroids.view.ViewHelper;
-import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -45,10 +42,10 @@ public class NewsDetailAdapter extends BaseMultiItemQuickAdapter<NewsDetail.Item
 
     @Override
     protected void convert(BaseViewHolder baseViewHolder, NewsDetail.ItemBean item) {
-        ViewHelper.setScaleX(baseViewHolder.itemView, 0.6f);
+       /* ViewHelper.setScaleX(baseViewHolder.itemView, 0.6f);
         ViewHelper.setScaleY(baseViewHolder.itemView, 0.6f);
         ViewPropertyAnimator.animate(baseViewHolder.itemView).scaleX(1).setDuration(350).setInterpolator(new OvershootInterpolator()).start();
-        ViewPropertyAnimator.animate(baseViewHolder.itemView).scaleY(1).setDuration(350).setInterpolator(new OvershootInterpolator()).start();
+        ViewPropertyAnimator.animate(baseViewHolder.itemView).scaleY(1).setDuration(350).setInterpolator(new OvershootInterpolator()).start();*/
         Logger.e("TAG","类型="+baseViewHolder.getItemViewType()+"");
         switch (baseViewHolder.getItemViewType()) {
 

@@ -1,15 +1,19 @@
 package com.example.hasee.ui.news;
 
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.animation.BaseAnimation;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.example.hasee.R;
@@ -22,8 +26,11 @@ import com.example.hasee.ui.adpater.NewsDetailAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.ContextUtils;
 import com.example.hasee.utils.FrescoUtils;
+import com.example.hasee.widget.NewsActionPopup;
 import com.example.hasee.widget.SimpleImageView;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.flyco.animation.SlideEnter.SlideRightEnter;
+import com.flyco.animation.SlideExit.SlideRightExit;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -59,6 +66,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
     private View view_Focus;
     private Banner mBanner;
     private boolean isRemoveHeaderView = false;
+    private NewsActionPopup newsDelPop;
 
 
     public static DetailFragment newInstance(String newsid, int position) {
@@ -82,6 +90,15 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         mNewsList = new ArrayList<>();
         mNewBannersList = new ArrayList<>();
         mNewsDetailAdapter = new NewsDetailAdapter(mNewsList, getActivity());
+        mNewsDetailAdapter.openLoadAnimation(new BaseAnimation() {
+            @Override
+            public Animator[] getAnimators(View view) {
+                return new Animator[]{
+                        ObjectAnimator.ofFloat(view,"scaleY",1, 1.1f,1),
+                        ObjectAnimator.ofFloat(view,"scaleX",1, 1.1f,1)
+                };
+            }
+        });
         mRecyclerView.setAdapter(mNewsDetailAdapter);
 
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -133,6 +150,24 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
             }
         });
 
+        newsDelPop = new NewsActionPopup(getActivity())
+                .alignCenter(false)
+                .widthScale(0.95f)
+//                                .showAnim(new FlipRightEnter())
+//                                .dismissAnim(new FlipHorizontalExit())
+                .showAnim(new SlideRightEnter())
+                .dismissAnim(new SlideRightExit())
+                .offset(-100, 0)
+                .dimEnabled(true);
+        newsDelPop.setOnClickListener(new NewsActionPopup.onClickListener() {
+            @Override
+            public void onClick(int position) {
+                newsDelPop.dismiss();
+                mNewsDetailAdapter.remove(position);
+                showToast(0, false);
+            }
+        });
+
 
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
@@ -148,17 +183,17 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                             return;
                         }
                         if (ContextUtils.getSreenWidth(MyApplication.getContext()) - 50 - location[1] < ContextUtils.dip2px(MyApplication.getContext(), 80)) {
-                           /* newsDelPop
+                            newsDelPop
                                     .anchorView(view)
                                     .gravity(Gravity.TOP)
-                                    .setBackReason(itemBean.getStyle().getBackreason(), true, i)
-                                    .show();*/
+                                    .setBackAction(itemBean.getStyle().getBackreason(), true, position)
+                                    .show();
                         } else {
-                            /*newsDelPop
+                            newsDelPop
                                     .anchorView(view)
                                     .gravity(Gravity.BOTTOM)
-                                    .setBackReason(itemBean.getStyle().getBackreason(), false, i)
-                                    .show();*/
+                                    .setBackAction(itemBean.getStyle().getBackreason(), false, position)
+                                    .show();
                         }
                         break;
                     default:
@@ -166,6 +201,14 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                 }
             }
         });
+    }
+
+    private void showToast(int num, boolean isRefresh) {
+        if (isRefresh) {
+            this.showErrorMsg(String.format(getResources().getString(R.string.news_toast), num + ""));
+        } else {
+            this.showErrorMsg("将为你减少此类内容");
+        }
     }
 
     private int themeCount = 0;

@@ -66,6 +66,7 @@
         android:layout_width="20dp"
         android:layout_height="11dp"
         android:text="广告"
+        android:visibility="gone"
         android:textColor="@android:color/holo_blue_light"
         android:background="@drawable/news_ad_bg"
         android:gravity="center"
