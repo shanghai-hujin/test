@@ -1,12 +1,14 @@
 package com.example.hasee.widget.dragtab;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import android.widget.ImageView;
 import com.example.hasee.R;
 import com.example.hasee.bean.Channel;
 import com.example.hasee.ui.adpater.NewChannelAdapter;
+import com.example.hasee.utils.Event;
+import com.example.hasee.utils.RxBus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,6 +37,7 @@ public class ChannelDialogFragment extends DialogFragment implements OnChannelLi
     private List<Channel> mDataSelected;
     private List<Channel> mDataUnselected;
     private NewChannelAdapter mNewChannelAdapter;
+    private boolean isUpdate;
 
     public void setOnChannelListener(OnChannelListener onChannelListener) {
         this.onChannelListener = onChannelListener;
@@ -132,21 +137,80 @@ public class ChannelDialogFragment extends DialogFragment implements OnChannelLi
 
     @Override
     public void onItemMove(int starPos, int endPos) {
+        if(starPos < 0 || endPos < 0){
+            return;
+        }
+
+        if(mDatas.get(endPos).getChannelName().equals("头条")){
+            return;
+        }
+
+        if(onChannelListener != null){
+            //去除标题所占的一个index
+            onChannelListener.onItemMove(starPos-1 ,endPos-1);
+        }
+        onMove(starPos, endPos, false);
+    }
+
+    private String firstAddChannelName = "";
+
+    private void onMove(int starPos, int endPos, boolean isAdd) {
+        try {
+            isUpdate = true;
+            Channel startChannel = mDatas.get(starPos);
+            //先删除之前的位置
+            mDatas.remove(starPos);
+            //添加到现在的位置
+            mDatas.add(endPos,startChannel);
+            mNewChannelAdapter.notifyItemMoved(starPos, endPos);
+            if(isAdd){
+                if(TextUtils.isEmpty(firstAddChannelName)){
+                    firstAddChannelName = startChannel.getChannelName();
+                }
+            }else {
+                if(startChannel.getChannelName().equals(firstAddChannelName)){
+                    firstAddChannelName = "";
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
+
+
     @Override
     public void onMoveToMyChannel(int starPos, int endPos) {
-
+        onMove(starPos, endPos, true);
     }
 
     @Override
     public void onMoveToOtherChannel(int starPos, int endPos) {
-
+        onMove(starPos, endPos, false);
     }
 
     @Override
     public void onFinish(String selectedChannelName) {
+        RxBus.INSTANCE.post(new Event.SelectChannelEvent(selectedChannelName));
+        dismiss();
+    }
 
+    @Override
+    public void onPause() {
+        if(isUpdate){
+            RxBus.INSTANCE.post(new Event.NewChannelEvent(mNewChannelAdapter.getData(), firstAddChannelName));
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,11 +14,13 @@ import android.widget.LinearLayout;
 
 import com.example.hasee.R;
 import com.example.hasee.bean.Channel;
+import com.example.hasee.dao.ChannelDao;
 import com.example.hasee.ui.adpater.ChannelPagerAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.RxBus;
 import com.example.hasee.widget.NoScrollViewPager;
+import com.example.hasee.widget.dragtab.ChannelDialogFragment;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flyco.tablayout.SlidingTabLayout;
 
@@ -27,6 +30,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by HASEE on 2018/4/29.
@@ -129,6 +134,100 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             }
         });
 
+
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        RxBus.INSTANCE.toFlowable(Event.NewChannelEvent.class)
+                .compose(bindToLife())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Event.NewChannelEvent>() {
+                    @Override
+                    public void accept(Event.NewChannelEvent newChannelEvent) throws Exception {
+                        if (newChannelEvent == null) {
+                            return;
+                        }
+
+                        if (newChannelEvent.selectedDatas != null && newChannelEvent.unSelectedDatas != null) {
+                            //传递过来的数据
+                            //选中的数据
+                            mSelectedDatas = newChannelEvent.selectedDatas;
+                            //未选中的数据
+                            mUnSelectedDatas = newChannelEvent.unSelectedDatas;
+                            //更新
+                            mChannelPagerAdapter.updateChannel(mSelectedDatas);
+                            mStlTabs.notifyDataSetChanged();
+                            //存入到本地
+                            ChannelDao.saveChannels(newChannelEvent.allChannels);
+
+                            //设置viewpager的选中页
+                            List<String> integers = new ArrayList<>();
+                            for (Channel channel : mSelectedDatas) {
+                                integers.add(channel.getChannelName());
+                            }
+
+                            if (TextUtils.isEmpty(newChannelEvent.firstChannelName)) {
+                                if (!integers.contains(selectedChannel)) {
+                                    //不包含
+                                    selectedChannel = mSelectedDatas.get(selectedIndex).getChannelName();
+                                    mViewPager.setCurrentItem(selectedIndex, false);
+                                } else {
+                                    setViewPagerPoition(integers, selectedChannel);
+                                }
+                            } else {
+                                setViewPagerPoition(integers, selectedChannel);
+                            }
+
+                        }
+                    }
+                });
+
+        RxBus.INSTANCE.toFlowable(Event.SelectChannelEvent.class)
+                .compose(bindToLife())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Event.SelectChannelEvent>() {
+                    @Override
+                    public void accept(Event.SelectChannelEvent selectChannelEvent) throws Exception {
+                        if (selectChannelEvent == null) {
+                            return;
+                        }
+                        List<String> integers = new ArrayList<>();
+                        for (Channel channel : mSelectedDatas) {
+                            integers.add(channel.getChannelName());
+                        }
+                        setViewPagerPoition(integers, selectChannelEvent.channelName);
+                    }
+                });
+    }
+
+    /**
+     * 设置viewpager选中
+     * @param integers 我的集合
+     * @param channelName 当前
+     */
+    private void setViewPagerPoition(List<String> integers, String channelName) {
+        if(TextUtils.isEmpty(channelName) || integers == null){
+            return;
+        }
+
+        for (int i = 0; i < integers.size(); i++) {
+            if(integers.get(i).equals(channelName)){
+                selectedChannel = integers.get(i);
+                selectedIndex = i;
+                break;
+            }
+        }
+
+        mViewPager.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mViewPager.setCurrentItem(selectedIndex, false);
+            }
+        },250);
     }
 
     @Override
@@ -184,6 +283,8 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
                 RxBus.INSTANCE.post(event);
                 break;
             case R.id.iv_edit:
+                ChannelDialogFragment dialogFragment = ChannelDialogFragment.newInstance(mSelectedDatas, mUnSelectedDatas);
+                dialogFragment.show(getChildFragmentManager(), "CHANNEL");
                 break;
             default:
                 break;

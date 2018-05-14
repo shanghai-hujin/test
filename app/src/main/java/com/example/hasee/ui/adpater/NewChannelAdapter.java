@@ -69,10 +69,9 @@ public class NewChannelAdapter extends BaseMultiItemQuickAdapter<Channel, BaseVi
     }
 
     @Override
-    protected void convert(BaseViewHolder baseViewHolder, Channel channel) {
+    protected void convert(final BaseViewHolder baseViewHolder, final Channel channel) {
         switch (baseViewHolder.getItemViewType()) {
             case Channel.TYPE_MY:
-                //给我的频道的标题配置
                 baseViewHolder.setText(R.id.tvTitle, channel.getChannelName());
                 baseViewHolder.getView(R.id.tv_edit).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -91,7 +90,6 @@ public class NewChannelAdapter extends BaseMultiItemQuickAdapter<Channel, BaseVi
                         .setVisible(R.id.img_edit, mIsEdit)
                         .addOnClickListener(R.id.img_edit);
 
-                //第一个不能动
                 if (channel.getChannelType() != 1) {
                     baseViewHolder.getView(R.id.img_edit).setTag(true);
                     baseViewHolder.getView(R.id.tv_channelname).setTag(false);
@@ -122,7 +120,7 @@ public class NewChannelAdapter extends BaseMultiItemQuickAdapter<Channel, BaseVi
                                 break;
                             case MotionEvent.ACTION_MOVE:
                                 if (System.currentTimeMillis() - mStartTime > SPACE_TIME) {
-                                    //move事件与down事件的间隔时间必须大于>100ms,才认定为拖拽
+                                    //当MOVE事件与DOWN事件的触发的间隔时间大于100ms时，则认为是拖拽starDrag
                                     mItemTouchHelper.startDrag(baseViewHolder);
                                 }
                                 break;
@@ -130,26 +128,21 @@ public class NewChannelAdapter extends BaseMultiItemQuickAdapter<Channel, BaseVi
                             case MotionEvent.ACTION_UP:
                                 mStartTime = 0;
                                 break;
-                            default:
-                                break;
                         }
                         return false;
                     }
                 });
 
-                //单点是删除频道，移动到推荐频道
+
                 baseViewHolder.getView(R.id.rl_channel).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //执行删除，移动到推荐频道列表
                         if (mIsEdit) {
-                            //头条标签不能移除
-                            if (channel.getChannelType() == 1) {
-                                return;
-                            }
-
+                            if (channel.getChannelType() == 1) return;
                             int otherFirstPosition = getOtherFirstPosition();
                             int currentPosition = baseViewHolder.getAdapterPosition();
-                            //获取到目标view
+                            //获取到目标View
                             View targetView = mRecylerView.getLayoutManager().findViewByPosition(otherFirstPosition);
                             //获取当前需要移动的View
                             View currentView = mRecylerView.getLayoutManager().findViewByPosition(currentPosition);
@@ -160,34 +153,27 @@ public class NewChannelAdapter extends BaseMultiItemQuickAdapter<Channel, BaseVi
                                 int spanCount = ((GridLayoutManager) manager).getSpanCount();
                                 int targetX = targetView.getLeft();
                                 int targetY = targetView.getTop();
-                                int myChannelSize = getMyChannelSize();
-                                if(myChannelSize % spanCount == 1){
-                                    //最一行最移除后，高度变化
+                                int myChannelSize = getMyChannelSize();//这里我是为了偷懒 ，算出来我的频道的大小
+                                if (myChannelSize % spanCount == 1) {
+                                    //我的频道最后一行 之后一个，移动后
                                     targetY -= targetView.getHeight();
                                 }
-
-                                //我的频道 移动到 推荐频道第一个,改为推荐频道
-                                channel.setItemtype(Channel.TYPE_OTHER_CHANNEL);
-                                channel.setChannelSelect(false);
-
-                                //移动到第一个其他频道的前面一个
-                                if(onChannelListener != null){
-                                    onChannelListener.onMoveToOtherChannel(currentPosition, otherFirstPosition-1);
-                                    startAnimation(currentView, targetX, targetY);
-                                }
-
-                            }else {
+                                //我的频道 移动到 推荐频道的第一个
                                 channel.setItemtype(Channel.TYPE_OTHER_CHANNEL);//改为推荐频道类型
                                 channel.setChannelSelect(false);
-                                if (otherFirstPosition == -1) {
-                                    otherFirstPosition = mData.size();
-                                }
-                                if (onChannelListener != null) {
+
+                                if (onChannelListener != null)
                                     onChannelListener.onMoveToOtherChannel(currentPosition, otherFirstPosition - 1);
-                                }
+                                startAnimation(currentView, targetX, targetY);
+                            } else {
+                                channel.setItemtype(Channel.TYPE_OTHER_CHANNEL);//改为推荐频道类型
+                                channel.setChannelSelect(false);
+                                if (otherFirstPosition == -1) otherFirstPosition = mData.size();
+                                if (onChannelListener != null)
+                                    onChannelListener.onMoveToOtherChannel(currentPosition, otherFirstPosition - 1);
                             }
-                        }else {
-                            if(onChannelListener != null){
+                        } else {
+                            if (onChannelListener != null) {
                                 onChannelListener.onFinish(channel.getChannelName());
                             }
                         }
@@ -195,56 +181,51 @@ public class NewChannelAdapter extends BaseMultiItemQuickAdapter<Channel, BaseVi
                 });
                 break;
             case Channel.TYPE_OTHER:
-                //其他频道的头部
                 baseViewHolder.setText(R.id.tvTitle, channel.getChannelName())
                         .setText(R.id.tv_sort, "点击添加频道")
                         .setVisible(R.id.tv_edit, false);
                 baseViewHolder.getView(R.id.tv_sort).setTag(false);
                 break;
-
             case Channel.TYPE_OTHER_CHANNEL:
                 baseViewHolder.setText(R.id.tv_channelname, channel.getChannelName())
                         .setVisible(R.id.img_edit, false);
                 baseViewHolder.getView(R.id.tv_channelname).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //我的频道，最后一个
                         int myLastPosition = getMyLastPosition();
-                        //当前位置
                         int currentPosition = baseViewHolder.getAdapterPosition();
-                        //获取目标view
+                        //获取到目标View
                         View targetView = mRecylerView.getLayoutManager().findViewByPosition(myLastPosition);
-                        //获取当前需要移动的view
+                        //获取当前需要移动的View
                         View currentView = mRecylerView.getLayoutManager().findViewByPosition(currentPosition);
 
                         // 如果targetView不在屏幕内,则indexOfChild为-1  此时不需要添加动画,因为此时notifyItemMoved自带一个向目标移动的动画
                         // 如果在屏幕内,则添加一个位移动画
-                        if(mRecylerView.indexOfChild(targetView) >= 0 && myLastPosition != -1){
+                        if (mRecylerView.indexOfChild(targetView) >= 0 && myLastPosition != -1) {
                             RecyclerView.LayoutManager manager = mRecylerView.getLayoutManager();
                             int spanCount = ((GridLayoutManager) manager).getSpanCount();
                             int targetX = targetView.getLeft() + targetView.getWidth();
                             int targetY = targetView.getTop();
 
-                            int myChanneSize = getMyChannelSize();
-                            if(myChanneSize % spanCount == 0){
-                                //添加到我的频道后换行，
+                            int myChannelSize = getMyChannelSize();//这里我是为了偷懒 ，算出来我的频道的大小
+                            if (myChannelSize % spanCount == 0) {
+                                //添加到我的频道后会换行，所以找到倒数第4个的位置
                                 View lastFourthView = mRecylerView.getLayoutManager().findViewByPosition(getMyLastPosition() - 3);
 //                                        View lastFourthView = mRecyclerView.getChildAt(getMyLastPosition() - 3);
                                 targetX = lastFourthView.getLeft();
                                 targetY = lastFourthView.getTop() + lastFourthView.getHeight();
                             }
 
-                            //将推进频道移动到我的频道的最后一个,改成我的频道
-                            channel.setItemtype(Channel.TYPE_MY_CHANNEL);
+                            // 推荐频道 移动到 我的频道的最后一个
+                            channel.setItemtype(Channel.TYPE_MY_CHANNEL);//改为推荐频道类型
                             channel.setChannelSelect(true);
 
-                            if(onChannelListener != null){
-                                onChannelListener.onMoveToMyChannel(currentPosition, myLastPosition+1);
+                            if (onChannelListener != null) {
+                                onChannelListener.onMoveToMyChannel(currentPosition, myLastPosition + 1);
                             }
                             startAnimation(currentView, targetX, targetY);
-
-                        }else {
-                            channel.setItemtype(Channel.TYPE_MY_CHANNEL);
+                        } else {
+                            channel.setItemtype(Channel.TYPE_MY_CHANNEL);//改为wde频道类型
                             channel.setChannelSelect(true);
 
                             if (myLastPosition == -1) {
@@ -256,6 +237,7 @@ public class NewChannelAdapter extends BaseMultiItemQuickAdapter<Channel, BaseVi
                         }
                     }
                 });
+
                 break;
             default:
                 break;
@@ -397,6 +379,7 @@ public class NewChannelAdapter extends BaseMultiItemQuickAdapter<Channel, BaseVi
 
     /**
      * 获取当前我的频道size大小
+     *
      * @return
      */
     public int getMyChannelSize() {

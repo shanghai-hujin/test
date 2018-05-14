@@ -33,7 +33,9 @@ public class ChannelDao {
      * @param channels
      */
     public static void saveChannels(final List<Channel> channels) {
-        if (channels == null) return;
+        if (channels == null) {
+            return;
+        }
         if (channels.size() > 0) {
             final List<Channel> channelList = new ArrayList<>();
             channelList.addAll(channels);
