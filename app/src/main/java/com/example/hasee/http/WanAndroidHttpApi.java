@@ -89,5 +89,12 @@ public class WanAndroidHttpApi {
     }
 
 
-
+    /**
+     * 获取天气
+     * @param areaid
+     * @return
+     */
+    public Observable<Object> getWeather(String areaid ) {
+        return httpSevies.getWeather(Common.API_Weather, areaid, "45690", "e8a41605afee4760b270c5ddd5da2286");
+    }
 }

@@ -3,8 +3,11 @@ package com.example.hasee.ui.news;
 import com.example.hasee.R;
 import com.example.hasee.bean.Channel;
 import com.example.hasee.dao.ChannelDao;
+import com.example.hasee.http.WanAndroidHttpApi;
 import com.example.hasee.ui.MyApplication;
+import com.example.hasee.ui.base.BaseObserver;
 import com.example.hasee.ui.base.BasePresenter;
+import com.example.hasee.utils.RxUtils;
 
 import org.litepal.crud.DataSupport;
 import org.litepal.crud.callback.SaveCallback;
@@ -84,4 +87,21 @@ class NewsPresenter extends BasePresenter<NewsContract.NewsView> implements News
         mView.loadData(myChannels,otherChannels);
 
     }
+
+    /**
+     * 获取网络
+     */
+    public void getWeather(){
+        WanAndroidHttpApi.getInstace().getWeather("101020900")
+                .compose(RxUtils.<Object>rxSchedulerHelper())
+                .compose(mView.<Object>bindToLife())
+                .subscribe(new BaseObserver<Object>(mView) {
+                    @Override
+                    public void onNext(Object o) {
+
+                    }
+                });
+
+    }
+
 }

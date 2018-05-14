@@ -15,6 +15,13 @@ public class Common {
 
     public static final String GetNewsArticleCmppApi = "http://api.3g.ifeng.com/";
 
+    /**
+     * 天气api
+     */
+    public final static String API_Weather = "https://route.showapi.com/9-2/";
+
+
+
     public static final int BLUE_THEME = R.color.blue;
 
     public static final int GREEN_THEME = android.R.color.holo_green_light;

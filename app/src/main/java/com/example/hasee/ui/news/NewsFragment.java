@@ -144,7 +144,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         super.onResume();
         RxBus.INSTANCE.toFlowable(Event.NewChannelEvent.class)
                 .compose(bindToLife())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Event.NewChannelEvent>() {
                     @Override
                     public void accept(Event.NewChannelEvent newChannelEvent) throws Exception {
@@ -188,7 +188,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
         RxBus.INSTANCE.toFlowable(Event.SelectChannelEvent.class)
                 .compose(bindToLife())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Event.SelectChannelEvent>() {
                     @Override
                     public void accept(Event.SelectChannelEvent selectChannelEvent) throws Exception {
@@ -235,6 +235,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         mSelectedDatas = new ArrayList<>();
         mUnSelectedDatas = new ArrayList<>();
         mPresenter.getChannel();
+        mPresenter.getWeather();
     }
 
 
