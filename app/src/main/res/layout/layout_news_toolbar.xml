@@ -41,21 +41,16 @@
 
                     <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/toolbar_user_avatar"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_marginEnd="3dp"
+                        android:layout_width="48dp"
+                        android:layout_height="40dp"
                         android:layout_marginStart="16dp"
-                        fresco:roundedCornerRadius="3dp"
-                        fresco:roundTopLeft="true"
-                        fresco:roundTopRight="true"
-                        fresco:roundBottomLeft="true"
-                        fresco:roundBottomRight="true"
                         fresco:placeholderImage="@mipmap/shuaige"
                         fresco:failureImage="@mipmap/shuaige"
-                        fresco:actualImageScaleType="center"
+                        fresco:actualImageScaleType="fitXY"
                         />
 
                     <TextView
+                        android:id="@+id/tv_weather"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"

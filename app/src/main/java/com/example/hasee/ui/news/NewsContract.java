@@ -1,6 +1,7 @@
 package com.example.hasee.ui.news;
 
 import com.example.hasee.bean.Channel;
+import com.example.hasee.bean.WeatherBean;
 import com.example.hasee.ui.base.BaseContract;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public interface NewsContract {
     interface NewsView extends BaseContract.BaseView{
 
         void loadData(List<Channel> myChannels, List<Channel> otherChannels);
+
+        void showWeather(WeatherBean weatherBean);
     }
 
     interface NewsPresenter extends BaseContract.BasePresenter<NewsView>{

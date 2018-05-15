@@ -18,7 +18,7 @@ public class Common {
     /**
      * 天气api
      */
-    public final static String API_Weather = "https://route.showapi.com/9-2/";
+    public final static String API_Weather = "https://api.seniverse.com/v3/weather/now.json";
 
 
 

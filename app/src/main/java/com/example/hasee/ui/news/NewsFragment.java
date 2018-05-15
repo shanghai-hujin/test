@@ -11,13 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.hasee.R;
 import com.example.hasee.bean.Channel;
+import com.example.hasee.bean.WeatherBean;
 import com.example.hasee.dao.ChannelDao;
 import com.example.hasee.ui.adpater.ChannelPagerAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.Event;
+import com.example.hasee.utils.FrescoUtils;
 import com.example.hasee.utils.RxBus;
 import com.example.hasee.widget.NoScrollViewPager;
 import com.example.hasee.widget.dragtab.ChannelDialogFragment;
@@ -46,6 +49,8 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     LinearLayout mLlNavigation;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.tv_weather)
+    TextView mTvWeather;
     @BindView(R.id.stl_tabs)
     SlidingTabLayout mStlTabs;
     @BindView(R.id.view_pager)
@@ -66,7 +71,23 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
      */
     private List<Channel> mUnSelectedDatas;
     private ChannelPagerAdapter mChannelPagerAdapter;
+    private MenuItem mMenuItem;
 
+    private int[] weather = {
+      R.mipmap.weather_1, R.mipmap.weather_2, R.mipmap.weather_3,
+      R.mipmap.weather_4, R.mipmap.weather_5, R.mipmap.weather_6,
+      R.mipmap.weather_7, R.mipmap.weather_8, R.mipmap.weather_9,
+      R.mipmap.weather_10, R.mipmap.weather_11, R.mipmap.weather_12,
+      R.mipmap.weather_13, R.mipmap.weather_14, R.mipmap.weather_15,
+      R.mipmap.weather_16, R.mipmap.weather_17, R.mipmap.weather_18,
+      R.mipmap.weather_19, R.mipmap.weather_20, R.mipmap.weather_21,
+      R.mipmap.weather_19, R.mipmap.weather_20, R.mipmap.weather_21,
+      R.mipmap.weather_22, R.mipmap.weather_23, R.mipmap.weather_24,
+      R.mipmap.weather_25, R.mipmap.weather_26, R.mipmap.weather_27,
+      R.mipmap.weather_28, R.mipmap.weather_29, R.mipmap.weather_30,
+      R.mipmap.weather_31, R.mipmap.weather_32, R.mipmap.weather_33, R.mipmap.weather_34,
+
+    };
     public static NewsFragment newInstance(String param1) {
         Bundle args = new Bundle();
         NewsFragment newsFragment = new NewsFragment();
@@ -269,6 +290,18 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         } else {
             errToast("数据移除");
         }
+    }
+
+    @Override
+    /**
+     * 显示天气
+     */
+    public void showWeather(WeatherBean weatherBean) {
+        int code = Integer.parseInt(weatherBean.getResults().get(0).getNow().getCode());
+        String url = "res://com.example.hasee/"+weather[code-1];
+        FrescoUtils.setController(url, mToolbarUserAvatar);
+        mTvWeather.setText(weatherBean.getResults().get(0).getNow().getText()
+        +": "+weatherBean.getResults().get(0).getNow().getTemperature()+"度");
     }
 
 

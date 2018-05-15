@@ -2,7 +2,6 @@ package com.example.hasee.ui;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.BuildConfig;
 import com.orhanobut.logger.Logger;
 
 import org.litepal.LitePal;
@@ -28,7 +27,7 @@ public class MyApplication extends LitePalApplication {
         Logger.addLogAdapter(new AndroidLogAdapter(){
             @Override
             public boolean isLoggable(int priority, String tag) {
-                return BuildConfig.DEBUG;
+                return true;
             }
         });
 

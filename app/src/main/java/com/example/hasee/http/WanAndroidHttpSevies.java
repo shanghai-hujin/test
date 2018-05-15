@@ -1,6 +1,7 @@
 package com.example.hasee.http;
 
 import com.example.hasee.bean.LoginResponse;
+import com.example.hasee.bean.WeatherBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -33,10 +34,9 @@ public interface WanAndroidHttpSevies {
 
 
     @GET
-    Observable<Object> getWeather(@Url String url,
-                                         @Query("areaid") String areaid,
-                                         @Query("showapi_appid") String showapi_appid,
-                                         @Query("showapi_sign") String showapi_sign);
+    Observable<WeatherBean> getWeather(@Url String url,
+                                       @Query("key") String areaid,
+                                       @Query("location") String location);
 
 
 }

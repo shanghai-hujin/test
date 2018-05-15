@@ -1,6 +1,7 @@
 package com.example.hasee.http;
 
 import com.example.hasee.bean.LoginResponse;
+import com.example.hasee.bean.WeatherBean;
 import com.example.hasee.http.cookies.CookiesManager;
 
 import java.io.ObjectStreamException;
@@ -78,6 +79,8 @@ public class WanAndroidHttpApi {
     }
 
 
+
+
     /**
      * 返回被观察者对象
      * @param username
@@ -89,12 +92,8 @@ public class WanAndroidHttpApi {
     }
 
 
-    /**
-     * 获取天气
-     * @param areaid
-     * @return
-     */
-    public Observable<Object> getWeather(String areaid ) {
-        return httpSevies.getWeather(Common.API_Weather, areaid, "45690", "e8a41605afee4760b270c5ddd5da2286");
+
+    public Observable<WeatherBean> getWeather(String key , String location) {
+        return httpSevies.getWeather(Common.API_Weather, key, location);
     }
 }
