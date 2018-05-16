@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import es.dmoral.toasty.Toasty;
 
 /**
  * desc: .
@@ -123,7 +124,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                showError();
             }
         });
         view_Focus = getView().inflate(getActivity(), R.layout.news_detail_headerview, null);
@@ -205,7 +206,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
 
     private void showToast(int num, boolean isRefresh) {
         if (isRefresh) {
-            this.showErrorMsg(String.format(getResources().getString(R.string.news_toast), num + ""));
+            Toasty.success(getActivity(), String.format(getResources().getString(R.string.news_toast), num + "")).show();
         } else {
             this.showErrorMsg("将为你减少此类内容");
         }
@@ -297,6 +298,8 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                 mNewsDetailAdapter.removeAllHeaderView();
             }
             mNewsDetailAdapter.setNewData(itemBeanList);
+            showToast(itemBeanList.size(), true);
+            showSuccess(DetailFragment.class.getSimpleName());
 
         }
     }

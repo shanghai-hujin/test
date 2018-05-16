@@ -119,7 +119,7 @@ public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends
     }
 
     @Override
-    public void showSuccess() {
+    public void showSuccess(String str) {
 
     }
 

@@ -35,7 +35,7 @@ public interface BaseContract {
         /**
          * 显示请求成功
          */
-        void showSuccess();
+        void showSuccess(String str);
 
         /**
          * 失败重试

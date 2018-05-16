@@ -26,6 +26,7 @@ import com.example.hasee.widget.NoScrollViewPager;
 import com.example.hasee.widget.dragtab.ChannelDialogFragment;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +86,9 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
       R.mipmap.weather_22, R.mipmap.weather_23, R.mipmap.weather_24,
       R.mipmap.weather_25, R.mipmap.weather_26, R.mipmap.weather_27,
       R.mipmap.weather_28, R.mipmap.weather_29, R.mipmap.weather_30,
-      R.mipmap.weather_31, R.mipmap.weather_32, R.mipmap.weather_33, R.mipmap.weather_34,
+      R.mipmap.weather_31, R.mipmap.weather_32, R.mipmap.weather_33,
+      R.mipmap.weather_34, R.mipmap.weather_35, R.mipmap.weather_36,
+      R.mipmap.weather_37, R.mipmap.weather_38, R.mipmap.weather_39,
 
     };
     public static NewsFragment newInstance(String param1) {
@@ -260,15 +263,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     }
 
 
-    @Override
-    public void showErrorMsg(String errorMsg) {
 
-    }
-
-    @Override
-    public void showError() {
-
-    }
 
 
     @Override
@@ -298,7 +293,8 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
      */
     public void showWeather(WeatherBean weatherBean) {
         int code = Integer.parseInt(weatherBean.getResults().get(0).getNow().getCode());
-        String url = "res://com.example.hasee/"+weather[code-1];
+        String url = "res://com.example.hasee/"+weather[code];
+        Logger.e(url);
         FrescoUtils.setController(url, mToolbarUserAvatar);
         mTvWeather.setText(weatherBean.getResults().get(0).getNow().getText()
         +": "+weatherBean.getResults().get(0).getNow().getTemperature()+"度");

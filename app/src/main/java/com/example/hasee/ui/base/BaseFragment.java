@@ -22,8 +22,7 @@ import es.dmoral.toasty.Toasty;
  */
 
 public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends SupportFragment
-        implements IBase,BaseContract.BaseView {
-
+        implements IBase, BaseContract.BaseView {
 
 
     private View mRootView;
@@ -44,15 +43,14 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
     }
 
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(mRootView == null){
+        if (mRootView == null) {
             mRootView = createView(inflater, container, savedInstanceState);
-        }else {
+        } else {
             ViewGroup parent = (ViewGroup) mRootView.getParent();
-            if(parent != null){
+            if (parent != null) {
                 parent.removeView(mRootView);
             }
         }
@@ -66,7 +64,7 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
         return mRootView;
     }
 
-    public abstract  P createPresenter();
+    public abstract P createPresenter();
 
     @Override
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,7 +78,12 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         attachView();
-        bindView(view,savedInstanceState);
+        bindView(view, savedInstanceState);
+        //初始化state布局
+        initStateView(view);
+    }
+
+    private void initStateView(View view) {
 
     }
 
@@ -110,7 +113,7 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        Toasty.normal(getActivity(),errorMsg).show();
+        Toasty.normal(getActivity(), errorMsg).show();
     }
 
     @Override
@@ -119,14 +122,13 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
     }
 
 
-
     @Override
     public void showLoading() {
 
     }
 
     @Override
-    public void showSuccess() {
+    public void showSuccess(String str) {
 
     }
 
@@ -145,8 +147,8 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
 
     }
 
-    protected void errToast(String err){
-        Toasty.error(getActivity(),err,1).show();
+    protected void errToast(String err) {
+        Toasty.error(getActivity(), err, 1).show();
     }
 
 
