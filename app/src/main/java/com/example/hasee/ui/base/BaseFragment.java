@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.example.hasee.R;
 import com.example.hasee.utils.DialogHelper;
+import com.example.hasee.widget.stateview.MultipleStatusView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import es.dmoral.toasty.Toasty;
@@ -30,6 +32,9 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
     protected P mPresenter;
     protected Context mContext;
     private Dialog mLoadingDialog;
+    @Nullable
+    @BindView(R.id.multiple_status_view)
+    MultipleStatusView multipleStatusView;
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
@@ -66,6 +71,7 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
 
     public abstract P createPresenter();
 
+
     @Override
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -80,11 +86,18 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
         attachView();
         bindView(view, savedInstanceState);
         //初始化state布局
-        initStateView(view);
+        initStateView();
     }
 
-    private void initStateView(View view) {
-
+    private void initStateView() {
+        if(multipleStatusView != null){
+            multipleStatusView.setOnRetryClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onRetry();
+                }
+            });
+        }
     }
 
     private void attachView() {
@@ -118,28 +131,38 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
 
     @Override
     public void showError() {
-
+        if (multipleStatusView != null) {
+            multipleStatusView.showError();
+        }
     }
 
 
     @Override
     public void showLoading() {
-
+        if (multipleStatusView != null) {
+            multipleStatusView.showLoading();
+        }
     }
 
     @Override
     public void showSuccess(String str) {
-
+        if (multipleStatusView != null) {
+            multipleStatusView.showContent();
+        }
     }
 
     @Override
     public void showFaild() {
-
+        if (multipleStatusView != null) {
+            multipleStatusView.showError();
+        }
     }
 
     @Override
     public void showNoNet() {
-
+        if (multipleStatusView != null) {
+            multipleStatusView.showNoNetwork();
+        }
     }
 
     @Override

@@ -8,10 +8,10 @@
     <string name="detail_header_tv">下拉一下，看点儿不一样的</string>
     <string name="news_toast">已为您推荐了%1$s条新资讯</string>
 
-    <string name="status_layout_manager_loading">加载中...</string>
-    <string name="status_layout_manager_empty">还没有内容</string>
-    <string name="status_layout_manager_error">似乎出了点问题</string>
-    <string name="status_layout_manager_retry">重新加载</string>
+
+    <string name="empty_view_hint">暂无数据</string>
+    <string name="error_view_hint">加载失败</string>
+    <string name="no_network_view_hint">网络异常</string>
 
     <string-array name="news_channel">
         <item>头条</item>

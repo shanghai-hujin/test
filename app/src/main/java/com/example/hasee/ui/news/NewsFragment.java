@@ -104,6 +104,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         return new NewsPresenter();
     }
 
+
     @Override
     public int getContentLayout() {
         return R.layout.layout_news_toolbar;

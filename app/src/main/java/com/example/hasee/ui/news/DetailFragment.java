@@ -259,6 +259,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         return new DetailPresenter();
     }
 
+
     @Override
     public void loadBannerData(NewsDetail newsDetail) {
         Logger.e("TAG", "loadBannerData: " + newsDetail.toString());
