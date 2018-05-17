@@ -165,10 +165,7 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
         }
     }
 
-    @Override
-    public void onRetry() {
 
-    }
 
     protected void errToast(String err) {
         Toasty.error(getActivity(), err, 1).show();
