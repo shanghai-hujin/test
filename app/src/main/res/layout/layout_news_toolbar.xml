@@ -95,6 +95,16 @@
             android:layout_height="match_parent"
             android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/new_floating_action_btn"
+            style="@style/style_float_btn"
+            android:layout_marginBottom="60dp"
+            android:layout_marginEnd="16dp"
+            android:src="@mipmap/ic_news_selected"
+            app:layout_behavior="@string/scale_down_show_behavior"
+           />
+
     </android.support.design.widget.CoordinatorLayout>
 
 </FrameLayout>

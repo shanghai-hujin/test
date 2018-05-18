@@ -25,7 +25,9 @@ import com.example.hasee.ui.MyApplication;
 import com.example.hasee.ui.adpater.NewsDetailAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.ContextUtils;
+import com.example.hasee.utils.Event;
 import com.example.hasee.utils.FrescoUtils;
+import com.example.hasee.utils.RxBus;
 import com.example.hasee.widget.NewsActionPopup;
 import com.example.hasee.widget.SimpleImageView;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -45,6 +47,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import es.dmoral.toasty.Toasty;
+import io.reactivex.functions.Consumer;
 
 /**
  * desc: .
@@ -74,6 +77,8 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         Bundle args = new Bundle();
         args.putString("newsid", newsid);
         args.putInt("position", position);
+        Logger.e("newsid=="+newsid);
+        Logger.e("position=="+position);
         DetailFragment fragment = new DetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -202,6 +207,8 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                 }
             }
         });
+
+
     }
 
     private void showToast(int num, boolean isRefresh) {
@@ -252,6 +259,20 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
             mPosition = getArguments().getInt("position");
             mPresenter.getData(mNewsid, NewsHttpApi.ACTION_DEFAULT, 1);
         }
+        RxBus.INSTANCE.toFlowable(Event.SlideTopEvent.class)
+                .compose(bindToLife())
+                .subscribe(new Consumer<Event.SlideTopEvent>() {
+                    @Override
+                    public void accept(Event.SlideTopEvent slideTopEvent) throws Exception {
+                        if(mRecyclerView != null){
+                            if(slideTopEvent.position == mPosition){
+                                Logger.e(slideTopEvent.position+"");
+                                mRecyclerView.smoothScrollToPosition(0);
+                            }
+
+                        }
+                    }
+                });
     }
 
     @Override
@@ -285,7 +306,6 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
 
     @Override
     public void loadTopNewsData(NewsDetail newsDetail) {
-        Logger.e("TAG", "loadTopNewsData: " + newsDetail.toString());
     }
 
     @Override

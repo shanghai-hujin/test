@@ -18,6 +18,10 @@ public class Event {
         public boolean start;
     }
 
+    public static class SlideTopEvent {
+        public int position;
+    }
+
     public static class SelectChannelEvent {
 
         public String channelName;
@@ -26,6 +30,8 @@ public class Event {
             this.channelName = channelName;
         }
     }
+
+
 
     public static class NewChannelEvent {
         public List<Channel> selectedDatas;

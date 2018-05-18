@@ -1,6 +1,7 @@
 package com.example.hasee.ui.news;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,14 +27,12 @@ import com.example.hasee.widget.NoScrollViewPager;
 import com.example.hasee.widget.dragtab.ChannelDialogFragment;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
@@ -58,7 +57,8 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     NoScrollViewPager mViewPager;
     @BindView(R.id.iv_edit)
     ImageButton mIvEdit;
-    Unbinder unbinder;
+    @BindView(R.id.new_floating_action_btn)
+    FloatingActionButton mNewFloatingActionBtn;
 
     private int selectedIndex;
     private String selectedChannel;
@@ -75,22 +75,23 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     private MenuItem mMenuItem;
 
     private int[] weather = {
-      R.mipmap.weather_1, R.mipmap.weather_2, R.mipmap.weather_3,
-      R.mipmap.weather_4, R.mipmap.weather_5, R.mipmap.weather_6,
-      R.mipmap.weather_7, R.mipmap.weather_8, R.mipmap.weather_9,
-      R.mipmap.weather_10, R.mipmap.weather_11, R.mipmap.weather_12,
-      R.mipmap.weather_13, R.mipmap.weather_14, R.mipmap.weather_15,
-      R.mipmap.weather_16, R.mipmap.weather_17, R.mipmap.weather_18,
-      R.mipmap.weather_19, R.mipmap.weather_20, R.mipmap.weather_21,
-      R.mipmap.weather_19, R.mipmap.weather_20, R.mipmap.weather_21,
-      R.mipmap.weather_22, R.mipmap.weather_23, R.mipmap.weather_24,
-      R.mipmap.weather_25, R.mipmap.weather_26, R.mipmap.weather_27,
-      R.mipmap.weather_28, R.mipmap.weather_29, R.mipmap.weather_30,
-      R.mipmap.weather_31, R.mipmap.weather_32, R.mipmap.weather_33,
-      R.mipmap.weather_34, R.mipmap.weather_35, R.mipmap.weather_36,
-      R.mipmap.weather_37, R.mipmap.weather_38, R.mipmap.weather_39,
+            R.mipmap.weather_1, R.mipmap.weather_2, R.mipmap.weather_3,
+            R.mipmap.weather_4, R.mipmap.weather_5, R.mipmap.weather_6,
+            R.mipmap.weather_7, R.mipmap.weather_8, R.mipmap.weather_9,
+            R.mipmap.weather_10, R.mipmap.weather_11, R.mipmap.weather_12,
+            R.mipmap.weather_13, R.mipmap.weather_14, R.mipmap.weather_15,
+            R.mipmap.weather_16, R.mipmap.weather_17, R.mipmap.weather_18,
+            R.mipmap.weather_19, R.mipmap.weather_20, R.mipmap.weather_21,
+            R.mipmap.weather_19, R.mipmap.weather_20, R.mipmap.weather_21,
+            R.mipmap.weather_22, R.mipmap.weather_23, R.mipmap.weather_24,
+            R.mipmap.weather_25, R.mipmap.weather_26, R.mipmap.weather_27,
+            R.mipmap.weather_28, R.mipmap.weather_29, R.mipmap.weather_30,
+            R.mipmap.weather_31, R.mipmap.weather_32, R.mipmap.weather_33,
+            R.mipmap.weather_34, R.mipmap.weather_35, R.mipmap.weather_36,
+            R.mipmap.weather_37, R.mipmap.weather_38, R.mipmap.weather_39,
 
     };
+
     public static NewsFragment newInstance(String param1) {
         Bundle args = new Bundle();
         NewsFragment newsFragment = new NewsFragment();
@@ -158,7 +159,6 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
             }
         });
-
 
 
     }
@@ -231,16 +231,17 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     /**
      * 设置viewpager选中
-     * @param integers 我的集合
+     *
+     * @param integers    我的集合
      * @param channelName 当前
      */
     private void setViewPagerPoition(List<String> integers, String channelName) {
-        if(TextUtils.isEmpty(channelName) || integers == null){
+        if (TextUtils.isEmpty(channelName) || integers == null) {
             return;
         }
 
         for (int i = 0; i < integers.size(); i++) {
-            if(integers.get(i).equals(channelName)){
+            if (integers.get(i).equals(channelName)) {
                 selectedChannel = integers.get(i);
                 selectedIndex = i;
                 break;
@@ -252,7 +253,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             public void run() {
                 mViewPager.setCurrentItem(selectedIndex, false);
             }
-        },250);
+        }, 250);
     }
 
     @Override
@@ -262,9 +263,6 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         mPresenter.getChannel();
         mPresenter.getWeather();
     }
-
-
-
 
 
     @Override
@@ -279,7 +277,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             //装订viewpager
             mChannelPagerAdapter = new ChannelPagerAdapter(getChildFragmentManager(), myChannels);
             mViewPager.setAdapter(mChannelPagerAdapter);
-            mViewPager.setOffscreenPageLimit(1);
+            mViewPager.setOffscreenPageLimit(0);
             mViewPager.setCurrentItem(0);
             mStlTabs.setViewPager(mViewPager);
 
@@ -294,15 +292,14 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
      */
     public void showWeather(WeatherBean weatherBean) {
         int code = Integer.parseInt(weatherBean.getResults().get(0).getNow().getCode());
-        String url = "res://com.example.hasee/"+weather[code];
-        Logger.e(url);
+        String url = "res://com.example.hasee/" + weather[code];
         FrescoUtils.setController(url, mToolbarUserAvatar);
         mTvWeather.setText(weatherBean.getResults().get(0).getNow().getText()
-        +": "+weatherBean.getResults().get(0).getNow().getTemperature()+"度");
+                + ": " + weatherBean.getResults().get(0).getNow().getTemperature() + "度");
     }
 
 
-    @OnClick({R.id.toolbar_user_avatar, R.id.ll_navigation, R.id.iv_edit})
+    @OnClick({R.id.toolbar_user_avatar, R.id.ll_navigation, R.id.iv_edit, R.id.new_floating_action_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_user_avatar:
@@ -317,8 +314,16 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
                 ChannelDialogFragment dialogFragment = ChannelDialogFragment.newInstance(mSelectedDatas, mUnSelectedDatas);
                 dialogFragment.show(getChildFragmentManager(), "CHANNEL");
                 break;
+            case R.id.new_floating_action_btn:
+                Event.SlideTopEvent slideTopEvent = new Event.SlideTopEvent();
+                slideTopEvent.position = mViewPager.getCurrentItem();
+                RxBus.INSTANCE.post(slideTopEvent);
+                break;
             default:
                 break;
         }
     }
+
+
+
 }

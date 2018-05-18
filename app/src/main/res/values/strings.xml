@@ -54,4 +54,7 @@
         <item>DYPD</item>
         <item>GJPD</item>
     </string-array>
+
+    //behavior
+    <string name="scale_down_show_behavior">com.example.hasee.widget.behavior.RightFloatingButtonBehavior</string>
 </resources>

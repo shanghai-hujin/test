@@ -69,6 +69,10 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
         return mRootView;
     }
 
+    /**
+     * 获取P对象
+     * @return
+     */
     public abstract P createPresenter();
 
 
@@ -165,6 +169,15 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
         }
     }
 
+    @Override
+    public void onRetry() {
+        multipleStatusView.showLoading();
+        multipleStatusView.postDelayed(new Runnable() {
+            @Override public void run() {
+                multipleStatusView.showContent();
+            }
+        }, 600);
+    }
 
 
     protected void errToast(String err) {

@@ -44,4 +44,10 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="style_float_btn">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">bottom|end</item>
+    </style>
+
 </resources>
