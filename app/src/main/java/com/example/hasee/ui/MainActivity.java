@@ -22,7 +22,7 @@ import com.example.hasee.ui.base.BasePresenter;
 import com.example.hasee.ui.book.BookFragment;
 import com.example.hasee.ui.movie.MovieFragment;
 import com.example.hasee.ui.news.NewsFragment;
-import com.example.hasee.ui.setting.MyFragment;
+import com.example.hasee.ui.mycenter.MyFragment;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.PerfectClickListener;
 import com.example.hasee.utils.RxBus;

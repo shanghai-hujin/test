@@ -1,4 +1,4 @@
-package com.example.hasee.ui.setting;
+package com.example.hasee.ui.mycenter;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +11,7 @@ import com.example.hasee.ui.base.BasePresenter;
  * Created by HASEE on 2018/4/29.
  */
 
-public class MyFragment extends BaseFragment {
+public class MyFragment extends BaseFragment<MyCenterPresenter> {
     private View mRootView;
 
     public static MyFragment newInstance(String param1){

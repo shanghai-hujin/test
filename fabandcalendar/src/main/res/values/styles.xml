@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.Design.AccountHeaderView" parent="android:Widget">
+        <item name="android:paddingTop">@dimen/account_header_padding_top</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="Widget.Design.FlexibleToolbarLayout" parent="android:Widget">
+        <item name="expandedMargin">16dp</item>
+        <item name="spaceTitleSubtitle">4dp</item>
+        <item name="spaceIconTitles">16dp</item>
+        <item name="iconCollapsedSize">40dp</item>
+        <item name="iconExpandedSize">56dp</item>
+        <item name="statusBarScrim">?attr/colorPrimaryDark</item>
+    </style>
+
+    <style name="TextAppearance.Design.FlexibleToolbarLayout.ExpandedTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+    <style name="TextAppearance.Design.FlexibleToolbarLayout.CollapsedTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.Design.FlexibleToolbarLayout.Subtitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="label_style_dark">
+        <item name="android:textColor">@color/label_text_color_dark</item>
+        <item name="labelBackgroundColor">@color/label_background_color_dark</item>
+        <item name="labelRippleColor">@color/label_ripple_color_dark</item>
+        <item name="labelCornerRadius">2dp</item>
+        <item name="labelElevation">6dp</item>
+        <item name="labelPaddingHorizontal">16dp</item>
+        <item name="labelPaddingVertical">4dp</item>
+    </style>
+
+    <style name="label_style_light">
+        <item name="android:textColor">@color/label_text_color_light</item>
+        <item name="labelBackgroundColor">@color/label_background_color_light</item>
+        <item name="labelRippleColor">@color/label_ripple_color_light</item>
+        <item name="labelCornerRadius">2dp</item>
+        <item name="labelElevation">6dp</item>
+        <item name="labelPaddingHorizontal">16dp</item>
+        <item name="labelPaddingVertical">4dp</item>
+    </style>
+
+    <style name="TextAppearance.Material.TimePicker.TimeLabel" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/timepicker_time_label_size</item>
+    </style>
+
+    <style name="TextAppearance.Material.TimePicker.AmPmLabel" parent="Base.TextAppearance.AppCompat.Button">
+        <item name="android:textSize">@dimen/timepicker_ampm_label_size</item>
+    </style>
+
+    <style name="TextAppearance.Material.Widget.Calendar.Day" parent="Base.TextAppearance.AppCompat.Caption">
+        <!-- We need to build the stateful ColorStateList at runtime -->
+        <item name="android:textColor">@null</item>
+    </style>
+    <style name="TextAppearance.Material.Widget.Calendar.DayOfWeek" parent="Base.TextAppearance.AppCompat.Caption" />
+    <style name="TextAppearance.Material.Widget.Calendar.Month" parent="Base.TextAppearance.AppCompat.Body2" />
+
+    <style name="TextAppearance.Material.DatePicker.YearLabel" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/date_picker_year_label_size</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.Material.DatePicker.DateLabel" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/date_picker_date_label_size</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.Material.DatePicker.List.YearLabel" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">@dimen/datepicker_list_year_label_size</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.Material.DatePicker.List.YearLabel.Selected">
+        <item name="android:textColor">?attr/colorControlActivated</item>
+        <item name="android:textSize">@dimen/datepicker_list_year_activated_label_size</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- default light and dark styles for picker dialogs -->
+    <style name="Theme.AppCompat.Light.DatePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#009688</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.TimePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#009688</item>
+        <item name="numbersBackgroundColor">#ffeeeeee</item>
+    </style>
+
+    <style name="Theme.AppCompat.DatePickerDialog" parent="Theme.AppCompat.Dialog">
+        <item name="headerBackground">#ff555555</item>
+        <item name="colorAccent">#80CBC4</item>
+    </style>
+
+    <style name="Theme.AppCompat.TimePickerDialog" parent="Theme.AppCompat.Dialog">
+        <item name="headerBackground">#ff555555</item>
+        <item name="colorAccent">#80CBC4</item>
+        <item name="numbersBackgroundColor">#ff555555</item>
+    </style>
+</resources>
