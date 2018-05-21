@@ -5,13 +5,12 @@ import android.view.View;
 
 import com.example.hasee.R;
 import com.example.hasee.ui.base.BaseFragment;
-import com.example.hasee.ui.base.BasePresenter;
 
 /**
  * Created by HASEE on 2018/4/29.
  */
 
-public class MyFragment extends BaseFragment<MyCenterPresenter> {
+public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCenterContract.MyCenterView {
     private View mRootView;
 
     public static MyFragment newInstance(String param1){
@@ -23,13 +22,13 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> {
     }
 
     @Override
-    public BasePresenter createPresenter() {
-        return null;
+    public MyCenterPresenter createPresenter() {
+        return new MyCenterPresenter();
     }
 
     @Override
     public int getContentLayout() {
-        return R.layout.activity_main;
+        return R.layout.fragment_my;
     }
 
     @Override

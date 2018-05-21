@@ -1,6 +1,5 @@
 package com.example.hasee.ui.mycenter;
 
-import com.example.hasee.ui.base.BaseContract;
 import com.example.hasee.ui.base.BasePresenter;
 
 /**
@@ -10,5 +9,8 @@ import com.example.hasee.ui.base.BasePresenter;
  * @date 2018/5/18 17:24
  */
 
-public class MyCenterPresenter extends BasePresenter<BaseContract.BaseView> implements BaseContract.BasePresenter {
+public class MyCenterPresenter extends BasePresenter<MyCenterContract.MyCenterView> implements MyCenterContract.MyCenterPresenter {
+
+
+
 }

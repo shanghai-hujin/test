@@ -57,4 +57,13 @@
 
     //behavior
     <string name="scale_down_show_behavior">com.example.hasee.widget.behavior.RightFloatingButtonBehavior</string>
+
+
+    //fab
+    <!-- Floating Action Menu items -->
+    <string name="fam_datepicker">Date</string>
+    <string name="fam_timepicker">Time</string>
+    <string name="fam_presentation">Presentation</string>
+    <string name="fam_spreadsheet">Spreadsheet</string>
+    <string name="fam_document">Text Document</string>
 </resources>

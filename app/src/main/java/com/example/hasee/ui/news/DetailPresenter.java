@@ -23,7 +23,9 @@ import io.reactivex.functions.Predicate;
  * @date 2018/5/8 10:01
  */
 
-class DetailPresenter extends BasePresenter<DetailContract.DetailVew>{
+public class DetailPresenter extends BasePresenter<DetailContract.DetailVew> implements DetailContract.DetailPresenter{
+
+    @Override
     public void getData(String newsid, String action, int pullNum) {
         NewsHttpApi.getInstace().getNewsDetail(newsid, action, pullNum)
                 .compose(RxUtils.<NewsDetail>rxSchedulerHelper())

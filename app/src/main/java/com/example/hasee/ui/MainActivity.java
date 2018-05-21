@@ -266,6 +266,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         break;
                     case R.id.item_down:
                         break;
+                    case R.id.item_theme:
+
+                        break;
                     default:
                         break;
                 }

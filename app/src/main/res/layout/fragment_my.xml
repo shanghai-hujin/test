@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.tr4android.support.extension.widget.FloatingActionMenu
+        android:id="@+id/fab_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        app:fabMenuCloseIconAngle="135"
+        app:fabMenuCloseIconSrc="@drawable/ic_edit_black_24dp"
+        app:fabMenuLabelStyle="@style/label_style_dark">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:tint="@android:color/white"
+            app:srcCompat="@drawable/ic_add_black_24dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_document"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/fam_document"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/blue"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_insert_drive_file_black_24dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_spreadsheet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/fam_spreadsheet"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/green"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_grid_on_black_24dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_presentation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/fam_presentation"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/yellow"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_insert_chart_black_24dp"/>
+    </com.tr4android.support.extension.widget.FloatingActionMenu>
+
+</android.support.design.widget.CoordinatorLayout>

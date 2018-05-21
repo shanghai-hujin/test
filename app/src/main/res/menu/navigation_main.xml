@@ -73,13 +73,6 @@
             android:icon="@mipmap/bootom_book_sel"
             android:title="主题选择"/>
 
-        <!-- <item
-             android:id="@+id/item_app"
-             android:checkable="false"
-             android:icon="@drawable/ic_shop_black_24dp"
-             android:title="@string/item_app" />
- -->
-
         <item
             android:id="@+id/item_settings"
             android:icon="@mipmap/bootom_book_sel"

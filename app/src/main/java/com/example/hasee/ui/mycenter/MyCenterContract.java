@@ -13,5 +13,10 @@ public interface MyCenterContract {
 
     interface MyCenterView extends BaseContract.BaseView{
 
+
+    }
+
+    interface MyCenterPresenter extends BaseContract.BasePresenter<MyCenterView>{
+
     }
 }
