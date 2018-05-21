@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View android:layout_width="match_parent" android:layout_height="160dp"
+          android:background="@drawable/bg_mycentent" app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sd_my"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        fresco:actualImageScaleType="fitXY"
+        fresco:placeholderImage="@mipmap/shuaige" fresco:roundBottomLeft="true"
+        fresco:roundBottomRight="true" fresco:roundTopLeft="true"
+        fresco:roundTopRight="true" fresco:roundedCornerRadius="23dp"/>
+
+    <TextView
+        android:id="@+id/tv_myname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="没错我就是锦" android:textColor="@color/white" android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/sd_my"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_myset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="32dp"
+        android:text="设置" android:textColor="@color/white"
+        android:textSize="16sp" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/id_my_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_text_my"
+        android:paddingBottom="1dp" android:paddingLeft="10dp"
+        android:paddingRight="10dp" android:paddingTop="1dp"
+        android:text="生活只剩下苟且了" android:textColor="@color/white"
+        android:textSize="11sp"
+        app:layout_constraintStart_toEndOf="@+id/sd_my"
+        app:layout_constraintTop_toBottomOf="@+id/tv_myname"/>
+
+    <TextView
+        android:id="@+id/id_my_text1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="收藏11"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/id_my_text2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sd_my"/>
+
+
+    <TextView
+        android:id="@+id/id_my_text2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="收藏22"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/id_my_text3"
+        app:layout_constraintStart_toEndOf="@+id/id_my_text1"
+        app:layout_constraintTop_toBottomOf="@+id/sd_my"/>
+
+    <TextView
+        android:id="@+id/id_my_text3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="收藏33"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/id_my_text4"
+        app:layout_constraintStart_toEndOf="@+id/id_my_text2"
+        app:layout_constraintTop_toBottomOf="@+id/sd_my"/>
+
+
+    <TextView
+        android:id="@+id/id_my_text4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="收藏44"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/id_my_text3"
+        app:layout_constraintTop_toBottomOf="@+id/sd_my"/>
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_centent"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="0dp"
+        android:alpha="0.0"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintRight_toRightOf="parent" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_drag"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_drawer_main"/>
+
+        <TextView
+            android:id="@+id/tv_centent_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="我的"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+    </android.support.v7.widget.Toolbar>
+
+    <com.tr4android.support.extension.widget.FloatingActionMenu
+        android:id="@+id/fab_menu"
+        android:layout_width="119dp"
+        android:layout_height="305dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="16dp"
+        app:fabMenuCloseIconAngle="135"
+        app:fabMenuCloseIconSrc="@drawable/ic_edit_black_24dp"
+        app:fabMenuLabelStyle="@style/label_style_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@android:color/white"
+            app:srcCompat="@drawable/ic_add_black_24dp"
+        />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_document"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/fam_document"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/blue"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_insert_drive_file_black_24dp"
+        />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_spreadsheet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/fam_spreadsheet"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/green"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_grid_on_black_24dp"
+        />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_presentation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/fam_presentation"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/yellow"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_insert_chart_black_24dp"
+        />
+    </com.tr4android.support.extension.widget.FloatingActionMenu>
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_centent"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="130dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="19dp"
+        app:cardElevation="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.example.hasee.widget.UPMarqueeView
+            android:id="@+id/upview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="17dp"
+            android:layout_marginStart="17dp"
+            android:focusableInTouchMode="false">
+
+        </com.example.hasee.widget.UPMarqueeView>
+
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>
