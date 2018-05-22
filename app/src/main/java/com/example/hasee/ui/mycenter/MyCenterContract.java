@@ -1,6 +1,9 @@
 package com.example.hasee.ui.mycenter;
 
+import com.example.hasee.bean.DataActivityBean;
 import com.example.hasee.ui.base.BaseContract;
+
+import java.util.List;
 
 /**
  * Demo ${CLASS}
@@ -14,9 +17,12 @@ public interface MyCenterContract {
     interface MyCenterView extends BaseContract.BaseView{
 
 
+        void loadNullData();
+
+        void loadData(List<DataActivityBean> dataActivityBeanList);
     }
 
     interface MyCenterPresenter extends BaseContract.BasePresenter<MyCenterView>{
-
+        void getDateActivity();
     }
 }

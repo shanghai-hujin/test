@@ -88,6 +88,7 @@
     <color name="burlywood">#DEB887</color><!--实木色 -->
     <color name="plum">#DDA0DD</color><!--洋李色 -->
     <color name="gainsboro">#DCDCDC</color><!--淡灰色 -->
+    <color name="gainsborot">#77DCDCDC</color><!--淡灰色 -->
     <color name="crimson">#DC143C</color><!--暗深红色 -->
     <color name="palevioletred">#DB7093</color><!--苍紫罗兰色 -->
     <color name="goldenrod">#DAA520</color><!--金麒麟色 -->

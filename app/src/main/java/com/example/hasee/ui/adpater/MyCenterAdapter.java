@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hasee.R;
+import com.example.hasee.bean.DataActivityBean;
 
-import java.nio.channels.Channel;
 import java.util.List;
 
 /**
@@ -17,13 +17,18 @@ import java.util.List;
  * @date 2018/5/21 18:02
  */
 
-public class MyCenterAdapter extends BaseQuickAdapter<Channel,BaseViewHolder> {
-    public MyCenterAdapter(@Nullable List<Channel> data, Context context) {
-        super(R.layout.layout_dialog, data);
+public class MyCenterAdapter extends BaseQuickAdapter<DataActivityBean,BaseViewHolder> {
+
+    private Context mContext;
+
+    public MyCenterAdapter(@Nullable List<DataActivityBean> data, Context context) {
+        super(R.layout.item_mydata, data);
+        this.mContext = context;
     }
 
+
     @Override
-    protected void convert(BaseViewHolder helper, Channel item) {
+    protected void convert(BaseViewHolder baseViewHolder, DataActivityBean dataActivityBean) {
 
     }
 }
