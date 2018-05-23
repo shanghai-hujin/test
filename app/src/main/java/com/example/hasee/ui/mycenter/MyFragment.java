@@ -17,6 +17,7 @@ import com.example.hasee.R;
 import com.example.hasee.bean.DataActivityBean;
 import com.example.hasee.ui.adpater.MyCenterAdapter;
 import com.example.hasee.ui.base.BaseFragment;
+import com.example.hasee.widget.DataActivityDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.tr4android.support.extension.widget.FloatingActionMenu;
 
@@ -137,7 +138,9 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
             case R.id.iv_drag:
                 break;
             case R.id.fab_document:
-
+                DataActivityDialog dataActivityDialog = DataActivityDialog.newInstance(1,"lanse");
+                dataActivityDialog.show(getChildFragmentManager(),"data");
+                mFabMenu.collapse();
                 break;
             case R.id.fab_spreadsheet:
                 break;

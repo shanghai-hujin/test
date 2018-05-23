@@ -5,7 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://C:\Users\TT\Desktop\branches\test\test\demo.iml" filepath="C:\Users\TT\Desktop\branches\test\test\demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/fabandcalendar/fabandcalendar.iml" filepath="$PROJECT_DIR$/fabandcalendar/fabandcalendar.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/test.iml" filepath="$PROJECT_DIR$/.idea/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test.iml" filepath="$PROJECT_DIR$/test.iml" />
+      <module fileurl="file://C:\Users\TT\Desktop\branches\test\test\.idea\test.iml" filepath="C:\Users\TT\Desktop\branches\test\test\.idea\test.iml" />
       <module fileurl="file://D:\MyApplication\demo\test.iml" filepath="D:\MyApplication\demo\test.iml" />
       <module fileurl="file://D:\MyApplication\test\test.iml" filepath="D:\MyApplication\test\test.iml" />
     </modules>

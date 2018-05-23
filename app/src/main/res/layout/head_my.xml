@@ -7,7 +7,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:background="@color/bg_press"
-    android:layout_height="195dp">
+    android:layout_height="200dp">
 
     <View android:layout_width="match_parent" android:layout_height="160dp"
           android:background="@drawable/bg_mycentent" app:layout_constraintEnd_toEndOf="parent"
