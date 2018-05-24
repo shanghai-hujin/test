@@ -104,4 +104,10 @@
         <item name="colorAccent">#80CBC4</item>
         <item name="numbersBackgroundColor">#ff555555</item>
     </style>
+
+    <style name="Theme.AppCompat.TimeBluePickerDialog" parent="Theme.AppCompat.Dialog">
+        <item name="headerBackground">#ff555555</item>
+        <item name="colorAccent">#F68E54</item>
+        <item name="numbersBackgroundColor">#ff555555</item>
+    </style>
 </resources>

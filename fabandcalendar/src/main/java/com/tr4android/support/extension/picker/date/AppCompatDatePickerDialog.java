@@ -21,15 +21,12 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.text.format.DateUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
 import com.tr4android.appcompat.extension.R;
-
-import java.util.Calendar;
 
 /**
  * A simple dialog containing an {@link android.widget.DatePicker}.
@@ -59,7 +56,7 @@ public class AppCompatDatePickerDialog extends AlertDialog implements OnClickLis
          *  with {@link java.util.Calendar}.
          * @param dayOfMonth The day of the month that was set.
          */
-        void onDateSet(AppCompatDatePicker view, int year, int monthOfYear, int dayOfMonth);
+        void onDateSet(AppCompatDatePicker view, int year, int monthOfYear, int dayOfMonth, String week);
     }
 
     /**
@@ -127,8 +124,9 @@ public class AppCompatDatePickerDialog extends AlertDialog implements OnClickLis
                     // Clearing focus forces the dialog to commit any pending
                     // changes, e.g. typed text in a NumberPicker.
                     mDatePicker.clearFocus();
+                    mDatePicker.getFirstDayOfWeek();
                     mDateSetListener.onDateSet(mDatePicker, mDatePicker.getYear(),
-                            mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
+                            mDatePicker.getMonth(), mDatePicker.getDayOfMonth(), mDatePicker.getDayOfMonthWeek());
                 }
                 break;
             case BUTTON_NEGATIVE:

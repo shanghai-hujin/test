@@ -28,6 +28,10 @@ public class DataActivityDao {
     }
 
 
+    /**
+     * 清除，重新存
+     * @param daoList
+     */
     public static void savaDataActivty(List<DataActivityBean> daoList){
         if(daoList == null){
             return;

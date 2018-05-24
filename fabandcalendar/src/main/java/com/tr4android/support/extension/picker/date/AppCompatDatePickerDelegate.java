@@ -343,6 +343,12 @@ class AppCompatDatePickerDelegate extends AppCompatDatePicker.AbstractDatePicker
     }
 
     @Override
+    public String getDayOfMonthWeek() {
+        return DateFormatUtils.format(mMonthDayFormat, mCurrentDate);
+    }
+
+
+    @Override
     public void setMinDate(long minDate) {
         mTempDate.setTimeInMillis(minDate);
         if (mTempDate.get(Calendar.YEAR) == mMinDate.get(Calendar.YEAR)

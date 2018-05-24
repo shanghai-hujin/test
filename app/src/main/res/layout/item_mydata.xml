@@ -8,6 +8,7 @@
     android:layout_marginRight="17dp"
     app:cardCornerRadius="15dp">
     <TextView
+        android:id="@+id/tv_activity_title"
         android:textSize="20sp"
         android:text="hello"
         android:layout_gravity="center"

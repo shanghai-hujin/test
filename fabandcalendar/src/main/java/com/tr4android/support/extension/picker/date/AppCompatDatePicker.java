@@ -159,6 +159,14 @@ public class AppCompatDatePicker extends FrameLayout {
     }
 
     /**
+     * @return The selected day of week
+     */
+    public String getDayOfMonthWeek() {
+        return mDelegate.getDayOfMonthWeek();
+    }
+
+
+    /**
      * Gets the minimal date supported by this {@link AppCompatDatePicker} in
      * milliseconds since January 1, 1970 00:00:00 in
      * {@link TimeZone#getDefault()} time zone.
@@ -329,6 +337,7 @@ public class AppCompatDatePicker extends FrameLayout {
         int getYear();
         int getMonth();
         int getDayOfMonth();
+        String getDayOfMonthWeek();
 
         void setFirstDayOfWeek(int firstDayOfWeek);
         int getFirstDayOfWeek();

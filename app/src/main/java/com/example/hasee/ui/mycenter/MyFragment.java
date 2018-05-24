@@ -17,7 +17,9 @@ import com.example.hasee.R;
 import com.example.hasee.bean.DataActivityBean;
 import com.example.hasee.ui.adpater.MyCenterAdapter;
 import com.example.hasee.ui.base.BaseFragment;
-import com.example.hasee.widget.DataActivityDialog;
+import com.example.hasee.utils.Event;
+import com.example.hasee.utils.RxBus;
+import com.example.hasee.widget.time.DataActivityDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.tr4android.support.extension.widget.FloatingActionMenu;
 
@@ -28,6 +30,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by HASEE on 2018/4/29.
@@ -109,14 +113,29 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
     @Override
     public void loadNullData() {
 
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        RxBus.INSTANCE.toFlowable(Event.DataActivityChange.class)
+            .compose(bindToLife())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Consumer<Event.DataActivityChange>() {
+                @Override
+                public void accept(Event.DataActivityChange dataActivityChange) throws Exception {
+                    if(dataActivityChange.isAddActivity){
+                        //更新data
+                        mPresenter.getDateActivity();
+                    }
+                }
+            });
     }
 
     @Override
     public void loadData(List<DataActivityBean> dataActivityBeanList) {
-
+        mMyCenterAdapter.setNewData(dataActivityBeanList);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

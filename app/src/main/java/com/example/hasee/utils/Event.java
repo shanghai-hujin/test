@@ -31,7 +31,9 @@ public class Event {
         }
     }
 
-
+    public static class DataActivityChange{
+        public boolean isAddActivity;
+    }
 
     public static class NewChannelEvent {
         public List<Channel> selectedDatas;

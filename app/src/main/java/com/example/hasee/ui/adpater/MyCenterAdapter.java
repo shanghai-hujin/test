@@ -29,6 +29,6 @@ public class MyCenterAdapter extends BaseQuickAdapter<DataActivityBean,BaseViewH
 
     @Override
     protected void convert(BaseViewHolder baseViewHolder, DataActivityBean dataActivityBean) {
-
+        baseViewHolder.setText(R.id.tv_activity_title, dataActivityBean.getActivityName());
     }
 }

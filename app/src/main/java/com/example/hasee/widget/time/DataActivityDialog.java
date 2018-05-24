@@ -1,4 +1,4 @@
-package com.example.hasee.widget;
+package com.example.hasee.widget.time;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -15,6 +15,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.hasee.R;
+import com.example.hasee.bean.DataActivityBean;
+import com.example.hasee.utils.Event;
+import com.example.hasee.utils.RxBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +55,6 @@ public class DataActivityDialog extends DialogFragment {
     ImageView mIvDataEnd;
     @BindView(R.id.sv_data)
     ScrollView mSvData;
-    Unbinder unbinder;
     @BindView(R.id.rb_richeng)
     RadioButton mRbRicheng;
     @BindView(R.id.rb_jinain)
@@ -63,9 +65,15 @@ public class DataActivityDialog extends DialogFragment {
     RadioButton mRbDaoshu;
     @BindView(R.id.rg_data)
     RadioGroup mRgData;
-    Unbinder unbinder1;
+    @BindView(R.id.tv_data_start_time)
+    TextView mTvDataStartTime;
+    @BindView(R.id.tv_data_end_time)
+    TextView mTvDataEndTime;
+
+    Unbinder unbinder;
     private int mType;
     private String mParam;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,7 +91,6 @@ public class DataActivityDialog extends DialogFragment {
         }
 
         View view = inflater.inflate(R.layout.dialog_data, null);
-        unbinder1 = ButterKnife.bind(this, view);
         return view;
 
     }
@@ -95,7 +102,6 @@ public class DataActivityDialog extends DialogFragment {
         Bundle bundle = getArguments();
         mType = bundle.getInt("type", 1);
         mParam = bundle.getString("param", "test");
-
 
         initType();
 
@@ -149,34 +155,104 @@ public class DataActivityDialog extends DialogFragment {
         unbinder.unbind();
     }
 
+
+
+
     @OnClick({R.id.view, R.id.tv_data_cannle, R.id.tv_data_title,
-            R.id.tv_data_ok, R.id.v_fenge, R.id.et_data_title,
+            R.id.tv_data_ok, R.id.v_fenge, R.id.et_data_title, R.id.tv_data_end_time,
             R.id.tv_data_start, R.id.iv_data_start, R.id.tv_data_end,
-            R.id.iv_data_end, R.id.sv_data,R.id.rb_richeng,
+            R.id.iv_data_end, R.id.sv_data, R.id.rb_richeng, R.id.tv_data_start_time,
             R.id.rb_jinain, R.id.rb_shengri, R.id.rb_daoshu, R.id.rg_data})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.view:
                 break;
             case R.id.tv_data_cannle:
+                dismiss();
                 break;
             case R.id.tv_data_title:
                 break;
             case R.id.tv_data_ok:
+                DataActivityBean dataActivityBean = new DataActivityBean();
+                dataActivityBean.setActivityName(mEtDataTitle.getText().toString().trim());
+                dataActivityBean.setActivityDate(mTvDataStart.getText().toString().trim());
+                dataActivityBean.save();
+
+                Event.DataActivityChange dataActivityChange = new Event.DataActivityChange();
+                dataActivityChange.isAddActivity = true;
+                RxBus.INSTANCE.post(dataActivityChange);
+                dismiss();
                 break;
             case R.id.v_fenge:
                 break;
             case R.id.et_data_title:
                 break;
             case R.id.tv_data_start:
-                break;
-            case R.id.iv_data_start:
+                DialogFragment datePickerDarkFragment = new DatePickerDarkFragment(new OnDataSetLinstener() {
+                    @Override
+                    public void onDataSet(int year, int month, int day, String firstWeek) {
+                        mTvDataStart.setText(year+"年"+firstWeek);
+                    }
+
+                });
+                datePickerDarkFragment.show(getChildFragmentManager(), "datePicker");
                 break;
             case R.id.tv_data_end:
+                DialogFragment datePickerDarkFragmentend = new DatePickerDarkFragment(new OnDataSetLinstener() {
+                    @Override
+                    public void onDataSet(int year, int month, int day, String firstWeek) {
+                        mTvDataEnd.setText(year+"年"+firstWeek);
+                    }
+
+                });
+                datePickerDarkFragmentend.show(getChildFragmentManager(), "datePickerend");
                 break;
+            case R.id.tv_data_end_time:
             case R.id.iv_data_end:
+                DialogFragment timePickerLightFragmentend = new TimePickerLightFragment(new OnTimeSetLinstener() {
+                    @Override
+                    public void onTimeSet(int hourOfDay, int minute) {
+                        String mSMinute;
+                        if(minute<10){
+                            mSMinute = "0"+minute;
+                        }else {
+                            mSMinute =""+minute;
+                        }
+                        if(hourOfDay>12){
+                            mTvDataEndTime.setText("下午"+(hourOfDay-12)+":"+mSMinute);
+                        }else if(hourOfDay == 12){
+                            mTvDataEndTime.setText("中午"+(hourOfDay)+":"+mSMinute);
+                        }else {
+                            mTvDataEndTime.setText("上午"+(hourOfDay)+":"+mSMinute);
+                        }
+                    }
+                });
+                timePickerLightFragmentend.show(getChildFragmentManager(), "timePickerend");
+                break;
+            case R.id.iv_data_start:
+            case R.id.tv_data_start_time:
+                DialogFragment timePickerLightFragment = new TimePickerLightFragment(new OnTimeSetLinstener() {
+                    @Override
+                    public void onTimeSet(int hourOfDay, int minute) {
+                        String mSMinute;
+                        if(minute<10){
+                            mSMinute = "0"+minute;
+                        }else {
+                            mSMinute =""+minute;
+                        }
+                        if(hourOfDay>12){
+                            mTvDataStartTime.setText("下午"+(hourOfDay-12)+":"+mSMinute);
+                        }else if(hourOfDay == 12){
+                            mTvDataStartTime.setText("中午"+(hourOfDay)+":"+mSMinute);
+                        }else {
+                            mTvDataStartTime.setText("上午"+(hourOfDay)+":"+mSMinute);
+                        }
+                    }
+                });
+                timePickerLightFragment.show(getChildFragmentManager(), "timePicker");
                 break;
             case R.id.sv_data:
+
                 break;
             case R.id.rb_richeng:
                 break;
@@ -192,5 +268,7 @@ public class DataActivityDialog extends DialogFragment {
                 break;
         }
     }
+
+
 
 }
