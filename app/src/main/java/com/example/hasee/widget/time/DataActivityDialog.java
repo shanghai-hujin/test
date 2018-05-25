@@ -18,6 +18,7 @@ import com.example.hasee.R;
 import com.example.hasee.bean.DataActivityBean;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.RxBus;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,6 +72,14 @@ public class DataActivityDialog extends DialogFragment {
     TextView mTvDataEndTime;
 
     Unbinder unbinder;
+    @BindView(R.id.appCompatEditText)
+    AppCompatEditText mAppCompatEditText;
+    @BindView(R.id.iv_add_reduce)
+    ImageView mIvAddReduce;
+    @BindView(R.id.tl_people_flow)
+    TagFlowLayout mTlPeopleFlow;
+    @BindView(R.id.et_actvtity_things)
+    AppCompatEditText mEtActvtityThings;
     private int mType;
     private String mParam;
 
@@ -156,9 +165,7 @@ public class DataActivityDialog extends DialogFragment {
     }
 
 
-
-
-    @OnClick({R.id.view, R.id.tv_data_cannle, R.id.tv_data_title,
+    @OnClick({R.id.view, R.id.tv_data_cannle, R.id.tv_data_title,R.id.iv_add_reduce,
             R.id.tv_data_ok, R.id.v_fenge, R.id.et_data_title, R.id.tv_data_end_time,
             R.id.tv_data_start, R.id.iv_data_start, R.id.tv_data_end,
             R.id.iv_data_end, R.id.sv_data, R.id.rb_richeng, R.id.tv_data_start_time,
@@ -191,7 +198,7 @@ public class DataActivityDialog extends DialogFragment {
                 DialogFragment datePickerDarkFragment = new DatePickerDarkFragment(new OnDataSetLinstener() {
                     @Override
                     public void onDataSet(int year, int month, int day, String firstWeek) {
-                        mTvDataStart.setText(year+"年"+firstWeek);
+                        mTvDataStart.setText(year + "年" + firstWeek);
                     }
 
                 });
@@ -201,7 +208,7 @@ public class DataActivityDialog extends DialogFragment {
                 DialogFragment datePickerDarkFragmentend = new DatePickerDarkFragment(new OnDataSetLinstener() {
                     @Override
                     public void onDataSet(int year, int month, int day, String firstWeek) {
-                        mTvDataEnd.setText(year+"年"+firstWeek);
+                        mTvDataEnd.setText(year + "年" + firstWeek);
                     }
 
                 });
@@ -213,17 +220,17 @@ public class DataActivityDialog extends DialogFragment {
                     @Override
                     public void onTimeSet(int hourOfDay, int minute) {
                         String mSMinute;
-                        if(minute<10){
-                            mSMinute = "0"+minute;
-                        }else {
-                            mSMinute =""+minute;
+                        if (minute < 10) {
+                            mSMinute = "0" + minute;
+                        } else {
+                            mSMinute = "" + minute;
                         }
-                        if(hourOfDay>12){
-                            mTvDataEndTime.setText("下午"+(hourOfDay-12)+":"+mSMinute);
-                        }else if(hourOfDay == 12){
-                            mTvDataEndTime.setText("中午"+(hourOfDay)+":"+mSMinute);
-                        }else {
-                            mTvDataEndTime.setText("上午"+(hourOfDay)+":"+mSMinute);
+                        if (hourOfDay > 12) {
+                            mTvDataEndTime.setText("下午" + (hourOfDay - 12) + ":" + mSMinute);
+                        } else if (hourOfDay == 12) {
+                            mTvDataEndTime.setText("中午" + (hourOfDay) + ":" + mSMinute);
+                        } else {
+                            mTvDataEndTime.setText("上午" + (hourOfDay) + ":" + mSMinute);
                         }
                     }
                 });
@@ -235,17 +242,17 @@ public class DataActivityDialog extends DialogFragment {
                     @Override
                     public void onTimeSet(int hourOfDay, int minute) {
                         String mSMinute;
-                        if(minute<10){
-                            mSMinute = "0"+minute;
-                        }else {
-                            mSMinute =""+minute;
+                        if (minute < 10) {
+                            mSMinute = "0" + minute;
+                        } else {
+                            mSMinute = "" + minute;
                         }
-                        if(hourOfDay>12){
-                            mTvDataStartTime.setText("下午"+(hourOfDay-12)+":"+mSMinute);
-                        }else if(hourOfDay == 12){
-                            mTvDataStartTime.setText("中午"+(hourOfDay)+":"+mSMinute);
-                        }else {
-                            mTvDataStartTime.setText("上午"+(hourOfDay)+":"+mSMinute);
+                        if (hourOfDay > 12) {
+                            mTvDataStartTime.setText("下午" + (hourOfDay - 12) + ":" + mSMinute);
+                        } else if (hourOfDay == 12) {
+                            mTvDataStartTime.setText("中午" + (hourOfDay) + ":" + mSMinute);
+                        } else {
+                            mTvDataStartTime.setText("上午" + (hourOfDay) + ":" + mSMinute);
                         }
                     }
                 });
@@ -263,6 +270,8 @@ public class DataActivityDialog extends DialogFragment {
             case R.id.rb_daoshu:
                 break;
             case R.id.rg_data:
+                break;
+            case R.id.iv_add_reduce:
                 break;
             default:
                 break;

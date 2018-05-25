@@ -66,4 +66,6 @@
     <string name="fam_presentation">Presentation</string>
     <string name="fam_spreadsheet">Spreadsheet</string>
     <string name="fam_document">Text Document</string>
+
+    <string name="text_things"><u>请输入事件内容，要简洁!要大气!</u></string>
 </resources>
