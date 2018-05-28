@@ -8,11 +8,13 @@
     <color name="status_layout_tip_text_color">#303F9F</color>
     <color name="status_layout_click_view_text_color">#FF4081</color>
 
+    <color name="color_checked">#66FF4081</color>
     <color name="tab_unselect">#a3a3a3</color>
 
     <color name="bg_press">#ebebeb</color>\
     <color name="bg_press_material">#d4d4d4</color>
 
+    <color name="while_most_color">#e4e4e4</color>
     <color name="status_bar_color">#ffce3d3a</color>
     <color name="tabSelectedTextColor">#ffce3d3a</color>
     <color name="tabTextColor">#88000000</color>
@@ -108,6 +110,7 @@
     <color name="darkgoldenrod">#B8860B</color><!--暗金黄色 -->
     <color name="firebrick">#B22222</color><!--火砖色 -->
     <color name="powderblue">#B0E0E6</color><!--粉蓝色 -->
+    <color name="tpowderblue">#99B0E0E6</color><!--粉蓝色 -->
     <color name="lightsteelblue">#B0C4DE</color><!--亮钢兰色 -->
     <color name="paleturquoise">#AFEEEE</color><!--苍宝石绿 -->
     <color name="greenyellow">#ADFF2F</color><!--黄绿色 -->

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,17 @@ import android.widget.TextView;
 
 import com.example.hasee.R;
 import com.example.hasee.bean.DataActivityBean;
+import com.example.hasee.utils.ContextUtils;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.RxBus;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +41,7 @@ import butterknife.Unbinder;
  * @date 2018/5/22 16:18
  */
 
-public class DataActivityDialog extends DialogFragment {
+public class DataActivityDialog extends DialogFragment implements RadioGroup.OnCheckedChangeListener {
 
     @BindView(R.id.view)
     View mView;
@@ -72,17 +81,20 @@ public class DataActivityDialog extends DialogFragment {
     TextView mTvDataEndTime;
 
     Unbinder unbinder;
-    @BindView(R.id.appCompatEditText)
-    AppCompatEditText mAppCompatEditText;
+    @BindView(R.id.et_data_name)
+    AppCompatEditText mEtDataName;
     @BindView(R.id.iv_add_reduce)
     ImageView mIvAddReduce;
     @BindView(R.id.tl_people_flow)
     TagFlowLayout mTlPeopleFlow;
     @BindView(R.id.et_actvtity_things)
     AppCompatEditText mEtActvtityThings;
-    private int mType;
+    private int mType = 0;
     private String mParam;
 
+    private List<String> peopleLists = new ArrayList<>();
+    private Map<String, Boolean> peopleCheckedLists = new HashMap<>();
+    private int mLeval;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,49 +121,76 @@ public class DataActivityDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         Bundle bundle = getArguments();
-        mType = bundle.getInt("type", 1);
+        mLeval = bundle.getInt("mLeval", 1);
         mParam = bundle.getString("param", "test");
 
-        initType();
+        mRgData.setOnCheckedChangeListener(this);
+        initTagFlow();
 
     }
 
-    private void initType() {
-        switch (mType) {
-            case 1:
-                mRbRicheng.setChecked(true);
-                mRbDaoshu.setChecked(false);
-                mRbJinain.setChecked(false);
-                mRbShengri.setChecked(false);
-                break;
-            case 2:
-                mRbDaoshu.setChecked(false);
-                mRbJinain.setChecked(true);
-                mRbShengri.setChecked(false);
-                mRbRicheng.setChecked(false);
-                break;
-            case 3:
-                mRbDaoshu.setChecked(false);
-                mRbJinain.setChecked(false);
-                mRbShengri.setChecked(true);
-                mRbRicheng.setChecked(false);
-                break;
-            case 4:
-                mRbJinain.setChecked(false);
-                mRbShengri.setChecked(false);
-                mRbRicheng.setChecked(false);
-                mRbDaoshu.setChecked(true);
-                break;
-            default:
-                break;
+    private void initTagFlow() {
+        if (peopleLists.size() <= 0) {
+            mTlPeopleFlow.setVisibility(View.GONE);
+        } else {
+            mTlPeopleFlow.setVisibility(View.VISIBLE);
         }
+
+        mTlPeopleFlow.setAdapter(new TagAdapter<String>(peopleLists) {
+            @Override
+            public View getView(FlowLayout parent, int position, String name) {
+                assert getActivity() != null;
+
+                TextView tv = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.item_flow_dataname, parent, false);
+
+                assert peopleLists != null;
+
+                tv.setText(name);
+                tv.setTextColor(ContextUtils.intrandomColor());
+
+                if (peopleLists.size() > 0) {
+                    mTlPeopleFlow.setVisibility(View.VISIBLE);
+                } else {
+                    mTlPeopleFlow.setVisibility(View.GONE);
+                }
+                mTlPeopleFlow.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+                    @Override
+                    public boolean onTagClick(View view, int position, FlowLayout parent) {
+
+                        peopleLists.remove(position);
+                        mTlPeopleFlow.onChanged();
+
+
+                        return true;
+
+                    }
+                });
+
+
+                return tv;
+            }
+
+            @Override
+            public void onSelected(int position, View view) {
+                peopleCheckedLists.put(peopleLists.get(position), true);
+
+                super.onSelected(position, view);
+            }
+
+            @Override
+            public void unSelected(int position, View view) {
+                peopleCheckedLists.put(peopleLists.get(position), false);
+
+                super.unSelected(position, view);
+            }
+        });
     }
 
 
     public static DataActivityDialog newInstance(int type, String parnm) {
 
         Bundle args = new Bundle();
-        args.putInt("type", type);
+        args.putInt("mLeval", type);
         args.putString("param", parnm);
         DataActivityDialog fragment = new DataActivityDialog();
         fragment.setArguments(args);
@@ -165,7 +204,7 @@ public class DataActivityDialog extends DialogFragment {
     }
 
 
-    @OnClick({R.id.view, R.id.tv_data_cannle, R.id.tv_data_title,R.id.iv_add_reduce,
+    @OnClick({R.id.view, R.id.tv_data_cannle, R.id.tv_data_title, R.id.iv_add_reduce,
             R.id.tv_data_ok, R.id.v_fenge, R.id.et_data_title, R.id.tv_data_end_time,
             R.id.tv_data_start, R.id.iv_data_start, R.id.tv_data_end,
             R.id.iv_data_end, R.id.sv_data, R.id.rb_richeng, R.id.tv_data_start_time,
@@ -180,9 +219,56 @@ public class DataActivityDialog extends DialogFragment {
             case R.id.tv_data_title:
                 break;
             case R.id.tv_data_ok:
+                if(TextUtils.isEmpty(mEtDataTitle.getText().toString().trim())){
+                    ContextUtils.getCommonSnackbar(mSvData,"请输入事件标题")
+                            .setAction("暂不设置", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mEtDataTitle.setText("待定");
+                                }
+                            }).show();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(mEtActvtityThings.getText().toString().trim())){
+                    ContextUtils.getCommonSnackbar(mSvData,"请输入事件内容")
+                            .setAction("暂不设置", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mEtActvtityThings.setText("待定");
+                                }
+                            }).show();
+                    return;
+                }
+
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String peopleList : peopleLists) {
+                    stringBuilder.append(peopleList);
+                    stringBuilder.append(" ");
+                }
+
+                if(peopleLists.size() == 0 ){
+                    ContextUtils.getCommonSnackbar(mSvData,"请输入事件人数")
+                            .setAction("暂不设置", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    peopleLists.add("人数待定");
+                                    mTlPeopleFlow.onChanged();
+                                }
+                            }).show();
+                    return;
+                }
+
+
                 DataActivityBean dataActivityBean = new DataActivityBean();
                 dataActivityBean.setActivityName(mEtDataTitle.getText().toString().trim());
-                dataActivityBean.setActivityDate(mTvDataStart.getText().toString().trim());
+                dataActivityBean.setActivityDateStart(mTvDataStart.getText().toString().trim() + " " + mTvDataStartTime.getText().toString().trim());
+                dataActivityBean.setActivityDateEnd(mTvDataEnd.getText().toString().trim() + " " + mTvDataEndTime.getText().toString().trim());
+                dataActivityBean.setActivityThings(mEtActvtityThings.getText().toString().trim());
+                dataActivityBean.setActivityPeople(stringBuilder.toString());
+                dataActivityBean.setActivityType(mType);
+                dataActivityBean.setActivityLevel(mLeval);
+
                 dataActivityBean.save();
 
                 Event.DataActivityChange dataActivityChange = new Event.DataActivityChange();
@@ -272,6 +358,14 @@ public class DataActivityDialog extends DialogFragment {
             case R.id.rg_data:
                 break;
             case R.id.iv_add_reduce:
+                //添加参与人数
+                if (TextUtils.isEmpty(mEtDataName.getText().toString())) {
+                    return;
+                }
+                peopleLists.add(mEtDataName.getText().toString().trim());
+                mTlPeopleFlow.onChanged();
+                mEtDataName.setText("");
+
                 break;
             default:
                 break;
@@ -279,5 +373,18 @@ public class DataActivityDialog extends DialogFragment {
     }
 
 
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        int childCount = group.getChildCount();
+        RadioButton childAt = null;
 
+        for (int i = 0; i < childCount; i++) {
+            childAt = (RadioButton) group.getChildAt(i);
+            if(childAt.isChecked()){
+                mType = i;
+                break;
+            }
+        }
+
+    }
 }

@@ -1,9 +1,16 @@
 package com.example.hasee.utils;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+
+import com.example.hasee.R;
+
+import java.util.Random;
 
 
 public class ContextUtils {
@@ -92,6 +99,32 @@ public class ContextUtils {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         return wm.getDefaultDisplay().getHeight();
     }
+
+    /**
+     * 获取随机rgb颜色值
+     */
+    public static int intrandomColor(){
+        Random random = new Random();
+        //0-190, 如果颜色值过大,就越接近白色,就看不清了,所以需要限定范围
+        int red =random.nextInt(150);
+        //0-190
+        int green =random.nextInt(150);
+        //0-190
+        int blue =random.nextInt(150);
+        //使用rgb混合生成一种新的颜色,Color.rgb生成的是一个int数
+        return Color.rgb(red,green, blue);
+    }
+
+    public static Snackbar getCommonSnackbar(View target, String title){
+
+        Snackbar snackbar = Snackbar.make(target, "请事件输入标题", Snackbar.LENGTH_LONG)
+                .setActionTextColor(Color.WHITE);
+        View snackbarView = snackbar.getView();
+        ((Button) snackbarView.findViewById(R.id.snackbar_action)).setBackground(null);
+        snackbarView.setBackgroundColor(Color.parseColor("#87CEFA"));
+        return snackbar;
+    }
+
 
 
 }

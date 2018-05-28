@@ -157,7 +157,7 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
             case R.id.iv_drag:
                 break;
             case R.id.fab_document:
-                DataActivityDialog dataActivityDialog = DataActivityDialog.newInstance(1,"lanse");
+                DataActivityDialog dataActivityDialog = DataActivityDialog.newInstance(1,"qita");
                 dataActivityDialog.show(getChildFragmentManager(),"data");
                 mFabMenu.collapse();
                 break;

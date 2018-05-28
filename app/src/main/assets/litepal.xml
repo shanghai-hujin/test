@@ -3,7 +3,7 @@
 
     <dbname value="hujindb">
     </dbname>
-    <version value="3">
+    <version value="4">
     </version>
     <list>
         <mapping class="com.example.hasee.bean.Channel">

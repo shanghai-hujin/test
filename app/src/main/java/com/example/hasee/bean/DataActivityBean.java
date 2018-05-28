@@ -14,18 +14,32 @@ import java.io.Serializable;
 public class DataActivityBean extends DataSupport implements Serializable {
     //活动名字
     private String activityName;
-    //活动时间
-    private String activityTime;
-    //活动日期
-    private String activityDate;
+
+    //活动日期开始
+    private String activityDateStart;
+
+    //活动日期结束
+    private String activityDateEnd;
+
     //活动内容
     private String activityThings;
+
     //参与人数
     private String activityPeople;
+
     //类型
-    private String activityType;
+    private int activityType;
+
     //程度
     private int activityLevel;
+
+    public String getActivityDateEnd() {
+        return activityDateEnd;
+    }
+
+    public void setActivityDateEnd(String activityDateEnd) {
+        this.activityDateEnd = activityDateEnd;
+    }
 
     public String getActivityName() {
         return activityName;
@@ -35,20 +49,13 @@ public class DataActivityBean extends DataSupport implements Serializable {
         this.activityName = activityName;
     }
 
-    public String getActivityTime() {
-        return activityTime;
+
+    public String getActivityDateStart() {
+        return activityDateStart;
     }
 
-    public void setActivityTime(String activityTime) {
-        this.activityTime = activityTime;
-    }
-
-    public String getActivityDate() {
-        return activityDate;
-    }
-
-    public void setActivityDate(String activityDate) {
-        this.activityDate = activityDate;
+    public void setActivityDateStart(String activityDate) {
+        this.activityDateStart = activityDate;
     }
 
     public String getActivityThings() {
@@ -67,11 +74,11 @@ public class DataActivityBean extends DataSupport implements Serializable {
         this.activityPeople = activityPeople;
     }
 
-    public String getActivityType() {
+    public int getActivityType() {
         return activityType;
     }
 
-    public void setActivityType(String activityType) {
+    public void setActivityType(int activityType) {
         this.activityType = activityType;
     }
 

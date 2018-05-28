@@ -65,6 +65,7 @@
         <RadioButton
             android:id="@+id/rb_richeng"
             style="@style/data_tab"
+            android:checked="true"
             android:drawableTop="@drawable/bg_richeng"
             android:text="日程"/>
         <RadioButton
@@ -280,7 +281,7 @@
             />
 
             <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/appCompatEditText"
+                android:id="@+id/et_data_name"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="17dp"
@@ -300,35 +301,57 @@
                 android:scaleType="center"
                 android:src="@mipmap/add_blue"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/appCompatEditText"
+                app:layout_constraintStart_toEndOf="@id/et_data_name"
                 app:layout_constraintTop_toBottomOf="@+id/v_lin4"/>
 
             <com.zhy.view.flowlayout.TagFlowLayout
                 android:id="@+id/tl_people_flow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp" android:layout_marginTop="8dp"
-                android:padding="20dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp" android:layout_marginTop="8dp"
+                app:layout_goneMarginEnd="0dp"
+                app:layout_goneMarginStart="0dp"
+                app:layout_goneMarginTop="0dp"
+                android:visibility="gone"
+                android:gravity="top|left"
+                android:background="@color/tpowderblue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appCompatEditText"
-                app:max_select="-1"/>
+                app:layout_constraintTop_toBottomOf="@+id/et_data_name"
+                app:layout_constraintBottom_toTopOf="@+id/v_smallin3"
+                app:max_select="1"/>
+
+            <View
+                android:id="@+id/v_smallin3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
+                android:background="@color/adjust_pressed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tl_people_flow"
+                app:layout_constraintBottom_toTopOf="@+id/et_actvtity_things"
+                />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/et_actvtity_things"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@null"
+                android:background="@drawable/white_radius"
+                android:paddingTop="8dp"
                 android:hint="@string/text_things"
                 android:lines="2"
                 android:textSize="17sp"
+                android:gravity="top|left"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tl_people_flow"/>
+                app:layout_constraintTop_toBottomOf="@+id/v_smallin3"/>
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
