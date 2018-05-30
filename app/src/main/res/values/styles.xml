@@ -63,4 +63,11 @@
         <item name="android:textColor">@color/data_text_color</item>
     </style>
 
+
+    <style name="CollapsingTextAppearance" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+    <style name="CollapsingTextAppearance.Inverse" >
+        <item name="android:textSize">19sp</item>
+    </style>
+
+
 </resources>

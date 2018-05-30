@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.hasee.ui.news.ReadContentsActivity"
+    tools:ignore="RtlHardcoded">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/abl_read"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    >
+
+        <!--
+        contentScrim:ToolBar被折叠到顶部固定时候的背景
+        title:ToolBar的标题，当CollapsingToolbarLayout全屏没有折叠时，
+            title显示的是大字体，在折叠的过程中，title不断变小到一定大小的效果
+        layout_scrollFlags 滚动标签 ：
+            scroll Child View 伴随着滚动事件而滚出或滚进屏幕
+            enterAlways 快速返回模式
+            enterAlwaysCollapsed Child View的高度和最小高度，向下滚动时，
+                Child View先向下滚动最小高度值，然后Scrolling View开始滚动，
+                到达边界时，Child View再向下滚动，直至显示完全。
+            exitUntilCollapsed 这里也涉及到最小高度。发生向上滚动事件时，
+                Child View向上滚动退出直至最小高度，然后Scrolling View开始滚动。
+                也就是，Child View不会完全退出屏幕。
+        expandedTitleMarginBottom 展开状态下的位置
+
+        -->
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/ctl_read"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:collapsedTitleTextAppearance="@style/CollapsingTextAppearance.Inverse"
+            app:contentScrim="@color/colorPrimary"
+            app:expandedTitleMarginBottom="94dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="@string/text_things">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:tint="#BBF68E54"
+                android:src="@drawable/london_flat"/>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_read"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@null"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@mipmap/arrow_1_left"
+            />
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:scrollbars="none"
+        app:behavior_overlapTop = "78dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cd_read"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="4dp"
+            app:contentPaddingBottom="16dp"
+            app:contentPaddingLeft="16dp"
+            app:contentPaddingRight="16dp">
+            <WebView
+                android:id="@+id/wv_read"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="45dp"
+                android:background="@android:color/white"
+            />
+
+
+        </android.support.v7.widget.CardView>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="32dp"
+        android:elevation="8dp"
+        android:src="@mipmap/daoshuri"
+        android:tint="@color/white"
+        app:layout_anchor="@id/cd_read"
+        app:layout_anchorGravity="top|right|end"
+        tools:ignore="RtlHardcoded"
+    />
+</android.support.design.widget.CoordinatorLayout>

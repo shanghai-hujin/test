@@ -4,6 +4,7 @@ package com.example.hasee.ui.news;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -77,8 +78,8 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         Bundle args = new Bundle();
         args.putString("newsid", newsid);
         args.putInt("position", position);
-        Logger.e("newsid=="+newsid);
-        Logger.e("position=="+position);
+        Logger.e("newsid==" + newsid);
+        Logger.e("position==" + position);
         DetailFragment fragment = new DetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -100,8 +101,8 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
             @Override
             public Animator[] getAnimators(View view) {
                 return new Animator[]{
-                        ObjectAnimator.ofFloat(view,"scaleY",1, 1.1f,1),
-                        ObjectAnimator.ofFloat(view,"scaleX",1, 1.1f,1)
+                        ObjectAnimator.ofFloat(view, "scaleY", 1, 1.1f, 1),
+                        ObjectAnimator.ofFloat(view, "scaleX", 1, 1.1f, 1)
                 };
             }
         });
@@ -113,14 +114,14 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                 mRefreshLayout.finishRefresh(2500);
                 setRefreshThemeColor();
                 isRemoveHeaderView = true;
-                mPresenter.getData(mNewsid, NewsHttpApi.ACTION_DOWN,downPullNum);
+                mPresenter.getData(mNewsid, NewsHttpApi.ACTION_DOWN, downPullNum);
             }
         });
         mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
 
-                mPresenter.getData(mNewsid, NewsHttpApi.ACTION_UP,upPullNum);
+                mPresenter.getData(mNewsid, NewsHttpApi.ACTION_UP, upPullNum);
                 mRefreshLayout.finishLoadMore(2000);
             }
         });
@@ -129,7 +130,9 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                showError();
+
+                NewsDetail.ItemBean itemBean = (NewsDetail.ItemBean) adapter.getItem(position);
+                toRead(itemBean);
             }
         });
         view_Focus = getView().inflate(getActivity(), R.layout.news_detail_headerview, null);
@@ -211,6 +214,39 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
 
     }
 
+    /**
+     * 点击跳往
+     *
+     * @param itemBean 数据
+     */
+    private void toRead(NewsDetail.ItemBean itemBean) {
+        if (itemBean == null) {
+            return;
+        }
+        switch (itemBean.getItemType()) {
+            case NewsDetail.ItemBean.TYPE_DOC_TITLEIMG:
+            case NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG:
+                Intent intent = new Intent(getActivity(), ReadContentsActivity.class);
+                intent.putExtra("aid", itemBean.getDocumentId());
+                startActivity(intent);
+                break;
+            case NewsDetail.ItemBean.TYPE_SLIDE:
+              //  ImageBrowseActivity.launch(getActivity(), itemBean);
+                break;
+            case NewsDetail.ItemBean.TYPE_ADVERT_TITLEIMG:
+            case NewsDetail.ItemBean.TYPE_ADVERT_SLIDEIMG:
+            case NewsDetail.ItemBean.TYPE_ADVERT_LONGIMG:
+                AdvertActivity.launch(getActivity(), itemBean.getLink().getWeburl());
+                break;
+            case NewsDetail.ItemBean.TYPE_PHVIDEO:
+                showErrorMsg("TYPE_PHVIDEO");
+                break;
+            default:
+                break;
+        }
+
+    }
+
     private void showToast(int num, boolean isRefresh) {
         if (isRefresh) {
             Toasty.success(getActivity(), String.format(getResources().getString(R.string.news_toast), num + "")).show();
@@ -220,6 +256,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
     }
 
     private int themeCount = 0;
+
     private void setRefreshThemeColor() {
         themeCount++;
         if (themeCount % 4 == 1) {
@@ -239,6 +276,9 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         }
         switch (itemBean.getType()) {
             case NewsUtils.TYPE_DOC:
+                Intent intent = new Intent(getActivity(), ReadContentsActivity.class);
+                intent.putExtra("aid", itemBean.getDocumentId());
+                startActivity(intent);
                 break;
             case NewsUtils.TYPE_SLIDE:
                 break;
@@ -264,9 +304,9 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                 .subscribe(new Consumer<Event.SlideTopEvent>() {
                     @Override
                     public void accept(Event.SlideTopEvent slideTopEvent) throws Exception {
-                        if(mRecyclerView != null){
-                            if(slideTopEvent.position == mPosition){
-                                Logger.e(slideTopEvent.position+"");
+                        if (mRecyclerView != null) {
+                            if (slideTopEvent.position == mPosition) {
+                                Logger.e(slideTopEvent.position + "");
                                 mRecyclerView.smoothScrollToPosition(0);
                             }
 
