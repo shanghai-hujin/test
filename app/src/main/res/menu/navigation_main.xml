@@ -5,6 +5,7 @@
            android:id="@+id/group_nomal">
         <item
             android:id="@+id/item_home"
+            android:checkable="false"
             android:icon="@mipmap/bootom_book_sel"
             android:title="首页"/>
 
@@ -19,11 +20,7 @@
             android:checkable="false"
             android:icon="@mipmap/bootom_book_sel"
             android:title="会员积分"/>
-        <item
-            android:id="@+id/item_unicom"
-            android:checkable="false"
-            android:icon="@mipmap/bootom_book_sel"
-            android:title="免流量服务"/>
+
         <item
             android:id="@+id/item_down"
             android:checkable="false"
@@ -35,11 +32,6 @@
         android:id="@+id/group_user"
         android:checkableBehavior="single">
 
-        <item
-            android:id="@+id/item_view_later"
-            android:checked="false"
-            android:icon="@mipmap/bootom_book_sel"
-            android:title="稍后再看"/>
 
         <item
             android:id="@+id/item_star"
@@ -57,11 +49,7 @@
             android:checkable="false"
             android:icon="@mipmap/bootom_book_sel"
             android:title="我的关注"/>
-        <item
-            android:id="@+id/item_wallet"
-            android:checkable="false"
-            android:icon="@mipmap/bootom_book_sel"
-            android:title="B币钱包"/>
+
     </group>
     <group android:checkableBehavior="single"
            android:id="@+id/gruop_setting"
@@ -77,6 +65,11 @@
             android:id="@+id/item_settings"
             android:icon="@mipmap/bootom_book_sel"
             android:title="设置与帮助"/>
+
+        <item
+            android:id="@+id/item_loginout"
+            android:icon="@mipmap/bootom_book_sel"
+            android:title="退出登录"/>
 
     </group>
 </menu>

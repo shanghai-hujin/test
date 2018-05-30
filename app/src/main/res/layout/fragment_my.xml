@@ -91,9 +91,9 @@
             android:id="@+id/fab_document"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="蓝色活动"
+            android:contentDescription="红色活动"
             android:tint="@android:color/white"
-            app:backgroundTint="@color/blue"
+            app:backgroundTint="@color/tomato"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_insert_drive_file_black_24dp"
         />
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="绿色活动"
             android:tint="@android:color/white"
-            app:backgroundTint="@color/green"
+            app:backgroundTint="@color/mediumseagreen"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_grid_on_black_24dp"
         />
@@ -113,9 +113,9 @@
             android:id="@+id/fab_presentation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="黄色活动"
+            android:contentDescription="蓝色活动"
             android:tint="@android:color/white"
-            app:backgroundTint="@color/yellow"
+            app:backgroundTint="@color/lightskyblue"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_insert_chart_black_24dp"
         />

@@ -7,7 +7,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:background="@color/bg_press"
-    android:layout_height="200dp">
+    android:layout_height="210dp">
 
     <View android:layout_width="match_parent" android:layout_height="160dp"
           android:background="@drawable/bg_mycentent" app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +56,7 @@
         android:background="@drawable/bg_text_my"
         android:paddingBottom="1dp" android:paddingLeft="10dp"
         android:paddingRight="10dp" android:paddingTop="1dp"
-        android:text="生活只剩下苟且了" android:textColor="@color/white"
+        android:text="世界上有趣的灵魂都在胖子里面！" android:textColor="@color/white"
         android:textSize="11sp"
         app:layout_constraintStart_toEndOf="@+id/sd_my"
         app:layout_constraintTop_toBottomOf="@+id/tv_myname"/>

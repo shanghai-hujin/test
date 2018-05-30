@@ -1,4 +1,4 @@
-package com.example.hasee.ui;
+package com.example.hasee.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,20 +16,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hasee.R;
+import com.example.hasee.http.cookies.CookiesManager;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.ui.base.BaseFragment;
-import com.example.hasee.ui.base.BasePresenter;
 import com.example.hasee.ui.book.BookFragment;
 import com.example.hasee.ui.movie.MovieFragment;
-import com.example.hasee.ui.news.NewsFragment;
 import com.example.hasee.ui.mycenter.MyFragment;
+import com.example.hasee.ui.news.NewsFragment;
+import com.example.hasee.ui.person.LoginActivity;
 import com.example.hasee.utils.Event;
+import com.example.hasee.utils.PasswordHelp;
 import com.example.hasee.utils.PerfectClickListener;
 import com.example.hasee.utils.RxBus;
 import com.example.hasee.utils.StatusBarUtil;
 import com.example.hasee.widget.BottomBar;
 import com.example.hasee.widget.BottomBarTab;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.MaterialDialog;
 
 import butterknife.BindView;
 import es.dmoral.toasty.Toasty;
@@ -37,7 +43,7 @@ import es.dmoral.toasty.Toasty;
 /**
  * @author TT
  */
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.MainView,  NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.contentContainer)
     FrameLayout contentContainer;
@@ -61,10 +67,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private ImageView mIvHeadNoftiy;
     private ImageView mIvHeadSwitchMode;
     private SimpleDraweeView mIcUser;
+    private ConstraintLayout mClLogin;
+    private ImageView mIvLogin;
 
     @Override
-    public BasePresenter createPresenter() {
-        return null;
+    public MainPresenter createPresenter() {
+        return new MainPresenter();
     }
 
 
@@ -151,6 +159,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 初始化数据数据
      */
     public void initData() {
+        initToolbar();
+        initHttpData();
+        initNav();
+        initLoginStatus();
+
         //监听事件
         RxBus.INSTANCE.toFlowable(Event.StartNavigationEvent.class)
                 .compose(bindToLifecycle())
@@ -160,11 +173,41 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     }
                 });
 
-        initToolbar();
-        initHttpData();
-        initNav();
+        RxBus.INSTANCE.toFlowable(Event.LoginStausEvent.class)
+                .compose(bindToLifecycle())
+                .subscribe(event -> {
+
+                        mClLogin.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (event.login) {
+                                    mClLogin.setVisibility(View.GONE);
+                                    navView.getMenu().findItem(R.id.item_loginout).setVisible(true);
+                                }else {
+                                    mClLogin.setVisibility(View.VISIBLE);
+                                    navView.getMenu().findItem(R.id.item_loginout).setVisible(false);
+                                }
+                            }
+                        });
+
+                });
 
 
+    }
+
+    /**
+     * 初始化登录状态
+     */
+    private void initLoginStatus() {
+
+        if(PasswordHelp.readLoginStatus()){
+            //登录了
+            mClLogin.setVisibility(View.GONE);
+            navView.getMenu().findItem(R.id.item_loginout).setVisible(true);
+        }else {
+            mClLogin.setVisibility(View.VISIBLE);
+            navView.getMenu().findItem(R.id.item_loginout).setVisible(false);
+        }
     }
 
     /**
@@ -193,8 +236,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mIvHeadNoftiy = (ImageView)headerView.findViewById(R.id.iv_head_noftiy);
         mIvHeadSwitchMode = (ImageView)headerView.findViewById(R.id.iv_head_switch_mode);
         mIcUser = (SimpleDraweeView)headerView.findViewById(R.id.ic_user);
+        mClLogin = (ConstraintLayout) headerView.findViewById(R.id.cl_login);
+        mIvLogin = (ImageView) headerView.findViewById(R.id.iv_login);
 
-        mClHeader.setOnClickListener(listener);
+        mIvLogin.setOnClickListener(listener);
+        mClLogin.setOnClickListener(listener);
         mTvName.setOnClickListener(listener);
         mTvLv.setOnClickListener(listener);
         mTvState.setOnClickListener(listener);
@@ -262,13 +308,34 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 switch (item.getItemId()) {
                     case R.id.item_vip:
                         break;
-                    case R.id.item_unicom:
-                        break;
+
                     case R.id.item_down:
                         break;
                     case R.id.item_theme:
 
                         break;
+                    case R.id.item_loginout:
+                        //退出登录
+                        MaterialDialog materialDialog = new MaterialDialog(MainActivity.this);
+                        materialDialog.content("您是否确定退出登录")
+                                .btnText("取消","确定")
+                                .showAnim(new BounceTopEnter())
+                                .dismissAnim(new SlideBottomExit())
+                                .show();
+                        materialDialog.setOnBtnClickL(new OnBtnClickL() {
+                            @Override
+                            public void onBtnClick() {
+                                materialDialog.dismiss();
+                            }
+                        }, new OnBtnClickL() {
+                            @Override
+                            public void onBtnClick() {
+                                materialDialog.dismiss();
+                                loginout();
+                            }
+                        });
+                        break;
+
                     default:
                         break;
                 }
@@ -276,6 +343,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }, 250);
 
         return false;
+    }
+
+    /**
+     * 登出，清除本地cook
+     */
+    private void loginout() {
+        CookiesManager.clearAllCookies();
+        PasswordHelp.cleanPassword();
+        Event.LoginStausEvent event = new Event.LoginStausEvent();
+        event.login = false;
+        RxBus.INSTANCE.post(event);
     }
 
     /**
@@ -292,7 +370,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 public void run() {
                     Intent intent = new Intent();
                     switch (view.getId()) {
-
+                        case R.id.iv_login:
+                            //跳登录
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                            break;
                         default:
                             break;
                     }

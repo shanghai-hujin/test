@@ -20,7 +20,7 @@ public class LoginResponse extends BaseResponce {
         this.data = data;
     }
 
-    class LoginData  {
+    public class LoginData  {
 
         private String username;
         private String password;

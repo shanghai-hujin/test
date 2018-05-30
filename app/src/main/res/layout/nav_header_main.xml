@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cl_header"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/cl_header"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:background="@color/colorPrimary"
@@ -16,14 +16,14 @@
         android:id="@+id/ic_user"
         android:layout_width="74dp"
         android:layout_height="74dp"
-        fresco:roundedCornerRadius="5dp"
-        fresco:roundTopLeft="true"
-        fresco:roundTopRight="true"
+        fresco:actualImageScaleType="center"
+        fresco:failureImage="@mipmap/shuaige"
+        fresco:placeholderImage="@mipmap/shuaige"
         fresco:roundBottomLeft="true"
         fresco:roundBottomRight="true"
-        fresco:placeholderImage="@mipmap/shuaige"
-        fresco:failureImage="@mipmap/shuaige"
-        fresco:actualImageScaleType="center"
+        fresco:roundTopLeft="true"
+        fresco:roundTopRight="true"
+        fresco:roundedCornerRadius="5dp"
     />
 
     <TextView
@@ -72,11 +72,11 @@
         android:id="@+id/tv_b"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:padding="3dp"
         android:text="age:18"
         android:textColor="@color/white"
         android:textSize="12sp"
-        android:layout_marginLeft="5dp"
         app:layout_constraintStart_toEndOf="@id/tv_icon"
         app:layout_constraintTop_toTopOf="@+id/tv_icon"/>
 
@@ -99,5 +99,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ic_user"/>
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:visibility="visible">
+        <ImageView
+            android:id="@+id/iv_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/login"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingRight="5dp"
+            android:text="路漫漫其修远兮"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:padding="5dp"
+            android:text="吾将上下而求索"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+        />
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

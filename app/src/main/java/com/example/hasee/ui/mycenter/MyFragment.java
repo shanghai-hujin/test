@@ -153,17 +153,24 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
 
     @OnClick({R.id.iv_drag, R.id.fab_document, R.id.fab_spreadsheet, R.id.fab_presentation})
     public void onViewClicked(View view) {
+        DataActivityDialog dataActivityDialog;
         switch (view.getId()) {
             case R.id.iv_drag:
                 break;
             case R.id.fab_document:
-                DataActivityDialog dataActivityDialog = DataActivityDialog.newInstance(1,"qita");
+                dataActivityDialog = DataActivityDialog.newInstance(0,"qita");
                 dataActivityDialog.show(getChildFragmentManager(),"data");
                 mFabMenu.collapse();
                 break;
             case R.id.fab_spreadsheet:
+                dataActivityDialog = DataActivityDialog.newInstance(1,"qita");
+                dataActivityDialog.show(getChildFragmentManager(),"data");
+                mFabMenu.collapse();
                 break;
             case R.id.fab_presentation:
+                dataActivityDialog = DataActivityDialog.newInstance(2,"qita");
+                dataActivityDialog.show(getChildFragmentManager(),"data");
+                mFabMenu.collapse();
                 break;
             default:
                 break;

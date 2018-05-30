@@ -14,6 +14,11 @@ import java.util.List;
  */
 
 public class Event {
+
+    public static class LoginStausEvent {
+        public boolean login;
+    }
+
     public static class StartNavigationEvent {
         public boolean start;
     }

@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,9 @@ import android.widget.Toast;
 import com.example.hasee.R;
 import com.example.hasee.bean.LoginResponse;
 import com.example.hasee.ui.base.BaseActivity;
+import com.example.hasee.utils.Event;
+import com.example.hasee.utils.PasswordHelp;
+import com.example.hasee.utils.RxBus;
 import com.example.hasee.utils.StatusBarUtil;
 
 import butterknife.BindView;
@@ -84,6 +88,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_go:
+                if (TextUtils.isEmpty(etUsername.getText().toString().trim()) || TextUtils.isEmpty(etPassword.getText().toString().trim())) {
+                    Toast.makeText(LoginActivity.this, "账号密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 basePresenter.Login(etUsername.getText().toString().trim(),etPassword.getText().toString().trim());
                 break;
             case R.id.fab:
@@ -234,11 +242,24 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
      * P层 返回的数据
      */
     public void loadData(LoginResponse loginResponse) {
+
+        if(loginResponse == null || loginResponse.getData() == null){
+            loginFail("账号密码错误...");
+            return;
+        }
+
+        LoginResponse.LoginData loginData = loginResponse.getData();
         Toasty.success(this,"登录成功...", Toast.LENGTH_SHORT,true).show();
+        PasswordHelp.savePassword(loginData.getUsername(), loginData.getPassword(), true);
+        Event.LoginStausEvent event = new Event.LoginStausEvent();
+        event.login = true;
+        RxBus.INSTANCE.post(event);
+        finish();
     }
 
     @Override
     public void loginFail(String errormsg) {
         Toasty.error(this,"账号密码错误...", Toast.LENGTH_SHORT,true).show();
+
     }
 }
