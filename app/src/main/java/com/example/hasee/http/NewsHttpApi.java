@@ -3,6 +3,7 @@ package com.example.hasee.http;
 import android.support.annotation.StringDef;
 import android.util.Log;
 
+import com.example.hasee.bean.NewsArticleBean;
 import com.example.hasee.bean.NewsDetail;
 import com.example.hasee.ui.MyApplication;
 import com.example.hasee.utils.NetUtil;
@@ -127,7 +128,7 @@ public class NewsHttpApi {
 
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl(Common.GetNewsArticleCmppApi)
+                .baseUrl(Common.IFengApi)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -178,6 +179,19 @@ public class NewsHttpApi {
                         return Observable.fromIterable(newsDetails);
                     }
                 });
+    }
+
+    /**
+     * 获取新闻详情文章
+     * @param aid  文章id
+     * @return
+     */
+    public Observable<NewsArticleBean> getNewsArticle(String aid){
+        if(aid.startsWith("sub")){
+            return httpSevies.getNewsArticleWithSub(aid);
+        }else {
+            return httpSevies.getNewsArticleWithCmpp(Common.GetNewsArticleCmppApi+ Common.GetNewsArticleDocCmppApi, aid);
+        }
     }
 
 }

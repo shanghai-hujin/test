@@ -15,10 +15,15 @@ public class Common {
 
     public static final String GetNewsArticleCmppApi = "http://api.3g.ifeng.com/";
 
+    public static final String GetNewsArticleDocCmppApi = "ipadtestdoc";
+
+
+    public static final String IFengApi = "http://api.iclient.ifeng.com/";
     /**
      * 天气api
      */
     public final static String API_Weather = "https://api.seniverse.com/v3/weather/now.json";
+
 
 
 

@@ -1,5 +1,6 @@
 package com.example.hasee.ui.news;
 
+import com.example.hasee.bean.NewsArticleBean;
 import com.example.hasee.ui.base.BaseContract;
 
 /**
@@ -13,11 +14,12 @@ public interface ReadContentsContract {
 
     interface ReadContentsView extends BaseContract.BaseView{
 
+        void loadWebData(NewsArticleBean newsArticleBean);
     }
 
 
     interface ReadContentsPresenter extends BaseContract.BasePresenter<ReadContentsView>{
-
+        void getData(String aid);
     }
 
 }

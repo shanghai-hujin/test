@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.hasee.ui.news.ReadContentsActivity"
     tools:ignore="RtlHardcoded">
 
@@ -36,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             app:collapsedTitleTextAppearance="@style/CollapsingTextAppearance.Inverse"
+            app:expandedTitleTextAppearance="@style/ExpandedTitleTextAppearance.Inverse"
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleMarginBottom="94dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -47,6 +49,49 @@
                 android:scaleType="centerCrop"
                 android:tint="#BBF68E54"
                 android:src="@drawable/london_flat"/>
+            <RelativeLayout
+                android:layout_marginBottom="130dp"
+                android:layout_gravity="bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sd_offlogo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    fresco:placeholderImage="@mipmap/shuaige"
+                    fresco:failureImage="@mipmap/shuaige"
+                />
+
+                <TextView
+                    android:id="@+id/tv_offname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text=""
+                    android:layout_alignTop="@id/sd_offlogo"
+                    android:layout_toRightOf="@id/sd_offlogo"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                />
+
+                <TextView
+                    android:id="@+id/tv_offupdateTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/sd_offlogo"
+                    android:text=""
+                    android:textSize="@dimen/sp_12"
+                    android:layout_alignBottom="@id/sd_offlogo"
+                    android:textColor="@color/white"
+                />
+
+            </RelativeLayout>
+
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_read"
@@ -76,12 +121,11 @@
             app:cardCornerRadius="4dp"
             app:cardElevation="4dp"
             app:contentPaddingBottom="16dp"
-            app:contentPaddingLeft="16dp"
-            app:contentPaddingRight="16dp">
+            >
             <WebView
                 android:id="@+id/wv_read"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="45dp"
                 android:background="@android:color/white"
             />
