@@ -15,6 +15,7 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 
 /**
  * Demo ${CLASS}
@@ -23,22 +24,46 @@ import butterknife.Unbinder;
  * @date 2018/4/26 15:00
  */
 
-public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends SupportActivity implements IBase,BaseContract.BaseView {
+public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends SupportActivity
+        implements IBase,BaseContract.BaseView, BGASwipeBackHelper.Delegate{
 
     private View mRootView;
     protected P basePresenter;
     private Unbinder unbinder;
     private Dialog mLoadingDialog;
+    private BGASwipeBackHelper mSwipeBackHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initSwipeBackFinish();
         mRootView = createView(null, null, savedInstanceState);
         setContentView(mRootView);
         attachView();
         bindView(mRootView, savedInstanceState);
         initStateView();
         mLoadingDialog = DialogHelper.getLoadingDialog(this);
+    }
+
+    /**
+     * 初始化滑动返回。在 super.onCreate(savedInstanceState) 之前调用该方法
+     */
+    private void initSwipeBackFinish() {
+        mSwipeBackHelper = new BGASwipeBackHelper(this, this);
+        // 设置滑动返回是否可用。默认值为 true
+        mSwipeBackHelper.setSwipeBackEnable(true);
+        // 设置是否仅仅跟踪左侧边缘的滑动返回。默认值为 true
+        mSwipeBackHelper.setIsOnlyTrackingLeftEdge(false);
+        // 设置是否是微信滑动返回样式。默认值为 true
+        mSwipeBackHelper.setIsWeChatStyle(true);
+        // 设置阴影资源 id。默认值为 R.drawable.bga_sbl_shadow
+        mSwipeBackHelper.setShadowResId(R.drawable.bga_sbl_shadow);
+        // 设置是否显示滑动返回的阴影效果。默认值为 true
+        mSwipeBackHelper.setIsNeedShowShadow(true);
+        // 设置阴影区域的透明度是否根据滑动的距离渐变。默认值为 true
+        mSwipeBackHelper.setIsShadowAlphaGradient(true);
+        // 设置触发释放后自动滑动返回的阈值，默认值为 0.3f
+        mSwipeBackHelper.setSwipeBackThreshold(0.3f);
     }
 
     /**
@@ -156,5 +181,30 @@ public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends
         if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
         }
+    }
+
+    /**
+     * 是否支持滑动返回。这里在父类中默认返回 true 来支持滑动返回，如果某个界面不想支持滑动返回则重写该方法返回 false 即可
+     *
+     * @return
+     */
+    @Override
+    public boolean isSupportSwipeBack() {
+        return false;
+    }
+
+    @Override
+    public void onSwipeBackLayoutSlide(float slideOffset) {
+
+    }
+
+    @Override
+    public void onSwipeBackLayoutCancel() {
+
+    }
+
+    @Override
+    public void onSwipeBackLayoutExecuted() {
+        mSwipeBackHelper.swipeBackward();
     }
 }

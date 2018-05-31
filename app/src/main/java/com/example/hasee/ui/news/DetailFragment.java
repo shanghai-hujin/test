@@ -231,7 +231,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                 startActivity(intent);
                 break;
             case NewsDetail.ItemBean.TYPE_SLIDE:
-              //  ImageBrowseActivity.launch(getActivity(), itemBean);
+                ImageBrowseActivity.launch(getActivity(), itemBean);
                 break;
             case NewsDetail.ItemBean.TYPE_ADVERT_TITLEIMG:
             case NewsDetail.ItemBean.TYPE_ADVERT_SLIDEIMG:

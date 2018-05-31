@@ -65,6 +65,11 @@ public class ReadContentsActivity extends BaseActivity<ReadContentsPresenter> im
 
     }
 
+    @Override
+    public boolean isSupportSwipeBack() {
+        return true;
+    }
+
     private void initWebViewSetting() {
         WebSettings settings = mWvRead.getSettings();
         //设置js

@@ -51,6 +51,7 @@
     </style>
 
 
+
     <style name="data_tab">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
@@ -73,6 +74,13 @@
     <style name="ExpandedTitleTextAppearance.Inverse">
         <item name="android:maxLines">2</item>
         <item name="android:textSize">25sp</item>
+    </style>
+
+    <!-- 用于开启滑动返回功能的 Activity -->
+    <style name="AppTheme.Transparent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 

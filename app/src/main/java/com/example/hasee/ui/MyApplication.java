@@ -7,6 +7,8 @@ import com.orhanobut.logger.Logger;
 import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
 
+import cn.bingoogolapple.swipebacklayout.BGASwipeBackManager;
+
 /**
  * Demo ${CLASS}
  *
@@ -35,6 +37,8 @@ public class MyApplication extends LitePalApplication {
         Fresco.initialize(this);
         //数据库初始化
         LitePal.initialize(this);
+        //初始化侧滑
+        BGASwipeBackManager.getInstance().init(this);
     }
 
     public static MyApplication getInstance() {
