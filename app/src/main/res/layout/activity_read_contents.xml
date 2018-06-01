@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.hasee.ui.news.ReadContentsActivity"
+    tools:context="com.example.hasee.ui.news.ReadTextActivity"
     tools:ignore="RtlHardcoded">
 
     <android.support.design.widget.AppBarLayout
@@ -99,7 +99,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@null"
                 app:layout_collapseMode="pin"
-                app:navigationIcon="@mipmap/arrow_1_left"
+                app:navigationIcon="@mipmap/arrow_left_white"
             />
         </android.support.design.widget.CollapsingToolbarLayout>
 

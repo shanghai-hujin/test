@@ -89,6 +89,11 @@ public class AdvertActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isSupportSwipeBack() {
+        return true;
+    }
+
+    @Override
     public BaseContract.BasePresenter createPresenter() {
         return null;
     }

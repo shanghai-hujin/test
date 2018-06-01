@@ -214,6 +214,12 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
 
     }
 
+    @Override
+    public void onRetry() {
+        super.onRetry();
+        initData();
+    }
+
     /**
      * 点击跳往
      *
@@ -226,7 +232,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         switch (itemBean.getItemType()) {
             case NewsDetail.ItemBean.TYPE_DOC_TITLEIMG:
             case NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG:
-                Intent intent = new Intent(getActivity(), ReadContentsActivity.class);
+                Intent intent = new Intent(getActivity(), ReadTextActivity.class);
                 intent.putExtra("aid", itemBean.getDocumentId());
                 startActivity(intent);
                 break;
@@ -276,13 +282,15 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         }
         switch (itemBean.getType()) {
             case NewsUtils.TYPE_DOC:
-                Intent intent = new Intent(getActivity(), ReadContentsActivity.class);
+                Intent intent = new Intent(getActivity(), ReadTextActivity.class);
                 intent.putExtra("aid", itemBean.getDocumentId());
                 startActivity(intent);
                 break;
             case NewsUtils.TYPE_SLIDE:
+                ImageBrowseActivity.launch(getActivity(), itemBean);
                 break;
             case NewsUtils.TYPE_ADVERT:
+                AdvertActivity.launch(getActivity(), itemBean.getLink().getWeburl());
                 break;
             case NewsUtils.TYPE_PHVIDEO:
                 break;

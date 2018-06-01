@@ -31,7 +31,7 @@ public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends
     protected P basePresenter;
     private Unbinder unbinder;
     private Dialog mLoadingDialog;
-    private BGASwipeBackHelper mSwipeBackHelper;
+    protected BGASwipeBackHelper mSwipeBackHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

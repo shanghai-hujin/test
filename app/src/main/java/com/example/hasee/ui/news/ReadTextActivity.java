@@ -26,7 +26,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ReadContentsActivity extends BaseActivity<ReadContentsPresenter> implements ReadContentsContract.ReadContentsView {
+public class ReadTextActivity extends BaseActivity<ReadContentsPresenter> implements ReadContentsContract.ReadContentsView {
 
 
     @BindView(R.id.toolbar_read)
