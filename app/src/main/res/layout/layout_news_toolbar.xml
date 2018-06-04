@@ -102,7 +102,7 @@
             style="@style/style_float_btn"
             android:layout_marginBottom="60dp"
             android:layout_marginEnd="16dp"
-            android:src="@mipmap/ic_news_selected"
+            android:src="@mipmap/news_arrow"
             app:layout_behavior="@string/scale_down_show_behavior"
            />
 

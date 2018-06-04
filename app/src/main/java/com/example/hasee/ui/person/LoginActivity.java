@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -57,6 +58,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
     LinearLayout llLoginOptions;
     @BindView(R.id.ll_login_pull)
     LinearLayout llLoginPull;
+    @BindView(R.id.toolbar_login)
+    Toolbar mToolbarLogin;
 
     @Override
     public int getContentLayout() {
@@ -66,9 +69,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
         StatusBarUtil.setTranslucent(LoginActivity.this);
-        if (savedInstanceState == null) {
+        mToolbarLogin.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
 
-        }
     }
 
     @Override
@@ -81,7 +89,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
         return new LoginPresenter();
     }
 
-
+    @Override
+    public boolean isSupportSwipeBack() {
+        return true;
+    }
 
     @OnClick({R.id.bt_go, R.id.fab, R.id.ib_login_weibo, R.id.ib_login_wx,
             R.id.ib_login_qq, R.id.ib_login_csdn, R.id.ll_login_options, R.id.ll_login_pull})

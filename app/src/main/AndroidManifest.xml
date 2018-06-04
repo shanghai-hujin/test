@@ -17,39 +17,45 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ui.main.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        <activity android:name=".ui.main.MainActivity"
+                  android:screenOrientation="portrait"
+                  >
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.person.LoginActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
-
-        <activity android:name=".ui.news.ReadTextActivity"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/AppTheme.Transparent"
-                  android:windowSoftInputMode="stateAlwaysHidden">
+        <activity
+            android:name=".ui.news.ReadTextActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
-
         <activity
             android:name=".ui.news.AdvertActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
-
         <activity
             android:name=".ui.news.ImageBrowseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+        <activity
+            android:name=".ui.WelcomeActivity"
+            android:theme="@style/NoTitleFullscreen"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 
