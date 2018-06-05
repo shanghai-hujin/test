@@ -49,7 +49,7 @@ public class WelcomeActivity extends BaseActivity {
     public void bindView(View view, Bundle savedInstanceState) {
        // hideBottomUIMenu();
       //  StatusBarUtil.setTranslucentForImageView(this, 0, mSdvWelcome);
-        FrescoUtils.setController("https://api.lylares.com/bing/image/?1080/1920/0", mSdvWelcome);
+        FrescoUtils.setController("https://api.lylares.com/bing/image/?1080/1920/0", mSdvWelcome ,1);
 
         mTvWelcomeFlash.setOnClickListener(new View.OnClickListener() {
             @Override

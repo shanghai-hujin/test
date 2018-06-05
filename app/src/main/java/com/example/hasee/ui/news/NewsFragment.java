@@ -135,6 +135,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
+
         if (mToolbar != null) {
             mToolbar.setTitle("");
             ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);

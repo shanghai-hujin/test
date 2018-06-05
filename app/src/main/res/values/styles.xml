@@ -76,6 +76,13 @@
         <item name="android:textSize">25sp</item>
     </style>
 
+
+    <style name="ExpandedMovieTextAppearance" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+    <style name="ExpandedMovieTextAppearance.Inverse">
+        <item name="android:textColor">#00ffffff</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
     <!-- 用于开启滑动返回功能的 Activity -->
     <style name="AppTheme.Transparent">
         <item name="android:windowBackground">@android:color/transparent</item>
