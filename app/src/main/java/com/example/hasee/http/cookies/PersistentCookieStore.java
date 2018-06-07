@@ -64,6 +64,10 @@ public class PersistentCookieStore {
     public void add(HttpUrl url, Cookie cookie) {
         String name = getCookieToken(cookie);
 
+        if("bid@douban.com".equals(name)){
+            return;
+        }
+
         //将cookies缓存到内存中 如果缓存过期 就重置此cookie
         if (!cookie.persistent()) {
             if (!cookies.containsKey(url.host())) {
@@ -76,7 +80,7 @@ public class PersistentCookieStore {
             }
         }
 
-        //讲cookies持久化到本地
+
         SharedPreferences.Editor prefsWriter = cookiePrefs.edit();
         prefsWriter.putString(url.host(), TextUtils.join(",", cookies.get(url.host()).keySet()));
         prefsWriter.putString(name, encodeCookie(new OkHttpCookies(cookie)));

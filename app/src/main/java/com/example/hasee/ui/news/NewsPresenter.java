@@ -4,7 +4,7 @@ import com.example.hasee.R;
 import com.example.hasee.bean.Channel;
 import com.example.hasee.bean.WeatherBean;
 import com.example.hasee.dao.ChannelDao;
-import com.example.hasee.http.WanAndroidHttpApi;
+import com.example.hasee.http.OtherHttpApi;
 import com.example.hasee.ui.MyApplication;
 import com.example.hasee.ui.base.BaseObserver;
 import com.example.hasee.ui.base.BasePresenter;
@@ -93,7 +93,7 @@ class NewsPresenter extends BasePresenter<NewsContract.NewsView> implements News
      * 获取网络
      */
     public void getWeather(){
-        WanAndroidHttpApi.getInstace().getWeather("96tev0flvjjg4a1o","shanghai")
+        OtherHttpApi.getInstace().getWeather("96tev0flvjjg4a1o","shanghai")
                 .compose(RxUtils.<WeatherBean>rxSchedulerHelper())
                 .compose(mView.<WeatherBean>bindToLife())
                 .subscribe(new BaseObserver<WeatherBean>(mView) {

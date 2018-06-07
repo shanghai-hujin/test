@@ -1,5 +1,6 @@
 package com.example.hasee.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -14,6 +15,11 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
+import android.renderscript.Type;
 import android.util.Log;
 
 import java.io.BufferedOutputStream;
@@ -22,6 +28,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class BitmapUtil {
 
@@ -108,7 +117,38 @@ public class BitmapUtil {
 		return tmp;
 	}
 
+	public static Bitmap blurBitmap(Bitmap bitmap, float radius, Context context) {
+		//Create renderscript
+		RenderScript rs = RenderScript.create(context);
 
+		//Create allocation from Bitmap
+		Allocation allocation = Allocation.createFromBitmap(rs, bitmap);
+
+		Type t = allocation.getType();
+
+		//Create allocation with the same type
+		Allocation blurredAllocation = Allocation.createTyped(rs, t);
+
+		//Create script
+		ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+		//Set blur radius (maximum 25.0)
+		blurScript.setRadius(radius);
+		//Set input for script
+		blurScript.setInput(allocation);
+		//Call script for output allocation
+		blurScript.forEach(blurredAllocation);
+
+		//Copy script result into bitmap
+		blurredAllocation.copyTo(bitmap);
+
+		//Destroy everything to free memory
+		allocation.destroy();
+		blurredAllocation.destroy();
+		blurScript.destroy();
+		t.destroy();
+		rs.destroy();
+		return bitmap;
+	}
 
 	/**
 	 * use to lessen pic 50%
@@ -402,6 +442,20 @@ public class BitmapUtil {
 		// 把 drawable 内容画到画布中
 		drawable.draw(canvas);
 		return bitmap;
+	}
+
+
+	public static Bitmap getNetBitmap(String path) throws IOException{
+		URL url = new URL(path);
+		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		conn.setConnectTimeout(5000);
+		conn.setRequestMethod("GET");
+		if(conn.getResponseCode() == 200){
+			InputStream inputStream = conn.getInputStream();
+			Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+			return bitmap;
+		}
+		return null;
 	}
 
 

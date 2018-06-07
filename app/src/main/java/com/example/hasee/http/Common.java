@@ -10,8 +10,9 @@ import com.example.hasee.R;
  */
 
 public class Common {
-
+    //玩Android的baseurl
     public static final String BASE_URL="http://www.wanandroid.com/";
+
 
     public static final String GetNewsArticleCmppApi = "http://api.3g.ifeng.com/";
 
@@ -26,6 +27,18 @@ public class Common {
 
 
 
+    //豆瓣电影api
+    public static final String DOUBAN_URL = "https://api.douban.com/";
+    //正在上映
+    public static final String IN_THEATERS = "https://api.douban.com/v2/movie/in_theaters";
+    //即将上映
+    public static final String COMING_SOON = "https://api.douban.com/v2/movie/coming_soon";
+    //TOP250
+    public static final String TOP_250 = "https://api.douban.com/v2/movie/top250";
+    //口碑
+    public static final String WEEKLY = "https://api.douban.com/v2/movie/search?tag=%E5%B0%8F%E6%9D%8E%E5%AD%90";
+    //搜索
+    public static final String SEACHE = "https://api.douban.com/v2/movie/search";
 
     public static final int BLUE_THEME = R.color.blue;
 

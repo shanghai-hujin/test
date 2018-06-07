@@ -1,6 +1,7 @@
 package com.example.hasee.http;
 
 import com.example.hasee.bean.LoginResponse;
+import com.example.hasee.bean.MovieDataBean;
 import com.example.hasee.bean.WeatherBean;
 import com.example.hasee.http.cookies.CookiesManager;
 
@@ -21,19 +22,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @date 2018/4/26 13:33
  */
 
-public class WanAndroidHttpApi {
+public class OtherHttpApi {
 
     public final static int CONNECT_TIMEOUT = 10;
     public final static int READ_TIMEOUT = 10;
     public final static int WRITE_TIMEOUT = 10;
     private final OkHttpClient okHttpClient;
     private final Retrofit retrofit;
-    private final WanAndroidHttpSevies httpSevies;
+    private final OtherHttpSevies httpSevies;
 
 
 
     //私有构造函数
-    private WanAndroidHttpApi() {
+    private OtherHttpApi() {
 
         // 防止反射获取多个对象的漏洞
         if (null != HelperSinger.sSingletonTest) {
@@ -58,31 +59,31 @@ public class WanAndroidHttpApi {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
-        httpSevies = retrofit.create(WanAndroidHttpSevies.class);
+        httpSevies = retrofit.create(OtherHttpSevies.class);
 
 
     }
 
     //静态内部类,
     private static class HelperSinger{
-        private static WanAndroidHttpApi sSingletonTest = new WanAndroidHttpApi();
+        private static OtherHttpApi sSingletonTest = new OtherHttpApi();
     }
 
 
-    public static WanAndroidHttpApi getInstace(){
+    public static OtherHttpApi getInstace(){
         return HelperSinger.sSingletonTest;
     }
 
     //防止反序列化产生多个对象
     private Object readResolve() throws ObjectStreamException {
-        return WanAndroidHttpApi.getInstace();
+        return OtherHttpApi.getInstace();
     }
 
 
 
 
     /**
-     * 返回被观察者对象
+     * 登录
      * @param username
      * @param password
      * @return
@@ -92,8 +93,33 @@ public class WanAndroidHttpApi {
     }
 
 
-
+    /**
+     * 获取天气
+     * @param key
+     * @param location
+     * @return
+     */
     public Observable<WeatherBean> getWeather(String key , String location) {
         return httpSevies.getWeather(Common.API_Weather, key, location);
+    }
+
+
+    /**
+     * 获取 正在上映
+     * @param start
+     * @param count
+     * @param city
+     * @return
+     */
+    public Observable<MovieDataBean> getMovieInTheatersData(int start, int count, String city){
+        return httpSevies.getMovieInTheatersData(Common.IN_THEATERS, start, count, city);
+    }
+
+    /**
+     * 获取 banner
+     * @return
+     */
+    public Observable<MovieDataBean> getMovieWeekly(){
+        return httpSevies.getMovieWeekly(Common.WEEKLY);
     }
 }

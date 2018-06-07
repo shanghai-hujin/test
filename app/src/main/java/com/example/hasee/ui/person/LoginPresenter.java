@@ -2,7 +2,7 @@ package com.example.hasee.ui.person;
 
 import com.example.hasee.bean.BaseResponce;
 import com.example.hasee.bean.LoginResponse;
-import com.example.hasee.http.WanAndroidHttpApi;
+import com.example.hasee.http.OtherHttpApi;
 import com.example.hasee.ui.base.BaseObserver;
 import com.example.hasee.ui.base.BasePresenter;
 import com.example.hasee.utils.RxUtils;
@@ -18,7 +18,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView>
     @Override
     public void Login(String name, String password) {
         //这里请求网络
-        WanAndroidHttpApi.getInstace().getLoginData(name,password)
+        OtherHttpApi.getInstace().getLoginData(name,password)
                 .compose(RxUtils.<LoginResponse>rxSchedulerHelper())
                 .compose(mView.<LoginResponse>bindToLife())
                 .subscribe(new BaseObserver<LoginResponse>(mView) {

@@ -78,8 +78,6 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         Bundle args = new Bundle();
         args.putString("newsid", newsid);
         args.putInt("position", position);
-        Logger.e("newsid==" + newsid);
-        Logger.e("position==" + position);
         DetailFragment fragment = new DetailFragment();
         fragment.setArguments(args);
         return fragment;
