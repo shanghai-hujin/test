@@ -24,7 +24,7 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
                     @Override
                     public void onNext(MovieDataBean movieDataBean) {
                         if(movieDataBean != null ){
-                            mView.loadData(movieDataBean.getSubjects());
+                            mView.loadMovieData(movieDataBean.getSubjects());
                         }
                     }
                 });
@@ -38,7 +38,17 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
 
     @Override
     public void getMovieTop250(int start, int count) {
-
+        OtherHttpApi.getInstace().getMovie250(start, count)
+                .compose(RxUtils.<MovieDataBean>rxSchedulerHelper())
+                .compose(mView.<MovieDataBean>bindToLife())
+                .subscribe(new BaseObserver<MovieDataBean>(mView) {
+                    @Override
+                    public void onNext(MovieDataBean movieDataBean) {
+                        if(movieDataBean != null ){
+                            mView.loadMovieData(movieDataBean.getSubjects());
+                        }
+                    }
+                });
     }
 
     @Override
@@ -50,7 +60,7 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
                     @Override
                     public void onNext(MovieDataBean movieDataBean) {
                         if(movieDataBean != null ){
-                            mView.loadBannerData(movieDataBean.getSubjects());
+                            mView.loadMovieData(movieDataBean.getSubjects());
                         }
                     }
                 });

@@ -94,7 +94,7 @@ public interface OtherHttpSevies {
 
 
     /**
-     * 获取250电影
+     * 获取tag
      *
      * @param url
      * @param start 开始

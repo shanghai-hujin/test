@@ -122,4 +122,12 @@ public class OtherHttpApi {
     public Observable<MovieDataBean> getMovieWeekly(){
         return httpSevies.getMovieWeekly(Common.WEEKLY);
     }
+
+    /**
+     * 获取 250
+     * @return
+     */
+    public Observable<MovieDataBean> getMovie250(int start, int count){
+        return httpSevies.getMovieTop250(Common.TOP_250, start, count);
+    }
 }

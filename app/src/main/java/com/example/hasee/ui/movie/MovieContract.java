@@ -19,7 +19,7 @@ public interface MovieContract {
          *
          * @param itemBeanList
          */
-        void loadData(List<MovieDataBean.SubjectsBean> itemBeanList);
+        void loadMovieData(List<MovieDataBean.SubjectsBean> itemBeanList);
 
         /**
          * 错误信息
@@ -27,13 +27,6 @@ public interface MovieContract {
          */
         void loadMovieError(String err);
 
-
-        /**
-         * 加载banner  口碑榜的五个数据
-         *
-         * @param itemBeanList
-         */
-        void loadBannerData(List<MovieDataBean.SubjectsBean> itemBeanList);
     }
 
     interface MoviePresenter extends BaseContract.BasePresenter<MovieView>{

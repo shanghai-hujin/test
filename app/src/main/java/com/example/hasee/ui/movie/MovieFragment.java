@@ -22,6 +22,7 @@ import android.widget.ViewSwitcher;
 import com.example.hasee.R;
 import com.example.hasee.bean.MovieDataBean;
 import com.example.hasee.ui.adpater.MovieHorizontalAdapter;
+import com.example.hasee.ui.adpater.MoviePagerAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.BitmapUtil;
 import com.example.hasee.widget.NoScrollViewPager;
@@ -65,6 +66,7 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
     private MovieHorizontalAdapter mMovieHorizontalAdapter;
     private int mCurrentItemOffset;
     private BannerScaleHelper mBannerScaleHelper = null;
+    private String[] mTitleLists = {"dd","dd","dd","dd","dd","dd","dd","dd","dd","dd"};
 
     public static MovieFragment newInstance(String param1) {
         Bundle args = new Bundle();
@@ -87,7 +89,47 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
         mCtlMovie.setExpandedTitleColor(Color.parseColor("#00ffffff"));//设置还没收缩时状态下字体颜色
+        initImage();
+        initRecyleview();
+        initTab();
 
+    }
+
+    /**
+     * 订装viewpager
+     */
+    private void initTab() {
+        MoviePagerAdapter moviePagerAdapter = new MoviePagerAdapter(getChildFragmentManager(), mTitleLists);
+        mVpMovie.setAdapter(moviePagerAdapter);
+        mVpMovie.setOffscreenPageLimit(0);
+        mVpMovie.setCurrentItem(0);
+        mStlMovie.setViewPager(mVpMovie);
+    }
+
+    /**
+     * 初始化recyleview
+     */
+    private void initRecyleview() {
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mBannerMovie.setLayoutManager(linearLayoutManager);
+
+        new LinearSnapHelper().attachToRecyclerView(mBannerMovie);
+        mMovieHorizontalAdapter = new MovieHorizontalAdapter( getContext(),itemBeanList);
+        mBannerMovie.setAdapter(mMovieHorizontalAdapter);
+
+        // mRecyclerView绑定scale效果
+        mBannerScaleHelper = new BannerScaleHelper();
+        mBannerScaleHelper.setFirstItemPos(1000);
+        mBannerMovie.setOnFlingListener(null);
+        if(mBannerMovie != null){
+            mBannerScaleHelper.attachToRecyclerView(mBannerMovie);
+        }
+    }
+
+    /**
+     * 初始化switchimage
+     */
+    private void initImage() {
         Animation fadeIn = new AlphaAnimation(0.5f, 1);
         fadeIn.setDuration(500);
         mImageSwitcher.setInAnimation(fadeIn);
@@ -107,21 +149,6 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
                 return imageView;
             }
         });
-
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        mBannerMovie.setLayoutManager(linearLayoutManager);
-
-        new LinearSnapHelper().attachToRecyclerView(mBannerMovie);
-        mMovieHorizontalAdapter = new MovieHorizontalAdapter( getContext(),itemBeanList);
-        mBannerMovie.setAdapter(mMovieHorizontalAdapter);
-
-        // mRecyclerView绑定scale效果
-        mBannerScaleHelper = new BannerScaleHelper();
-        mBannerScaleHelper.setFirstItemPos(1000);
-        mBannerMovie.setOnFlingListener(null);
-        if(mBannerMovie != null){
-            mBannerScaleHelper.attachToRecyclerView(mBannerMovie);
-        }
     }
 
 
@@ -131,24 +158,11 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
     }
 
     @Override
-    public void loadData(List<MovieDataBean.SubjectsBean> itemBeanList) {
-        if(itemBeanList.size() > 0){
-
-
-        }
-    }
-
-    @Override
-    public void loadMovieError(String err) {
-
-    }
-
-    @Override
-    public void loadBannerData(List<MovieDataBean.SubjectsBean> itemBeanList) {
+    public void loadMovieData(List<MovieDataBean.SubjectsBean> itemBeanList) {
         if(itemBeanList.size() == 0){
             return;
         }
-      //  mMovieHorizontalAdapter.addData(itemBeanList);
+        //  mMovieHorizontalAdapter.addData(itemBeanList);
 
         mMovieHorizontalAdapter.setSubjectsBeanList(itemBeanList);
         mMovieHorizontalAdapter.notifyDataSetChanged();
@@ -188,6 +202,12 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
         });
 
     }
+
+    @Override
+    public void loadMovieError(String err) {
+
+    }
+
 
 
 }
