@@ -7,13 +7,16 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.FrameLayout;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.example.hasee.R;
@@ -22,7 +25,8 @@ import com.example.hasee.ui.adpater.MovieHorizontalAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.BitmapUtil;
 import com.example.hasee.widget.NoScrollViewPager;
-import com.example.hasee.widget.ScalableCardHelper;
+import com.example.hasee.widget.recyclebanner.BannerRecyclerView;
+import com.example.hasee.widget.recyclebanner.BannerScaleHelper;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import java.io.IOException;
@@ -30,16 +34,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by HASEE on 2018/4/29.
  */
 
 public class MovieFragment extends BaseFragment<MoviePresenter> implements
-        MovieContract.MovieView, ScalableCardHelper.OnPageChangeListener {
+        MovieContract.MovieView {
 
     @BindView(R.id.banner_movie)
-    RecyclerView mBannerMovie;
+    BannerRecyclerView mBannerMovie;
     @BindView(R.id.toolbar_movie)
     Toolbar mToolbarMovie;
     @BindView(R.id.ctl_movie)
@@ -50,12 +56,15 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
     NoScrollViewPager mVpMovie;
     @BindView(R.id.image_switcher)
     ImageSwitcher mImageSwitcher;
+    @BindView(R.id.tv_bannar_title)
+    TextView tv_bannar_title;
 
     private List<String> mBannerUrlList = new ArrayList<>();
     private List<String> mBannerTitleList = new ArrayList<>();
     private List<MovieDataBean.SubjectsBean> itemBeanList = new ArrayList<>();
     private MovieHorizontalAdapter mMovieHorizontalAdapter;
     private int mCurrentItemOffset;
+    private BannerScaleHelper mBannerScaleHelper = null;
 
     public static MovieFragment newInstance(String param1) {
         Bundle args = new Bundle();
@@ -90,21 +99,29 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
             @Override
             public View makeView() {
                 ImageView imageView = new ImageView(getActivity());
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                imageView.setLayoutParams(params);
                 return imageView;
             }
         });
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mBannerMovie.setLayoutManager(linearLayoutManager);
 
         new LinearSnapHelper().attachToRecyclerView(mBannerMovie);
-        mMovieHorizontalAdapter = new MovieHorizontalAdapter(itemBeanList, getContext());
+        mMovieHorizontalAdapter = new MovieHorizontalAdapter( getContext(),itemBeanList);
         mBannerMovie.setAdapter(mMovieHorizontalAdapter);
 
-        ScalableCardHelper cardHelper = new ScalableCardHelper(this);
-        cardHelper.attachToRecyclerView(mBannerMovie);
-
+        // mRecyclerView绑定scale效果
+        mBannerScaleHelper = new BannerScaleHelper();
+        mBannerScaleHelper.setFirstItemPos(1000);
+        mBannerMovie.setOnFlingListener(null);
+        if(mBannerMovie != null){
+            mBannerScaleHelper.attachToRecyclerView(mBannerMovie);
+        }
     }
 
 
@@ -132,22 +149,45 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
             return;
         }
       //  mMovieHorizontalAdapter.addData(itemBeanList);
-        itemBeanList.clear();
-        itemBeanList.addAll(itemBeanList);
+
+        mMovieHorizontalAdapter.setSubjectsBeanList(itemBeanList);
         mMovieHorizontalAdapter.notifyDataSetChanged();
 
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-        Bitmap bitmap = null;
         try {
-            bitmap = BitmapUtil.blurBitmap(BitmapUtil.getNetBitmap(itemBeanList.get(position).getImages().getMedium()),
-                    25 , getContext());
+            Observable<Bitmap> netBitmap = BitmapUtil.getNetBitmap(itemBeanList.get(1000 % itemBeanList.size()).getImages().getMedium());
+            netBitmap.subscribe(new Consumer<Bitmap>() {
+                @Override
+                public void accept(Bitmap bitmap) throws Exception {
+                    bitmap = BitmapUtil.fastblur(bitmap,20);
+                    mImageSwitcher.setImageDrawable(new BitmapDrawable(getResources(),bitmap));
+                }
+            });
+            tv_bannar_title.setText(itemBeanList.get(1000 % itemBeanList.size()).getTitle());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mImageSwitcher.setImageDrawable(new BitmapDrawable(getResources(),bitmap));
+
+        mBannerMovie.setOnPageChangeListener(new BannerRecyclerView.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                try {
+                    Observable<Bitmap> netBitmap = BitmapUtil.getNetBitmap(itemBeanList.get(position % itemBeanList.size()).getImages().getMedium());
+                    netBitmap.subscribe(new Consumer<Bitmap>() {
+                        @Override
+                        public void accept(Bitmap bitmap) throws Exception {
+                            bitmap = BitmapUtil.fastblur(bitmap,20);
+                            mImageSwitcher.setImageDrawable(new BitmapDrawable(getResources(),bitmap));
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Log.e("tag", "position=="+position);
+                tv_bannar_title.setText(itemBeanList.get(position % itemBeanList.size()).getTitle());
+            }
+        });
+
     }
+
+
 }

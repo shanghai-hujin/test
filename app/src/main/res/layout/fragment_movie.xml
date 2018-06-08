@@ -22,6 +22,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
@@ -32,14 +33,26 @@
                 <ImageSwitcher
                     android:id="@+id/image_switcher"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:scaleType="fitXY"
+                    android:layout_height="280dp"/>
 
-                <android.support.v7.widget.RecyclerView
+                <com.example.hasee.widget.recyclebanner.BannerRecyclerView
                     android:id="@+id/banner_movie"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="260dp"
                     android:layout_gravity="center"
                     />
+
+                <TextView
+                    android:id="@+id/tv_bannar_title"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="13sp"
+                    android:layout_gravity="right|bottom"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
             </FrameLayout>
             <android.support.v7.widget.Toolbar
