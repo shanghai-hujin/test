@@ -33,7 +33,17 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
 
     @Override
     public void getMovieComingSoon(int start, int count) {
-
+        OtherHttpApi.getInstace().getMovieComingSoon(start, count)
+                .compose(RxUtils.<MovieDataBean>rxSchedulerHelper())
+                .compose(mView.<MovieDataBean>bindToLife())
+                .subscribe(new BaseObserver<MovieDataBean>(mView) {
+                    @Override
+                    public void onNext(MovieDataBean movieDataBean) {
+                        if (movieDataBean != null) {
+                            mView.loadMovieData(movieDataBean.getSubjects());
+                        }
+                    }
+                });
     }
 
     @Override
@@ -69,6 +79,16 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
 
     @Override
     public void getMovieSearch(int start, int count, String q, String tag) {
-
+        OtherHttpApi.getInstace().getMovieSearch(start, count, q, tag)
+                .compose(RxUtils.<MovieDataBean>rxSchedulerHelper())
+                .compose(mView.<MovieDataBean>bindToLife())
+                .subscribe(new BaseObserver<MovieDataBean>(mView) {
+                    @Override
+                    public void onNext(MovieDataBean movieDataBean) {
+                        if (movieDataBean != null) {
+                            mView.loadMovieData(movieDataBean.getSubjects());
+                        }
+                    }
+                });
     }
 }

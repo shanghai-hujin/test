@@ -34,6 +34,13 @@ public interface OtherHttpSevies {
     Observable<LoginResponse> getLoginData(@Field("username") String username, @Field("password") String password);
 
 
+    /**
+     * 获取天气
+     * @param url
+     * @param areaid
+     * @param location
+     * @return
+     */
     @GET
     Observable<WeatherBean> getWeather(@Url String url,
                                        @Query("key") String areaid,

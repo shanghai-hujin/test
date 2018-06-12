@@ -66,7 +66,8 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
     private MovieHorizontalAdapter mMovieHorizontalAdapter;
     private int mCurrentItemOffset;
     private BannerScaleHelper mBannerScaleHelper = null;
-    private String[] mTitleLists = {"dd","dd","dd","dd","dd","dd","dd","dd","dd","dd"};
+    private String[] mTitleLists = {"Top250","正在上映","即将上映","喜剧","爱情",
+            "动作","科幻","悬疑","动画","剧情"};
 
     public static MovieFragment newInstance(String param1) {
         Bundle args = new Bundle();
@@ -208,6 +209,10 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
 
     }
 
+    @Override
+    public void loadNoMoreData(String err) {
+
+    }
 
 
 }

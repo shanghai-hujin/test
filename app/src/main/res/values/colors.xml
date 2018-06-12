@@ -13,6 +13,7 @@
 
     <color name="bg_press">#ebebeb</color>\
     <color name="bg_press_material">#d4d4d4</color>
+    <color name="bg_tab">#FFA07A</color>
 
     <color name="while_most_color">#e4e4e4</color>
     <color name="status_bar_color">#ffce3d3a</color>

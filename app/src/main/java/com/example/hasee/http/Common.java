@@ -40,6 +40,7 @@ public class Common {
     //搜索
     public static final String SEACHE = "https://api.douban.com/v2/movie/search";
 
+
     public static final int BLUE_THEME = R.color.blue;
 
     public static final int GREEN_THEME = android.R.color.holo_green_light;
@@ -47,6 +48,8 @@ public class Common {
     public static final int RED_THEME = android.R.color.holo_red_light;
 
     public static final int ORANGE_THEME = android.R.color.holo_orange_light;
+
+    public static final int COLORPRIMARY = R.color.colorPrimary;
 
     public static final String uid = "863058036126104";
 

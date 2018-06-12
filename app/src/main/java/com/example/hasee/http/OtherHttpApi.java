@@ -103,6 +103,15 @@ public class OtherHttpApi {
         return httpSevies.getWeather(Common.API_Weather, key, location);
     }
 
+    /**
+     * 获取 获取tag
+     * @param start
+     * @param count
+     * @return
+     */
+    public Observable<MovieDataBean> getMovieSearch(int start, int count, String q, String tag){
+        return httpSevies.getMovieSearch(Common.SEACHE, start, count, q, tag);
+    }
 
     /**
      * 获取 正在上映
@@ -114,6 +123,18 @@ public class OtherHttpApi {
     public Observable<MovieDataBean> getMovieInTheatersData(int start, int count, String city){
         return httpSevies.getMovieInTheatersData(Common.IN_THEATERS, start, count, city);
     }
+
+    /**
+     * 获取 即将上映
+     * @param start
+     * @param count
+     * @return
+     */
+    public Observable<MovieDataBean> getMovieComingSoon(int start, int count){
+        return httpSevies.getMovieComingSoon(Common.COMING_SOON, start, count);
+    }
+
+
 
     /**
      * 获取 banner

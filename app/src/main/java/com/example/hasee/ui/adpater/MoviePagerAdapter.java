@@ -25,7 +25,7 @@ public class MoviePagerAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public BaseFragment getItem(int position) {
-        return MovieDetailFragment.newInstance(position);
+        return MovieDetailFragment.newInstance(position, mStrings);
     }
 
     @Override

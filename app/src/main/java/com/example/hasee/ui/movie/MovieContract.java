@@ -27,6 +27,13 @@ public interface MovieContract {
          */
         void loadMovieError(String err);
 
+
+        /**
+         * 没有更多信息
+         * @param err
+         */
+        void loadNoMoreData(String err);
+
     }
 
     interface MoviePresenter extends BaseContract.BasePresenter<MovieView>{
