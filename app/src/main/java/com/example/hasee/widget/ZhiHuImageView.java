@@ -7,6 +7,8 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 /**
  * Demo ${CLASS}
  *
@@ -14,7 +16,7 @@ import android.util.Log;
  * @date 2017/12/5 17:50
  */
 
-public class ZhiHuImageView extends AppCompatImageView {
+public class ZhiHuImageView extends SimpleDraweeView {
 
     /**
      * 测量的实际最小高度

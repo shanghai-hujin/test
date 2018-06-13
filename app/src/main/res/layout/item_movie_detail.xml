@@ -8,13 +8,13 @@
               android:orientation="vertical"
               android:paddingLeft="5dp"
               android:paddingTop="5dp">
-   <!-- <com.example.hasee.widget.ZhiHuImageView
+    <com.example.hasee.widget.ZhiHuImageView
         android:id="@+id/zh_img"
         android:scaleType="matrix"
+        fresco:actualImageScaleType="fitXY"
         android:visibility="gone"
-        android:src="@mipmap/shuaige"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>-->
+        android:layout_height="180dp"/>
     <LinearLayout
         android:id="@+id/ll_item"
         android:layout_width="match_parent"

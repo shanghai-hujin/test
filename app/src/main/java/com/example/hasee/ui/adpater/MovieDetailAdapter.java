@@ -2,6 +2,7 @@ package com.example.hasee.ui.adpater;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -35,18 +36,17 @@ public class MovieDetailAdapter extends BaseQuickAdapter<MovieDataBean.SubjectsB
 
         int position = helper.getPosition();
 
+        LinearLayout llItem = helper.getView(R.id.ll_item);
+        ZhiHuImageView zhiHuImageView = helper.getView(R.id.zh_img);
+        if (position > 0 && position % 4 == 0) {
 
-        /*if (position > 0 && position % 4 == 0) {
-            helper.setVisible(R.id.ll_item, false);
-            helper.setVisible(R.id.zh_img, true);
-            String url ="http://imgstore04.cdn.sogou.com/app/a/100520024/877e990117d6a7ebc68f46c5e76fc47a";
-            String url1 ="https://raw.githubusercontent.com/hongyangAndroid/demo_rvadimage/master/rvimageads/src/main/res/mipmap-xxhdpi/gril.jpg";
-            zhiHuImageView = helper.getView(R.id.zh_img);
-            //FrescoUtils.setController(url, zhiHuImageView);
+            llItem.setVisibility(View.GONE);
+            zhiHuImageView.setVisibility(View.VISIBLE);
+            FrescoUtils.setController(data.getImages().getLarge(), zhiHuImageView);
         } else {
-            helper.setVisible(R.id.ll_item, true);
-            helper.setVisible(R.id.zh_img, false);
-        }*/
+            llItem.setVisibility(View.VISIBLE);
+            zhiHuImageView.setVisibility(View.GONE);
+        }
 
         helper.setText(R.id.tv_one_title, data.getTitle())
                 .setText(R.id.tv_one_directors, ContextUtils.formatName(data.getDirectors()))

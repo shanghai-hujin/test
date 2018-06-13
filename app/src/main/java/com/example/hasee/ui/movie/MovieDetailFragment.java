@@ -3,6 +3,7 @@ package com.example.hasee.ui.movie;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.example.hasee.R;
@@ -10,6 +11,7 @@ import com.example.hasee.bean.MovieDataBean;
 import com.example.hasee.http.Common;
 import com.example.hasee.ui.adpater.MovieDetailAdapter;
 import com.example.hasee.ui.base.BaseFragment;
+import com.example.hasee.widget.ZhiHuImageView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -65,6 +67,26 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
         mMovieDetailAdapter = new MovieDetailAdapter(getContext(), mSubjectsBeans);
         mRvMovieDetail.setAdapter(mMovieDetailAdapter);
 
+        mRvMovieDetail.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //第一个可见item
+                int fPos = linearLayoutManager.findFirstVisibleItemPosition();
+                //最后个可见item
+                int lPos = linearLayoutManager.findLastCompletelyVisibleItemPosition();
+                for (int i = fPos; i <= lPos; i++) {
+                    //从可见的item找到显示的图片的item
+                    View view = linearLayoutManager.findViewByPosition(i);
+                    ZhiHuImageView adImageView = (ZhiHuImageView) view.findViewById(R.id.zh_img);
+                    if (adImageView.getVisibility() == View.VISIBLE) {
+                        adImageView.setDy((int) ((linearLayoutManager.getHeight() - view.getTop())*1.1));
+                        Log.e("Tag","linearLayoutManager.getHeight()=="+linearLayoutManager.getHeight());
+                        Log.e("Tag","view.getTop()=="+view.getTop());
+                    }
+                }
+            }
+        });
         mSlMovie.setPrimaryColorsId(Common.COLORPRIMARY, R.color.white);
         mSlMovie.setEnableLoadMore(true)
                 .setEnableRefresh(true)
