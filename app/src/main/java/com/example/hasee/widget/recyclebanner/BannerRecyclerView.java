@@ -12,7 +12,6 @@ import java.util.List;
  * 控制fling速度的RecyclerView
  * <p>
  * Created by jameson on 9/1/16.
- * changed by 二精-霁雪清虹 on 2017/11/19
  */
 public class BannerRecyclerView extends RecyclerView {
 

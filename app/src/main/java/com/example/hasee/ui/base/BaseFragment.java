@@ -184,6 +184,10 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
         Toasty.error(getActivity(), err, 1).show();
     }
 
+    protected void sucToast(String scs) {
+        Toasty.success(getActivity(), scs, 1).show();
+    }
+
 
     @Override
     public <T> LifecycleTransformer<T> bindToLife() {

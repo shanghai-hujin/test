@@ -24,7 +24,19 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
                     @Override
                     public void onNext(MovieDataBean movieDataBean) {
                         if(movieDataBean != null ){
-                            mView.loadMovieData(movieDataBean.getSubjects());
+                            //总数量
+                            int total = movieDataBean.getTotal();
+                            //开始下标
+                            int start = movieDataBean.getStart();
+                            //请求数量
+                            int count = movieDataBean.getCount();
+                            if(movieDataBean.getSubjects().size() == 0){
+                                //没有数据了
+                                mView.loadNoMoreData(total+"条数据已经全部加载完了");
+                                return;
+                            }
+
+                            mView.loadMovieData(movieDataBean.getSubjects(),start+count);
                         }
                     }
                 });
@@ -40,7 +52,19 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
                     @Override
                     public void onNext(MovieDataBean movieDataBean) {
                         if (movieDataBean != null) {
-                            mView.loadMovieData(movieDataBean.getSubjects());
+                            //总数量
+                            int total = movieDataBean.getTotal();
+                            //开始下标
+                            int start = movieDataBean.getStart();
+                            //请求数量
+                            int count = movieDataBean.getCount();
+                            if(movieDataBean.getSubjects().size() == 0){
+                                //没有数据了
+                                mView.loadNoMoreData(total+"条数据已经全部加载完了");
+                                return;
+                            }
+
+                            mView.loadMovieData(movieDataBean.getSubjects(),start+count);
                         }
                     }
                 });
@@ -55,7 +79,19 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
                     @Override
                     public void onNext(MovieDataBean movieDataBean) {
                         if(movieDataBean != null ){
-                            mView.loadMovieData(movieDataBean.getSubjects());
+                            //总数量
+                            int total = movieDataBean.getTotal();
+                            //开始下标
+                            int start = movieDataBean.getStart();
+                            //请求数量
+                            int count = movieDataBean.getCount();
+                            if(movieDataBean.getSubjects().size() == 0){
+                                //没有数据了
+                                mView.loadNoMoreData(total+"条数据已经全部加载完了");
+                                return;
+                            }
+
+                            mView.loadMovieData(movieDataBean.getSubjects(),start+count);
                         }
                     }
                 });
@@ -70,7 +106,19 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
                     @Override
                     public void onNext(MovieDataBean movieDataBean) {
                         if(movieDataBean != null ){
-                            mView.loadMovieData(movieDataBean.getSubjects());
+                            //总数量
+                            int total = movieDataBean.getTotal();
+                            //开始下标
+                            int start = movieDataBean.getStart();
+                            //请求数量
+                            int count = movieDataBean.getCount();
+                            if(movieDataBean.getSubjects().size() == 0){
+                                //没有数据了
+                                mView.loadNoMoreData(total+"条数据已经全部加载完了");
+                                return;
+                            }
+
+                            mView.loadMovieData(movieDataBean.getSubjects(),start+count);
                         }
                     }
                 });
@@ -86,7 +134,19 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
                     @Override
                     public void onNext(MovieDataBean movieDataBean) {
                         if (movieDataBean != null) {
-                            mView.loadMovieData(movieDataBean.getSubjects());
+                            //总数量
+                            int total = movieDataBean.getTotal();
+                            //开始下标
+                            int start = movieDataBean.getStart();
+                            //请求数量
+                            int count = movieDataBean.getCount();
+                            if(movieDataBean.getSubjects().size() == 0){
+                                //没有数据了
+                                mView.loadNoMoreData(total+"条数据已经全部加载完了");
+                                return;
+                            }
+
+                            mView.loadMovieData(movieDataBean.getSubjects(),start+count);
                         }
                     }
                 });

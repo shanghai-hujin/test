@@ -19,7 +19,7 @@ public interface MovieContract {
          *
          * @param itemBeanList
          */
-        void loadMovieData(List<MovieDataBean.SubjectsBean> itemBeanList);
+        void loadMovieData(List<MovieDataBean.SubjectsBean> itemBeanList,int newStart);
 
         /**
          * 错误信息

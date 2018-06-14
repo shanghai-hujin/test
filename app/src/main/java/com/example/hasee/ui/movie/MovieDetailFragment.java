@@ -43,6 +43,7 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
     private int position;
     private int start = 0;
     private int count = 20;
+    private int nowSize;
 
     public static MovieDetailFragment newInstance(int position, String[] titleList) {
         Bundle args = new Bundle();
@@ -97,7 +98,7 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
                         mSlMovie.finishRefresh(2500);
                         switch (position) {
                             case 0:
-                                mPresenter.getMovieTop250(start, count);
+                                mPresenter.getMovieTop250(0, count);
                                 break;
                             case 1:
                                 mPresenter.getMovieInTheatersData(0, count, "上海");
@@ -133,6 +134,38 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
                 mSlMovie.finishLoadMore(2500);
+                switch (position) {
+                    case 0:
+                        mPresenter.getMovieTop250(nowSize, count);
+                        break;
+                    case 1:
+                        mPresenter.getMovieInTheatersData(nowSize, count, "上海");
+                        break;
+                    case 2:
+                        mPresenter.getMovieComingSoon(nowSize, count);
+                        break;
+                    case 3:
+                        mPresenter.getMovieSearch(nowSize, count, "", "喜剧");
+                        break;
+                    case 4:
+                        mPresenter.getMovieSearch(nowSize, count, "", "爱情");
+                        break;
+                    case 5:
+                        mPresenter.getMovieSearch(nowSize, count, "", "动作");
+                        break;
+                    case 6:
+                        mPresenter.getMovieSearch(nowSize, count, "", "科幻");
+                        break;
+                    case 7:
+                        mPresenter.getMovieSearch(nowSize, count, "", "悬疑");
+                        break;
+                    case 8:
+                        mPresenter.getMovieSearch(nowSize, count, "", "动画");
+                        break;
+                    case 9:
+                        mPresenter.getMovieSearch(nowSize, count, "", "剧情");
+                        break;
+                }
             }
         });
     }
@@ -187,10 +220,12 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
     }
 
     @Override
-    public void loadMovieData(List<MovieDataBean.SubjectsBean> itemBeanList) {
+    public void loadMovieData(List<MovieDataBean.SubjectsBean> itemBeanList, int newStart) {
         if (itemBeanList.size() <= 0) {
             return;
         }
+        sucToast(String.format("更新了%1$s条电影咨询",itemBeanList.size()+""));
+        nowSize = newStart;
         hideLoadingDialog();
         mMovieDetailAdapter.addData(itemBeanList);
     }
@@ -202,6 +237,7 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
 
     @Override
     public void loadNoMoreData(String err) {
-
+        mSlMovie.finishLoadMore();
+        errToast(err);
     }
 }

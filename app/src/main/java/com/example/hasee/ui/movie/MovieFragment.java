@@ -159,7 +159,7 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
     }
 
     @Override
-    public void loadMovieData(List<MovieDataBean.SubjectsBean> itemBeanList) {
+    public void loadMovieData(List<MovieDataBean.SubjectsBean> itemBeanList, int newStart) {
         if(itemBeanList.size() == 0){
             return;
         }
