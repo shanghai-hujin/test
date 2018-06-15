@@ -34,6 +34,12 @@ public interface MovieContract {
          */
         void loadNoMoreData(String err);
 
+        /**
+         * 没有更多信息
+         * @param itemBeanList
+         */
+        void loadRefreshMoreData(List<MovieDataBean.SubjectsBean> itemBeanList);
+
     }
 
     interface MoviePresenter extends BaseContract.BasePresenter<MovieView>{

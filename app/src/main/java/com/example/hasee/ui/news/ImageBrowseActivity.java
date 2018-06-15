@@ -70,8 +70,11 @@ public class ImageBrowseActivity extends BaseActivity<ReadContentsPresenter> imp
         return R.layout.activity_imagebrowse;
     }
 
+
+
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
+        StatusBarUtil.setWindowStatusBarColor(this,android.R.color.black);
         StatusBarUtil.setColor(this, ContextCompat.getColor(this, android.R.color.black));
         mSwipeBackHelper.setSwipeBackEnable(true);
         mClImg.getBackground().setAlpha(255);

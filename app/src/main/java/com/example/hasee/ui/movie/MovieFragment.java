@@ -214,5 +214,10 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
 
     }
 
+    @Override
+    public void loadRefreshMoreData(List<MovieDataBean.SubjectsBean> itemBeanList) {
+
+    }
+
 
 }

@@ -81,9 +81,9 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
                     View view = linearLayoutManager.findViewByPosition(i);
                     ZhiHuImageView adImageView = (ZhiHuImageView) view.findViewById(R.id.zh_img);
                     if (adImageView.getVisibility() == View.VISIBLE) {
-                        adImageView.setDy((int) ((linearLayoutManager.getHeight() - view.getTop())*1.1));
-                        Log.e("Tag","linearLayoutManager.getHeight()=="+linearLayoutManager.getHeight());
-                        Log.e("Tag","view.getTop()=="+view.getTop());
+                        adImageView.setDy((int) ((linearLayoutManager.getHeight() - view.getTop()) * 1.1));
+                        Log.e("Tag", "linearLayoutManager.getHeight()==" + linearLayoutManager.getHeight());
+                        Log.e("Tag", "view.getTop()==" + view.getTop());
                     }
                 }
             }
@@ -165,6 +165,8 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
                     case 9:
                         mPresenter.getMovieSearch(nowSize, count, "", "剧情");
                         break;
+                    default:
+                        break;
                 }
             }
         });
@@ -179,7 +181,7 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
         showLoadingDialog();
         switch (position) {
             case 0:
-                mPresenter.getMovieTop250(start, count);
+                mPresenter.getMovieTop250(0, count);
                 break;
             case 1:
                 mPresenter.getMovieInTheatersData(0, count, "上海");
@@ -208,8 +210,8 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
             case 9:
                 mPresenter.getMovieSearch(0, count, "", "剧情");
                 break;
-
-
+            default:
+                break;
         }
 
     }
@@ -224,7 +226,7 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
         if (itemBeanList.size() <= 0) {
             return;
         }
-        sucToast(String.format("更新了%1$s条电影咨询",itemBeanList.size()+""));
+        sucToast(String.format("加载了%1$s条电影咨询", itemBeanList.size() + ""));
         nowSize = newStart;
         hideLoadingDialog();
         mMovieDetailAdapter.addData(itemBeanList);
@@ -239,5 +241,16 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
     public void loadNoMoreData(String err) {
         mSlMovie.finishLoadMore();
         errToast(err);
+    }
+
+    @Override
+    public void loadRefreshMoreData(List<MovieDataBean.SubjectsBean> itemBeanList) {
+        if (itemBeanList.size() <= 0) {
+            return;
+        }
+        mSubjectsBeans.clear();
+        mSubjectsBeans.addAll(itemBeanList);
+        hideLoadingDialog();
+        mMovieDetailAdapter.notifyDataSetChanged();
     }
 }

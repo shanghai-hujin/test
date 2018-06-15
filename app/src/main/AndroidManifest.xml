@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
+
     <application
         android:name=".ui.MyApplication"
         android:allowBackup="true"
@@ -17,40 +18,52 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ui.main.MainActivity"
-                  android:screenOrientation="portrait"
-                  >
+
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1"/>
+
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:resizeableActivity="true"
+            android:screenOrientation="portrait"
+        >
 
         </activity>
         <activity
             android:name=".ui.person.LoginActivity"
             android:hardwareAccelerated="true"
+            android:resizeableActivity="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity
             android:name=".ui.news.ReadTextActivity"
+            android:resizeableActivity="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity
             android:name=".ui.news.AdvertActivity"
+            android:resizeableActivity="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity
             android:name=".ui.news.ImageBrowseActivity"
+            android:resizeableActivity="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity
             android:name=".ui.WelcomeActivity"
-            android:theme="@style/NoTitleFullscreen"
-            android:screenOrientation="portrait">
+            android:resizeableActivity="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleFullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
