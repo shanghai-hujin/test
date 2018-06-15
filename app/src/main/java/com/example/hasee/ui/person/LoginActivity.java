@@ -91,7 +91,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
 
     @Override
     public boolean isSupportSwipeBack() {
-        return true;
+        return false;
     }
 
     @OnClick({R.id.bt_go, R.id.fab, R.id.ib_login_weibo, R.id.ib_login_wx,
