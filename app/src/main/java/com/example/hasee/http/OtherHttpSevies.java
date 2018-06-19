@@ -1,5 +1,6 @@
 package com.example.hasee.http;
 
+import com.example.hasee.bean.HistoryTodayBean;
 import com.example.hasee.bean.LoginResponse;
 import com.example.hasee.bean.MovieDataBean;
 import com.example.hasee.bean.WeatherBean;
@@ -116,4 +117,12 @@ public interface OtherHttpSevies {
                                            @Query("count") int count,
                                            @Query("q") String q,
                                            @Query("tag") String tag);
+
+    /**
+     * 获取历史上的今天
+     * @param url
+     * @return
+     */
+    @GET
+    Observable<HistoryTodayBean> getHistoryOfToday(@Url String url);
 }

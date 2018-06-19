@@ -227,9 +227,10 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
             return;
         }
         sucToast(String.format("加载了%1$s条电影咨询", itemBeanList.size() + ""));
+        mSubjectsBeans.addAll(itemBeanList);
         nowSize = newStart;
         hideLoadingDialog();
-        mMovieDetailAdapter.addData(itemBeanList);
+        mMovieDetailAdapter.notifyDataSetChanged();
     }
 
     @Override

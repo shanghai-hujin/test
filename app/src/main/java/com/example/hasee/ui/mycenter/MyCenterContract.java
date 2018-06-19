@@ -1,6 +1,7 @@
 package com.example.hasee.ui.mycenter;
 
 import com.example.hasee.bean.DataActivityBean;
+import com.example.hasee.bean.HistoryTodayBean;
 import com.example.hasee.ui.base.BaseContract;
 
 import java.util.List;
@@ -20,9 +21,16 @@ public interface MyCenterContract {
         void loadNullData();
 
         void loadData(List<DataActivityBean> dataActivityBeanList);
+
+        void loadHittoryData(HistoryTodayBean historyTodayBean);
     }
 
     interface MyCenterPresenter extends BaseContract.BasePresenter<MyCenterView>{
         void getDateActivity();
+
+        /**
+         * 获取历史的今天
+         */
+        void getHistoruOfToday();
     }
 }

@@ -1,8 +1,12 @@
 package com.example.hasee.ui.mycenter;
 
 import com.example.hasee.bean.DataActivityBean;
+import com.example.hasee.bean.HistoryTodayBean;
 import com.example.hasee.dao.DataActivityDao;
+import com.example.hasee.http.OtherHttpApi;
+import com.example.hasee.ui.base.BaseObserver;
 import com.example.hasee.ui.base.BasePresenter;
+import com.example.hasee.utils.RxUtils;
 
 import java.util.List;
 
@@ -28,5 +32,19 @@ public class MyCenterPresenter extends BasePresenter<MyCenterContract.MyCenterVi
             //数据库有数据
             mView.loadData(dataActivityBeanList);
         }
+    }
+
+    @Override
+    public void getHistoruOfToday() {
+        OtherHttpApi.getInstace().getHistoryOfToday()
+                .compose(RxUtils.<HistoryTodayBean>rxSchedulerHelper())
+                .compose(mView.<HistoryTodayBean>bindToLife())
+                .subscribe(new BaseObserver<HistoryTodayBean>(mView) {
+                    @Override
+                    public void onNext(HistoryTodayBean historyTodayBean) {
+                        mView.loadHittoryData(historyTodayBean);
+                    }
+                });
+
     }
 }

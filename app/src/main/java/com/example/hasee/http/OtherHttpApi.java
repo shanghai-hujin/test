@@ -1,5 +1,6 @@
 package com.example.hasee.http;
 
+import com.example.hasee.bean.HistoryTodayBean;
 import com.example.hasee.bean.LoginResponse;
 import com.example.hasee.bean.MovieDataBean;
 import com.example.hasee.bean.WeatherBean;
@@ -150,5 +151,13 @@ public class OtherHttpApi {
      */
     public Observable<MovieDataBean> getMovie250(int start, int count){
         return httpSevies.getMovieTop250(Common.TOP_250, start, count);
+    }
+
+    /**
+     * 获取 250
+     * @return
+     */
+    public Observable<HistoryTodayBean> getHistoryOfToday(){
+        return httpSevies.getHistoryOfToday("https://api.lylares.com/history/query");
     }
 }

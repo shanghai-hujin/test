@@ -12,6 +12,10 @@ import android.widget.TextView;
 import com.example.hasee.R;
 import com.example.hasee.utils.DialogHelper;
 import com.example.hasee.widget.stateview.MultipleStatusView;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.MaterialDialog;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 
 import butterknife.BindView;
@@ -187,6 +191,7 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
     protected void sucToast(String scs) {
         Toasty.success(getActivity(), scs, 1).show();
     }
+
 
 
     @Override
