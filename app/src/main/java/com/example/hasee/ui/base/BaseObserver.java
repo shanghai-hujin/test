@@ -6,6 +6,8 @@ import com.example.hasee.R;
 import com.example.hasee.ui.MyApplication;
 import com.orhanobut.logger.Logger;
 
+import java.net.SocketException;
+
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -58,8 +60,11 @@ public abstract class BaseObserver<T> implements Observer<T> {
             baseView.showErrorMsg(mErrorMsg);
         }  else if (e instanceof HttpException) {
             baseView.showErrorMsg(MyApplication.getInstance().getString(R.string.http_error));
-        } else {
-            baseView.showErrorMsg(MyApplication.getInstance().getString(R.string.unKnown_error));
+        } else if (e instanceof SocketException) {
+            baseView.showErrorMsg("网络异常:SocketException");
+        }
+        else {
+            baseView.showErrorMsg(MyApplication.getInstance().getString(R.string.unKnown_error)+":"+e.getMessage());
             Logger.d(e.toString());
         }
         if (isShowError) {

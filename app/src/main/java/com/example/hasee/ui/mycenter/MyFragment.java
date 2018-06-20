@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.animation.ZoomEnter.ZoomInLeftEnter;
 import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.flyco.dialog.widget.MaterialDialog;
 import com.orhanobut.logger.Logger;
@@ -220,6 +222,17 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
                 .showAnim(new ZoomInLeftEnter())
                 .cancelText("朕,不看了")
                 .show();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                historySingleDialog(mHistoryTodayBeanResult.get(position).getTitle(),
+                        "上一个", "下一个",
+                        mHistoryTodayBeanResult.get(position).getEvent(), position);
+
+            }
+        });
     }
 
     private void historySingleDialog(String title, String leftBtn,
@@ -227,6 +240,8 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
         MaterialDialog materialDialog = new MaterialDialog(getActivity());
         materialDialog.content(content)
                 .title(title)
+                .titleTextSize(18.0f)
+                .contentTextSize(10.0f)
                 .btnText(leftBtn, rightBtn)
                 .showAnim(new BounceTopEnter())
                 .dismissAnim(new SlideBottomExit())
@@ -236,22 +251,24 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
             public void onBtnClick() {
                 if (pos == 0) {
                     //第一个
+                    showErrorMsg("这是第一个了");
                     return;
                 }
                 materialDialog.dismiss();
                 historySingleDialog(mHistoryTodayBeanResult.get(pos - 1).getTitle(),
-                        "", "",
+                        "上一个", "下一个",
                         mHistoryTodayBeanResult.get(pos - 1).getEvent(), pos - 1);
             }
         }, new OnBtnClickL() {
             @Override
             public void onBtnClick() {
                 if (pos == mHistoryTodayBeanResult.size() - 1) {
+                    showErrorMsg("已经到顶了");
                     return;
                 }
                 materialDialog.dismiss();
                 historySingleDialog(mHistoryTodayBeanResult.get(pos + 1).getTitle(),
-                        "", "",
+                        "上一个", "下一个",
                         mHistoryTodayBeanResult.get(pos + 1).getEvent(), pos + 1);
             }
         });
