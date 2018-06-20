@@ -25,6 +25,8 @@ public class Common {
      */
     public final static String API_Weather = "https://api.seniverse.com/v3/weather/now.json";
 
+    public final static String API_BERRY = "JwEL8kEoaQ";
+
 
 
     //豆瓣电影api

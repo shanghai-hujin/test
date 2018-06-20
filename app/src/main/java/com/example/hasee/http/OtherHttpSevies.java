@@ -2,6 +2,7 @@ package com.example.hasee.http;
 
 import com.example.hasee.bean.HistoryTodayBean;
 import com.example.hasee.bean.LoginResponse;
+import com.example.hasee.bean.MeiRiYiWenBean;
 import com.example.hasee.bean.MovieDataBean;
 import com.example.hasee.bean.WeatherBean;
 
@@ -125,4 +126,12 @@ public interface OtherHttpSevies {
      */
     @GET
     Observable<HistoryTodayBean> getHistoryOfToday(@Url String url);
+
+    /**
+     * 获取Nasa故事
+     * @param url
+     * @return
+     */
+    @GET
+    Observable<MeiRiYiWenBean> getNASAOfToday(@Url String url);
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.hasee.R;
 import com.example.hasee.bean.DataActivityBean;
 import com.example.hasee.bean.HistoryTodayBean;
+import com.example.hasee.bean.MeiRiYiWenBean;
 import com.example.hasee.ui.adpater.MyCenterAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.Event;
@@ -83,6 +84,7 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
     private TextView mTvHistory3;
     private HistoryTodayBean mHistoryTodayBean;
     private List<HistoryTodayBean.ResultBean> mHistoryTodayBeanResult;
+    private TextView mTvHistory4;
 
     public static MyFragment newInstance(String param1) {
         Bundle args = new Bundle();
@@ -110,9 +112,11 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
         mTvHistory = (TextView) headView.findViewById(R.id.id_my_text1);
         mTvHistory2 = (TextView) headView.findViewById(R.id.id_my_text2);
         mTvHistory3 = (TextView) headView.findViewById(R.id.id_my_text3);
+        mTvHistory4 = (TextView) headView.findViewById(R.id.id_my_text4);
         mTvHistory.setOnClickListener(mPerfectClickListener);
         mTvHistory2.setOnClickListener(mPerfectClickListener);
         mTvHistory3.setOnClickListener(mPerfectClickListener);
+        mTvHistory4.setOnClickListener(mPerfectClickListener);
 
         mMyCenterAdapter.addHeaderView(headView);
 
@@ -134,8 +138,13 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
 
                     break;
                 case R.id.id_my_text2:
+
                     break;
                 case R.id.id_my_text3:
+                    break;
+                case R.id.id_my_text4:
+                    showLoadingDialog();
+                    mPresenter.getNasaStoryOfToday();
                     break;
                 default:
                     break;
@@ -175,6 +184,25 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
                         }
                     }
                 });
+    }
+
+    @Override
+    public void loadNasaData(MeiRiYiWenBean nasaStoryBean) {
+        hideLoadingDialog();
+        if(nasaStoryBean == null){
+            return;
+        }
+        /*ImgAndTextPopup nassImgAndTextPopup = new ImgAndTextPopup(getActivity());
+        nassImgAndTextPopup
+                .gravity(Gravity.BOTTOM)
+                .anchorView(mTvHistory4)
+                //设置三角形的长宽
+                .triangleWidth(20)
+                .triangleHeight(10)
+                .bubbleColor(Color.parseColor("#FFFFFF"))
+                .showAnim(null)
+                .dismissAnim(null)
+                .show();*/
     }
 
     @Override

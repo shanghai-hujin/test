@@ -2,6 +2,7 @@ package com.example.hasee.ui.mycenter;
 
 import com.example.hasee.bean.DataActivityBean;
 import com.example.hasee.bean.HistoryTodayBean;
+import com.example.hasee.bean.MeiRiYiWenBean;
 import com.example.hasee.dao.DataActivityDao;
 import com.example.hasee.http.OtherHttpApi;
 import com.example.hasee.ui.base.BaseObserver;
@@ -43,6 +44,20 @@ public class MyCenterPresenter extends BasePresenter<MyCenterContract.MyCenterVi
                     @Override
                     public void onNext(HistoryTodayBean historyTodayBean) {
                         mView.loadHittoryData(historyTodayBean);
+                    }
+                });
+
+    }
+
+    @Override
+    public void getNasaStoryOfToday() {
+        OtherHttpApi.getInstace().getNASAOfToday()
+                .compose(RxUtils.<MeiRiYiWenBean>rxSchedulerHelper())
+                .compose(mView.<MeiRiYiWenBean>bindToLife())
+                .subscribe(new BaseObserver<MeiRiYiWenBean>(mView) {
+                    @Override
+                    public void onNext(MeiRiYiWenBean meiRiYiWenBean) {
+                        mView.loadNasaData(meiRiYiWenBean);
                     }
                 });
 

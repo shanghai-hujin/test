@@ -2,6 +2,7 @@ package com.example.hasee.http;
 
 import com.example.hasee.bean.HistoryTodayBean;
 import com.example.hasee.bean.LoginResponse;
+import com.example.hasee.bean.MeiRiYiWenBean;
 import com.example.hasee.bean.MovieDataBean;
 import com.example.hasee.bean.WeatherBean;
 import com.example.hasee.http.cookies.CookiesManager;
@@ -154,10 +155,18 @@ public class OtherHttpApi {
     }
 
     /**
-     * 获取 250
+     * 获取今日历史
      * @return
      */
     public Observable<HistoryTodayBean> getHistoryOfToday(){
         return httpSevies.getHistoryOfToday("https://api.lylares.com/history/query");
+    }
+
+    /**
+     * 获取 nasa故事
+     * @return
+     */
+    public Observable<MeiRiYiWenBean> getNASAOfToday(){
+        return httpSevies.getNASAOfToday("https://interface.meiriyiwen.com/article/today");
     }
 }
