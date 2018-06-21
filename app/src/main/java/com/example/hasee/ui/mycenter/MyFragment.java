@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,9 +23,12 @@ import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.PerfectClickListener;
 import com.example.hasee.utils.RxBus;
+import com.example.hasee.widget.ImgAndTextPopup;
 import com.example.hasee.widget.time.DataActivityDialog;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideEnter.SlideRightEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.animation.SlideExit.SlideLeftExit;
 import com.flyco.animation.ZoomEnter.ZoomInLeftEnter;
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
@@ -192,17 +196,20 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
         if(nasaStoryBean == null){
             return;
         }
-        /*ImgAndTextPopup nassImgAndTextPopup = new ImgAndTextPopup(getActivity());
+        ImgAndTextPopup nassImgAndTextPopup = new ImgAndTextPopup(getActivity());
+        nassImgAndTextPopup.setText(nasaStoryBean.getData().get(0).getStory(),
+                nasaStoryBean.getData().get(0).getTitle(),
+                nasaStoryBean.getData().get(0).getUrl());
         nassImgAndTextPopup
                 .gravity(Gravity.BOTTOM)
                 .anchorView(mTvHistory4)
                 //设置三角形的长宽
                 .triangleWidth(20)
                 .triangleHeight(10)
-                .bubbleColor(Color.parseColor("#FFFFFF"))
-                .showAnim(null)
-                .dismissAnim(null)
-                .show();*/
+                .bubbleColor(Color.parseColor("#00000000"))
+                .showAnim(new SlideRightEnter())
+                .dismissAnim(new SlideLeftExit())
+                .show();
     }
 
     @Override

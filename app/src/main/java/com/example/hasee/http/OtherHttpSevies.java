@@ -133,5 +133,6 @@ public interface OtherHttpSevies {
      * @return
      */
     @GET
-    Observable<MeiRiYiWenBean> getNASAOfToday(@Url String url);
+    Observable<MeiRiYiWenBean> getNASAOfToday(@Url String url,
+                                              @Query("AppKey") String AppKey);
 }

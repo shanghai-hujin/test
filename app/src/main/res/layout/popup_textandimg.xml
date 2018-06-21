@@ -8,8 +8,8 @@
 
 
     <android.support.v7.widget.CardView
-        android:layout_width="266dp"
-        android:layout_height="350dp"
+        android:layout_width="300dp"
+        android:layout_height="233dp"
         android:background="@color/white"
         app:cardCornerRadius="4dp"
         app:cardMaxElevation="3dp">
@@ -25,12 +25,13 @@
 
         <TextView
             android:id="@+id/tv_nasa_con"
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="#26000000"
             android:textColor="@color/white"
-            android:textSize="12sp"/>
+            android:textSize="11sp"/>
 
         <TextView
             android:id="@+id/tv_nasa_title"
@@ -38,8 +39,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:text="nasa标题"
+            android:gravity="center"
+            android:background="#26000000"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textStyle="bold"/>
 
     </android.support.v7.widget.CardView>

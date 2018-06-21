@@ -23,6 +23,7 @@ import com.example.hasee.ui.book.BookFragment;
 import com.example.hasee.ui.movie.MovieFragment;
 import com.example.hasee.ui.mycenter.MyFragment;
 import com.example.hasee.ui.news.NewsFragment;
+import com.example.hasee.ui.person.LEDSettingActivity;
 import com.example.hasee.ui.person.LoginActivity;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.PasswordHelp;
@@ -310,6 +311,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                         break;
 
                     case R.id.item_down:
+                        break;
+                    case R.id.item_led:
+                        //显示led字幕
+                        startActivity(new Intent(MainActivity.this, LEDSettingActivity.class));
                         break;
                     case R.id.item_theme:
 

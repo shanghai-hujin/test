@@ -37,6 +37,14 @@
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
+
+        <activity
+            android:name=".ui.person.LEDSettingActivity"
+            android:hardwareAccelerated="true"
+            android:resizeableActivity="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
         <activity
             android:name=".ui.news.ReadTextActivity"
             android:resizeableActivity="true"

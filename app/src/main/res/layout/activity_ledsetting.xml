@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_led"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@mipmap/arrow_top">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="17dp"
+            android:text="@string/led"
+            android:textColor="@color/white"
+            android:textSize="21sp"/>
+    </android.support.v7.widget.Toolbar>
+
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/et_ledtext"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:drawableStart="@mipmap/edit_lock"
+        android:drawablePadding="5dp"
+        android:hint="用户名"
+        android:imeOptions="actionDone"
+        android:inputType="textPersonName"
+        android:padding="5dp"
+        android:paddingBottom="2dp"
+        android:textColor="@color/black"
+        android:textCursorDrawable="@drawable/bg_input_cursor"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_led"
+    />
+
+
+
+
+</android.support.constraint.ConstraintLayout>

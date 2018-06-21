@@ -167,6 +167,6 @@ public class OtherHttpApi {
      * @return
      */
     public Observable<MeiRiYiWenBean> getNASAOfToday(){
-        return httpSevies.getNASAOfToday("https://interface.meiriyiwen.com/article/today");
+        return httpSevies.getNASAOfToday("https://api.lylares.com/bing/asc",Common.API_BERRY);
     }
 }
