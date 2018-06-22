@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
@@ -28,14 +28,13 @@
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/et_ledtext"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
         android:background="@null"
-        android:drawableStart="@mipmap/edit_lock"
         android:drawablePadding="5dp"
-        android:hint="用户名"
+        android:drawableStart="@mipmap/edit_lock"
+        android:hint="字幕文字"
         android:imeOptions="actionDone"
         android:inputType="textPersonName"
         android:padding="5dp"
@@ -48,7 +47,34 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar_led"
     />
 
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_setcolor"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:gravity="center"
+        android:text="字幕颜色"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_ledtext"/>
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="228dp"
+        android:src="@color/black"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_setcolor"
+        app:layout_constraintTop_toBottomOf="@+id/et_ledtext"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"/>
 
 
 </android.support.constraint.ConstraintLayout>
