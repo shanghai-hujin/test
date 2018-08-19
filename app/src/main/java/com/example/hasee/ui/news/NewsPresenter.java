@@ -18,6 +18,10 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.Provides;
+
 /**
  * Demo ${CLASS}
  *
@@ -27,6 +31,12 @@ import java.util.List;
 
 class NewsPresenter extends BasePresenter<NewsContract.NewsView> implements NewsContract.NewsPresenter{
 
+    private NewsContract.NewsView newsView;
+
+    @Inject
+    public NewsPresenter(NewsContract.NewsView newsView) {
+        this.newsView = newsView;
+    }
 
     @Override
     public void getChannel() {
