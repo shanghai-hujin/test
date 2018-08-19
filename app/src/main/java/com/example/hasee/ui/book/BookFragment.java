@@ -29,7 +29,7 @@ public class BookFragment extends BaseFragment {
 
     @Override
     public int getContentLayout() {
-        return R.layout.activity_main;
+        return R.layout.activity_book;
     }
 
     @Override
