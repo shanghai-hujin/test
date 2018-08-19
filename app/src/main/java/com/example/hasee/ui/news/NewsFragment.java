@@ -18,6 +18,8 @@ import com.example.hasee.R;
 import com.example.hasee.bean.Channel;
 import com.example.hasee.bean.WeatherBean;
 import com.example.hasee.dao.ChannelDao;
+import com.example.hasee.di.component.DaggerNewsComponent;
+import com.example.hasee.di.module.NewsModule;
 import com.example.hasee.ui.adpater.ChannelPagerAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.Event;
@@ -102,7 +104,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     @Override
     public NewsPresenter createPresenter() {
-        return new NewsPresenter();
+        return null;
     }
 
 
@@ -161,6 +163,10 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             }
         });
 
+        DaggerNewsComponent.builder()
+                .newsModule(new NewsModule(this))
+                .build()
+                .inject(this);
 
     }
 
