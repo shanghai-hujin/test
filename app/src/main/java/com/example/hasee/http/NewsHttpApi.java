@@ -8,28 +8,21 @@ import com.example.hasee.bean.NewsDetail;
 import com.example.hasee.ui.MyApplication;
 import com.example.hasee.utils.NetUtil;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.ObjectStreamException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
-import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Demo ${CLASS}
@@ -97,61 +90,21 @@ public class NewsHttpApi {
             return chain.proceed(request);
         }
     };
-    private final OkHttpClient okHttpClient;
-    private final Retrofit retrofit;
-    private final NewsHttpSevies httpSevies;
+    private  OkHttpClient okHttpClient;
+    private  Retrofit retrofit;
+    private  NewsHttpSevies httpSevies;
+    public static NewsHttpApi sInstance;
 
-    //私有构造函数
-    private NewsHttpApi() {
+    public NewsHttpApi(NewsHttpSevies httpSevies) {
+        this.httpSevies = httpSevies;
+    }
 
-        // 防止反射获取多个对象的漏洞
-        if (null != NewsHttpApi.HelperSinger.sSingletonTest) {
-            throw new RuntimeException("单例被反射");
+
+    public static NewsHttpApi getInstance(NewsHttpSevies newsHttpSevies){
+        if(sInstance != null){
+            sInstance = new NewsHttpApi(newsHttpSevies);
         }
-
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        // 指定缓存路径,缓存大小100Mb
-        Cache cache = new Cache(new File(MyApplication.getContext().getCacheDir(), "HttpCache"),
-                1024 * 1024 * 100);
-
-        okHttpClient = new OkHttpClient.Builder()
-                .cache(cache)
-                .retryOnConnectionFailure(true)
-                .addInterceptor(sRewriteCacheControlInterceptor)
-                .addNetworkInterceptor(sRewriteCacheControlInterceptor)
-                .addInterceptor(httpLoggingInterceptor)
-                .addInterceptor(sQueryParameterInterceptor)
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .build();
-
-        retrofit = new Retrofit.Builder()
-                .client(okHttpClient)
-                .baseUrl(Common.IFengApi)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-
-        httpSevies = retrofit.create(NewsHttpSevies.class);
-
-
-    }
-
-
-    //静态内部类,
-    private static class HelperSinger{
-        private static NewsHttpApi sSingletonTest = new NewsHttpApi();
-    }
-
-
-    public static NewsHttpApi getInstace(){
-        return NewsHttpApi.HelperSinger.sSingletonTest;
-    }
-
-    //防止反序列化产生多个对象
-    private Object readResolve() throws ObjectStreamException {
-        return NewsHttpApi.getInstace();
+        return sInstance;
     }
 
     public static final String ACTION_DEFAULT = "default";

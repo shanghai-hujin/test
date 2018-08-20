@@ -41,7 +41,6 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
     /**
      * 父类标记了
      */
-    @Nullable
     @Inject
     protected P mPresenter;
 

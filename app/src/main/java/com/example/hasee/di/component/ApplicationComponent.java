@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.hasee.di.module.ApplicationModule;
 import com.example.hasee.di.module.HttpModule;
 import com.example.hasee.di.scope.AppScope;
+import com.example.hasee.http.NewsHttpApi;
 import com.example.hasee.http.OtherHttpApi;
 
 import dagger.Component;
@@ -24,6 +25,8 @@ public interface ApplicationComponent {
      *修改时间:2018/8/20 10:35
      */
     OtherHttpApi getOtherHttpApi();
+
+    NewsHttpApi getNewsHttpApi();
 
     Context getContext();
 }

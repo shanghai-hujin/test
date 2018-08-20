@@ -13,6 +13,8 @@ import com.orhanobut.logger.Logger;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 
@@ -24,10 +26,17 @@ import io.reactivex.functions.Predicate;
  */
 
 public class DetailPresenter extends BasePresenter<DetailContract.DetailVew> implements DetailContract.DetailPresenter{
+    NewsHttpApi mNewsHttpApi;
+
+    @Inject
+    public DetailPresenter(NewsHttpApi newsHttpApi) {
+        mNewsHttpApi = newsHttpApi;
+    }
+
 
     @Override
     public void getData(String newsid, String action, int pullNum) {
-        NewsHttpApi.getInstace().getNewsDetail(newsid, action, pullNum)
+        mNewsHttpApi.getNewsDetail(newsid, action, pullNum)
                 .compose(RxUtils.<NewsDetail>rxSchedulerHelper())
                 .filter(new Predicate<NewsDetail>() {
                     @Override

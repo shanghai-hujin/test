@@ -19,6 +19,7 @@ import com.example.hasee.R;
 import com.example.hasee.bean.NewsArticleBean;
 import com.example.hasee.bean.NewsDetail;
 import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.http.Common;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.utils.StatusBarUtil;
@@ -162,11 +163,15 @@ public class ImageBrowseActivity extends BaseActivity<
         }
         String aid = getIntent().getStringExtra(AID);
         boolean isCmpp = getIntent().getBooleanExtra(ISCMPP, false);
-     //   basePresenter.getData(aid);
+        basePresenter.getData(aid);
     }
 
     @Override
     public void initInjector(ApplicationComponent applicationComponent) {
+        DaggerHttpComponent.builder()
+                .applicationComponent(applicationComponent)
+                .build()
+                .inject(this);
     }
 
     @Override
