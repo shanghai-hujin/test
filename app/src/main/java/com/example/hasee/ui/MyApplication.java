@@ -1,5 +1,9 @@
 package com.example.hasee.ui;
 
+import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.di.component.DaggerApplicationComponent;
+import com.example.hasee.di.module.ApplicationModule;
+import com.example.hasee.di.module.HttpModule;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -20,6 +24,12 @@ public class MyApplication extends LitePalApplication {
 
     private static MyApplication instance;
 
+    public ApplicationComponent getApplicationComponent() {
+        return mApplicationComponent;
+    }
+
+    private ApplicationComponent mApplicationComponent;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -39,6 +49,11 @@ public class MyApplication extends LitePalApplication {
         LitePal.initialize(this);
         //初始化侧滑
         BGASwipeBackManager.getInstance().init(this);
+
+        mApplicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .httpModule(new HttpModule())
+                .build();
     }
 
     public static MyApplication getInstance() {

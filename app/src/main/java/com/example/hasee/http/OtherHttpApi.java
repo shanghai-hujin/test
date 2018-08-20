@@ -5,17 +5,10 @@ import com.example.hasee.bean.LoginResponse;
 import com.example.hasee.bean.MeiRiYiWenBean;
 import com.example.hasee.bean.MovieDataBean;
 import com.example.hasee.bean.WeatherBean;
-import com.example.hasee.http.cookies.CookiesManager;
 
 import java.io.ObjectStreamException;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Demo ${CLASS}
@@ -25,25 +18,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class OtherHttpApi {
+    public static OtherHttpApi sInstance;
 
-    public final static int CONNECT_TIMEOUT = 10;
-    public final static int READ_TIMEOUT = 10;
-    public final static int WRITE_TIMEOUT = 10;
-    private final OkHttpClient okHttpClient;
-    private final Retrofit retrofit;
-    private final OtherHttpSevies httpSevies;
-
-
+    private  OtherHttpSevies httpSevies;
 
     //私有构造函数
     private OtherHttpApi() {
 
-        // 防止反射获取多个对象的漏洞
-        if (null != HelperSinger.sSingletonTest) {
-            throw new RuntimeException("单例被反射");
-        }
-
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+ /*       HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         okHttpClient = new OkHttpClient.Builder()
@@ -61,27 +43,22 @@ public class OtherHttpApi {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
-        httpSevies = retrofit.create(OtherHttpSevies.class);
-
-
+        httpSevies = retrofit.create(OtherHttpSevies.class);*/
+    }
+    public OtherHttpApi(OtherHttpSevies httpSevies) {
+        this.httpSevies = httpSevies;
     }
 
-    //静态内部类,
-    private static class HelperSinger{
-        private static OtherHttpApi sSingletonTest = new OtherHttpApi();
-    }
-
-
-    public static OtherHttpApi getInstace(){
-        return HelperSinger.sSingletonTest;
+    public static OtherHttpApi getInstance(OtherHttpSevies httpSevies) {
+        if (sInstance == null)
+            sInstance = new OtherHttpApi(httpSevies);
+        return sInstance;
     }
 
     //防止反序列化产生多个对象
     private Object readResolve() throws ObjectStreamException {
-        return OtherHttpApi.getInstace();
+        return OtherHttpApi.getInstance(httpSevies);
     }
-
-
 
 
     /**
