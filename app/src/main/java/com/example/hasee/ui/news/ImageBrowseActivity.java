@@ -19,7 +19,6 @@ import com.example.hasee.R;
 import com.example.hasee.bean.NewsArticleBean;
 import com.example.hasee.bean.NewsDetail;
 import com.example.hasee.di.component.ApplicationComponent;
-import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.http.Common;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.utils.StatusBarUtil;
@@ -46,7 +45,8 @@ import butterknife.OnClick;
  * @date 2018/5/31 14:05
  */
 
-public class ImageBrowseActivity extends BaseActivity<ReadContentsPresenter> implements ReadContentsContract.ReadContentsView {
+public class ImageBrowseActivity extends BaseActivity<
+        ReadContentsPresenter> implements ReadContentsContract.ReadContentsView {
     private static final String AID = "aid";
     private static final String ISCMPP = "isCmpp";
     @BindView(R.id.hvp_layout)
@@ -162,15 +162,11 @@ public class ImageBrowseActivity extends BaseActivity<ReadContentsPresenter> imp
         }
         String aid = getIntent().getStringExtra(AID);
         boolean isCmpp = getIntent().getBooleanExtra(ISCMPP, false);
-        basePresenter.getData(aid);
+     //   basePresenter.getData(aid);
     }
 
     @Override
     public void initInjector(ApplicationComponent applicationComponent) {
-        DaggerHttpComponent.builder()
-                .applicationComponent(applicationComponent)
-                .build()
-                .inject(this);
     }
 
     @Override

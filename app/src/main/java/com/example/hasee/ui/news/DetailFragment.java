@@ -21,9 +21,7 @@ import com.example.hasee.R;
 import com.example.hasee.bean.NewsDetail;
 import com.example.hasee.bean.NewsUtils;
 import com.example.hasee.di.component.ApplicationComponent;
-import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.http.Common;
-import com.example.hasee.http.NewsHttpApi;
 import com.example.hasee.ui.MyApplication;
 import com.example.hasee.ui.adpater.NewsDetailAdapter;
 import com.example.hasee.ui.base.BaseFragment;
@@ -114,14 +112,14 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                 mRefreshLayout.finishRefresh(2500);
                 setRefreshThemeColor();
                 isRemoveHeaderView = true;
-                mPresenter.getData(mNewsid, NewsHttpApi.ACTION_DOWN, downPullNum);
+           //     mPresenter.getData(mNewsid, NewsHttpApi.ACTION_DOWN, downPullNum);
             }
         });
         mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
 
-                mPresenter.getData(mNewsid, NewsHttpApi.ACTION_UP, upPullNum);
+           //     mPresenter.getData(mNewsid, NewsHttpApi.ACTION_UP, upPullNum);
                 mRefreshLayout.finishLoadMore(2000);
             }
         });
@@ -305,7 +303,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
         if (getArguments() != null) {
             mNewsid = getArguments().getString("newsid");
             mPosition = getArguments().getInt("position");
-            mPresenter.getData(mNewsid, NewsHttpApi.ACTION_DEFAULT, 1);
+          //  mPresenter.getData(mNewsid, NewsHttpApi.ACTION_DEFAULT, 1);
         }
         RxBus.INSTANCE.toFlowable(Event.SlideTopEvent.class)
                 .compose(bindToLife())
@@ -325,10 +323,6 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
 
     @Override
     public void initInjector(ApplicationComponent applicationComponent) {
-        DaggerHttpComponent.builder()
-                .applicationComponent(applicationComponent)
-                .build()
-                .inject(this);
     }
 
 

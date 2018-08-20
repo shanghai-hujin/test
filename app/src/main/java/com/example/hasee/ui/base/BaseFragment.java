@@ -3,7 +3,6 @@ package com.example.hasee.ui.base;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +41,7 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
     /**
      * 父类标记了
      */
-    @NonNull
+    @Nullable
     @Inject
     protected P mPresenter;
 
@@ -91,11 +90,12 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initInjector(MyApplication.getInstance().getApplicationComponent());
         attachView();
         bindView(view, savedInstanceState);
         //初始化state布局
         initStateView();
-        initInjector(MyApplication.getInstance().getApplicationComponent());
+
     }
 
     private void initStateView() {
@@ -129,6 +129,7 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
         //rx已经交给RxLifecyc处理
         if (mPresenter != null) {
             mPresenter.detachView();
+            mPresenter = null;
         }
     }
 

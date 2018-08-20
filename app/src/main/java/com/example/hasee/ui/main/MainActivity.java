@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.example.hasee.R;
 import com.example.hasee.di.component.ApplicationComponent;
-import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.http.cookies.CookiesManager;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.ui.base.BaseFragment;
@@ -194,10 +193,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void initInjector(ApplicationComponent applicationComponent) {
-        DaggerHttpComponent.builder()
-                .applicationComponent(applicationComponent)
-                .build()
-                .inject(this);
+
     }
 
     /**

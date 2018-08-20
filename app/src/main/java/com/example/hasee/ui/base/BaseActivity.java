@@ -45,10 +45,10 @@ public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends
         initSwipeBackFinish();
         mRootView = createView(null, null, savedInstanceState);
         setContentView(mRootView);
+        initInjector(MyApplication.getInstance().getApplicationComponent());
         attachView();
         bindView(mRootView, savedInstanceState);
         initStateView();
-        initInjector(MyApplication.getInstance().getApplicationComponent());
         mLoadingDialog = DialogHelper.getLoadingDialog(this);
     }
 

@@ -107,4 +107,5 @@ dependencies {
     /*compile 'com.google.dagger:dagger-android:2.14.1'
     compile 'com.google.dagger:dagger-android-support:2.14.1'
     compile 'com.google.dagger:dagger-android-processor:2.14.1'*/
+    compile 'org.glassfish:javax.annotation:10.0-b28'
 }

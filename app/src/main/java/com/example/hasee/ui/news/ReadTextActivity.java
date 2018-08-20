@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.example.hasee.R;
 import com.example.hasee.bean.NewsArticleBean;
 import com.example.hasee.di.component.ApplicationComponent;
-import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.utils.DateUtil;
 import com.example.hasee.utils.FrescoUtils;
@@ -121,7 +120,7 @@ public class ReadTextActivity extends BaseActivity<ReadContentsPresenter> implem
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 String aid = getIntent().getStringExtra("aid");
-                basePresenter.getData(aid);
+              //  basePresenter.getData(aid);
             }
         });
 
@@ -216,10 +215,7 @@ public class ReadTextActivity extends BaseActivity<ReadContentsPresenter> implem
 
     @Override
     public void initInjector(ApplicationComponent applicationComponent) {
-        DaggerHttpComponent.builder()
-                .applicationComponent(applicationComponent)
-                .build()
-                .inject(this);
+
     }
 
     @OnClick({R.id.cd_read, R.id.fab_read})

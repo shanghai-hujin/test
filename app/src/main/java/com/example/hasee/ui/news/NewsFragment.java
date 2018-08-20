@@ -19,6 +19,7 @@ import com.example.hasee.bean.Channel;
 import com.example.hasee.bean.WeatherBean;
 import com.example.hasee.dao.ChannelDao;
 import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.ui.adpater.ChannelPagerAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.Event;
