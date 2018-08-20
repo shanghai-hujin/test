@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Demo ${CLASS}
  *
- * @author 廖望
+ * @author hj
  * @date 2018/8/20 09:45
  */
 @Module

@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.example.hasee.R;
 import com.example.hasee.bean.NewsArticleBean;
 import com.example.hasee.bean.NewsDetail;
+import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.http.Common;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.utils.StatusBarUtil;
@@ -164,8 +166,11 @@ public class ImageBrowseActivity extends BaseActivity<ReadContentsPresenter> imp
     }
 
     @Override
-    public ReadContentsPresenter createPresenter() {
-        return new ReadContentsPresenter();
+    public void initInjector(ApplicationComponent applicationComponent) {
+        DaggerHttpComponent.builder()
+                .applicationComponent(applicationComponent)
+                .build()
+                .inject(this);
     }
 
     @Override

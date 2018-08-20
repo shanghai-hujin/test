@@ -8,6 +8,8 @@ import android.view.View;
 
 import com.example.hasee.R;
 import com.example.hasee.bean.MovieDataBean;
+import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.http.Common;
 import com.example.hasee.ui.adpater.MovieDetailAdapter;
 import com.example.hasee.ui.base.BaseFragment;
@@ -217,9 +219,14 @@ public class MovieDetailFragment extends BaseFragment<MoviePresenter> implements
     }
 
     @Override
-    public MoviePresenter createPresenter() {
-        return new MoviePresenter();
+    public void initInjector(ApplicationComponent applicationComponent) {
+        DaggerHttpComponent.builder()
+                .applicationComponent(applicationComponent)
+                .build()
+                .inject(this);
     }
+
+
 
     @Override
     public void loadMovieData(List<MovieDataBean.SubjectsBean> itemBeanList, int newStart) {

@@ -20,6 +20,8 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.example.hasee.R;
 import com.example.hasee.bean.NewsDetail;
 import com.example.hasee.bean.NewsUtils;
+import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.http.Common;
 import com.example.hasee.http.NewsHttpApi;
 import com.example.hasee.ui.MyApplication;
@@ -322,8 +324,11 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
     }
 
     @Override
-    public DetailPresenter createPresenter() {
-        return new DetailPresenter();
+    public void initInjector(ApplicationComponent applicationComponent) {
+        DaggerHttpComponent.builder()
+                .applicationComponent(applicationComponent)
+                .build()
+                .inject(this);
     }
 
 

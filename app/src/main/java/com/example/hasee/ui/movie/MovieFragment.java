@@ -21,6 +21,8 @@ import android.widget.ViewSwitcher;
 
 import com.example.hasee.R;
 import com.example.hasee.bean.MovieDataBean;
+import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.ui.adpater.MovieHorizontalAdapter;
 import com.example.hasee.ui.adpater.MoviePagerAdapter;
 import com.example.hasee.ui.base.BaseFragment;
@@ -75,11 +77,6 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
         args.putString("param1", param1);
         newsFragment.setArguments(args);
         return newsFragment;
-    }
-
-    @Override
-    public MoviePresenter createPresenter() {
-        return new MoviePresenter();
     }
 
     @Override
@@ -156,6 +153,14 @@ public class MovieFragment extends BaseFragment<MoviePresenter> implements
     @Override
     public void initData() {
         mPresenter.getMovieWeekly();
+    }
+
+    @Override
+    public void initInjector(ApplicationComponent applicationComponent) {
+        DaggerHttpComponent.builder()
+                .applicationComponent(applicationComponent)
+                .build()
+                .inject(this);
     }
 
     @Override

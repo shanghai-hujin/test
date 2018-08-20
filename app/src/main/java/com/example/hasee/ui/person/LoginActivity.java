@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.example.hasee.R;
 import com.example.hasee.bean.LoginResponse;
+import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.PasswordHelp;
@@ -85,9 +87,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
     }
 
     @Override
-    public LoginPresenter createPresenter() {
-        return new LoginPresenter();
+    public void initInjector(ApplicationComponent applicationComponent) {
+        DaggerHttpComponent.builder()
+                .applicationComponent(applicationComponent)
+                .build()
+                .inject(this);
     }
+
+
 
     @Override
     public boolean isSupportSwipeBack() {

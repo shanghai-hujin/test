@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.hasee.di.component.ApplicationComponent;
+
 /**
  * Demo ${CLASS}
  *
@@ -32,4 +34,6 @@ public interface IBase {
     void bindView(View view, Bundle savedInstanceState);
 
     void initData();
+
+    void initInjector(ApplicationComponent applicationComponent);
 }

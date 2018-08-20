@@ -20,8 +20,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.Provides;
-
 /**
  * Demo ${CLASS}
  *
@@ -31,11 +29,19 @@ import dagger.Provides;
 
 class NewsPresenter extends BasePresenter<NewsContract.NewsView> implements NewsContract.NewsPresenter{
 
-    private NewsContract.NewsView newsView;
-
+    OtherHttpApi otherHttpApi;
+    /**
+     *说明:被inject标记了，会被注入到被 component标记的目标
+     * 构造函数中的参数由 module来提供
+     * 然后在 component标记的目标中使用  @Inject标记后，直接使用该对象
+     *作者:hujin
+     *添加时间:2018/8/20 11:07
+     *修改人:hujin
+     *修改时间:2018/8/20 11:07
+     */
     @Inject
-    public NewsPresenter(NewsContract.NewsView newsView) {
-        this.newsView = newsView;
+    public NewsPresenter(OtherHttpApi otherHttpApi) {
+        this.otherHttpApi = otherHttpApi;
     }
 
     @Override
@@ -103,7 +109,7 @@ class NewsPresenter extends BasePresenter<NewsContract.NewsView> implements News
      * 获取网络
      */
     public void getWeather(){
-        OtherHttpApi.getInstace().getWeather("96tev0flvjjg4a1o","shanghai")
+        otherHttpApi.getWeather("96tev0flvjjg4a1o","shanghai")
                 .compose(RxUtils.<WeatherBean>rxSchedulerHelper())
                 .compose(mView.<WeatherBean>bindToLife())
                 .subscribe(new BaseObserver<WeatherBean>(mView) {

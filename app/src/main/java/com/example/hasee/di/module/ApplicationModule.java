@@ -2,8 +2,6 @@ package com.example.hasee.di.module;
 
 import android.content.Context;
 
-import com.example.hasee.di.scope.ActivityScope;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -20,8 +18,7 @@ public class ApplicationModule {
     }
 
     @Provides
-    @ActivityScope
-    public Context providesContext(){
+    Context providesContext(){
         return context;
     }
 }

@@ -6,6 +6,8 @@ import com.example.hasee.ui.base.BaseObserver;
 import com.example.hasee.ui.base.BasePresenter;
 import com.example.hasee.utils.RxUtils;
 
+import javax.inject.Inject;
+
 /**
  * Demo ${CLASS}
  *
@@ -15,9 +17,23 @@ import com.example.hasee.utils.RxUtils;
 
 public class MoviePresenter extends BasePresenter<MovieContract.MovieView> implements MovieContract.MoviePresenter{
 
+    OtherHttpApi otherHttpApi;
+    /**
+     *说明:被inject标记了，会被注入到被 component标记的目标
+     * 构造函数中的参数由 module来提供
+     * 然后在 component标记的目标中使用  @Inject标记后，直接使用该对象
+     *作者:hujin
+     *添加时间:2018/8/20 11:07
+     *修改人:hujin
+     *修改时间:2018/8/20 11:07
+     */
+    @Inject
+    public MoviePresenter(OtherHttpApi otherHttpApi) {
+        this.otherHttpApi = otherHttpApi;
+    }
     @Override
     public void getMovieInTheatersData(int start, int count, String city) {
-        OtherHttpApi.getInstace().getMovieInTheatersData(start, count, city)
+        otherHttpApi.getMovieInTheatersData(start, count, city)
                 .compose(RxUtils.<MovieDataBean>rxSchedulerHelper())
                 .compose(mView.<MovieDataBean>bindToLife())
                 .subscribe(new BaseObserver<MovieDataBean>(mView) {
@@ -45,7 +61,7 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
 
     @Override
     public void getMovieComingSoon(int start, int count) {
-        OtherHttpApi.getInstace().getMovieComingSoon(start, count)
+        otherHttpApi.getMovieComingSoon(start, count)
                 .compose(RxUtils.<MovieDataBean>rxSchedulerHelper())
                 .compose(mView.<MovieDataBean>bindToLife())
                 .subscribe(new BaseObserver<MovieDataBean>(mView) {
@@ -72,7 +88,7 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
 
     @Override
     public void getMovieTop250(int start, int count) {
-        OtherHttpApi.getInstace().getMovie250(start, count)
+        otherHttpApi.getMovie250(start, count)
                 .compose(RxUtils.<MovieDataBean>rxSchedulerHelper())
                 .compose(mView.<MovieDataBean>bindToLife())
                 .subscribe(new BaseObserver<MovieDataBean>(mView) {
@@ -99,7 +115,7 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
 
     @Override
     public void getMovieWeekly() {
-        OtherHttpApi.getInstace().getMovieWeekly()
+        otherHttpApi.getMovieWeekly()
                 .compose(RxUtils.<MovieDataBean>rxSchedulerHelper())
                 .compose(mView.<MovieDataBean>bindToLife())
                 .subscribe(new BaseObserver<MovieDataBean>(mView) {
@@ -127,7 +143,7 @@ public class MoviePresenter extends BasePresenter<MovieContract.MovieView> imple
 
     @Override
     public void getMovieSearch(int start, int count, String q, String tag) {
-        OtherHttpApi.getInstace().getMovieSearch(start, count, q, tag)
+        otherHttpApi.getMovieSearch(start, count, q, tag)
                 .compose(RxUtils.<MovieDataBean>rxSchedulerHelper())
                 .compose(mView.<MovieDataBean>bindToLife())
                 .subscribe(new BaseObserver<MovieDataBean>(mView) {

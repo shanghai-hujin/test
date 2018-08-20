@@ -11,6 +11,8 @@ import com.example.hasee.utils.RxUtils;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Demo ${CLASS}
  *
@@ -20,6 +22,21 @@ import java.util.List;
 
 public class MyCenterPresenter extends BasePresenter<MyCenterContract.MyCenterView> implements MyCenterContract.MyCenterPresenter {
 
+
+    OtherHttpApi otherHttpApi;
+    /**
+     *说明:被inject标记了，会被注入到被 component标记的目标
+     * 构造函数中的参数由 module来提供
+     * 然后在 component标记的目标中使用  @Inject标记后，直接使用该对象
+     *作者:hujin
+     *添加时间:2018/8/20 11:07
+     *修改人:hujin
+     *修改时间:2018/8/20 11:07
+     */
+    @Inject
+    public MyCenterPresenter(OtherHttpApi otherHttpApi) {
+        this.otherHttpApi = otherHttpApi;
+    }
 
     @Override
     public void getDateActivity() {
@@ -37,7 +54,7 @@ public class MyCenterPresenter extends BasePresenter<MyCenterContract.MyCenterVi
 
     @Override
     public void getHistoruOfToday() {
-        OtherHttpApi.getInstace().getHistoryOfToday()
+        otherHttpApi.getHistoryOfToday()
                 .compose(RxUtils.<HistoryTodayBean>rxSchedulerHelper())
                 .compose(mView.<HistoryTodayBean>bindToLife())
                 .subscribe(new BaseObserver<HistoryTodayBean>(mView) {
@@ -51,7 +68,7 @@ public class MyCenterPresenter extends BasePresenter<MyCenterContract.MyCenterVi
 
     @Override
     public void getNasaStoryOfToday() {
-        OtherHttpApi.getInstace().getNASAOfToday()
+        otherHttpApi.getNASAOfToday()
                 .compose(RxUtils.<MeiRiYiWenBean>rxSchedulerHelper())
                 .compose(mView.<MeiRiYiWenBean>bindToLife())
                 .subscribe(new BaseObserver<MeiRiYiWenBean>(mView) {

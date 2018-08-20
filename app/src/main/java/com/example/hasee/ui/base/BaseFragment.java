@@ -3,6 +3,7 @@ package com.example.hasee.ui.base;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +11,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hasee.R;
+import com.example.hasee.ui.MyApplication;
 import com.example.hasee.utils.DialogHelper;
 import com.example.hasee.widget.stateview.MultipleStatusView;
-import com.flyco.animation.BounceEnter.BounceTopEnter;
-import com.flyco.animation.SlideExit.SlideBottomExit;
-import com.flyco.dialog.listener.OnBtnClickL;
-import com.flyco.dialog.widget.MaterialDialog;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,12 +33,18 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
 
     private View mRootView;
     private Unbinder unbinder;
-    protected P mPresenter;
+
     protected Context mContext;
     private Dialog mLoadingDialog;
     @Nullable
     @BindView(R.id.multiple_status_view)
     MultipleStatusView multipleStatusView;
+    /**
+     * 父类标记了
+     */
+    @NonNull
+    @Inject
+    protected P mPresenter;
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
@@ -73,12 +79,6 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
         return mRootView;
     }
 
-    /**
-     * 获取P对象
-     * @return
-     */
-    public abstract P createPresenter();
-
 
     @Override
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,6 +95,7 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
         bindView(view, savedInstanceState);
         //初始化state布局
         initStateView();
+        initInjector(MyApplication.getInstance().getApplicationComponent());
     }
 
     private void initStateView() {
@@ -109,7 +110,6 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
     }
 
     private void attachView() {
-        mPresenter = createPresenter();
         if (mPresenter != null) {
             mPresenter.attachView(this);
         }

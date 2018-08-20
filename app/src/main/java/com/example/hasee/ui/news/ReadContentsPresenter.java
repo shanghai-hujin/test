@@ -19,6 +19,7 @@ public class ReadContentsPresenter extends BasePresenter<ReadContentsContract.Re
         implements ReadContentsContract.ReadContentsPresenter {
 
 
+
     @Override
     public void getData(String aid) {
 

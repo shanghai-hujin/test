@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.hasee.R;
+import com.example.hasee.di.component.ApplicationComponent;
 import com.example.hasee.ui.base.BaseActivity;
-import com.example.hasee.ui.base.BaseContract;
 
 /**
  * Demo ${CLASS}
@@ -31,7 +31,8 @@ public class LEDSettingActivity extends BaseActivity{
     }
 
     @Override
-    public BaseContract.BasePresenter createPresenter() {
-        return null;
+    public void initInjector(ApplicationComponent applicationComponent) {
+
     }
+
 }

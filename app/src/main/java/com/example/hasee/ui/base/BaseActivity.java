@@ -2,6 +2,7 @@ package com.example.hasee.ui.base;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hasee.R;
+import com.example.hasee.ui.MyApplication;
 import com.example.hasee.utils.DialogHelper;
 import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -28,6 +32,8 @@ public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends
         implements IBase,BaseContract.BaseView, BGASwipeBackHelper.Delegate{
 
     private View mRootView;
+    @NonNull
+    @Inject
     protected P basePresenter;
     private Unbinder unbinder;
     private Dialog mLoadingDialog;
@@ -42,6 +48,7 @@ public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends
         attachView();
         bindView(mRootView, savedInstanceState);
         initStateView();
+        initInjector(MyApplication.getInstance().getApplicationComponent());
         mLoadingDialog = DialogHelper.getLoadingDialog(this);
     }
 
@@ -84,15 +91,12 @@ public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends
 
 
     private void attachView() {
-        basePresenter = createPresenter();
         if (basePresenter != null) {
             basePresenter.attachView(this);
         }else {
             Logger.e("P为空");
         }
     }
-
-    public abstract P createPresenter();
 
     public P getPresenter() {
         return basePresenter;

@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.hasee.R;
+import com.example.hasee.di.component.ApplicationComponent;
 import com.example.hasee.ui.base.BaseActivity;
-import com.example.hasee.ui.base.BasePresenter;
 import com.example.hasee.ui.main.MainActivity;
 import com.example.hasee.utils.FrescoUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -33,12 +33,6 @@ public class WelcomeActivity extends BaseActivity {
     @BindView(R.id.tv_welcome_flash)
     TextView mTvWelcomeFlash;
     private Disposable mDisposable;
-
-
-    @Override
-    public BasePresenter createPresenter() {
-        return null;
-    }
 
     @Override
     public int getContentLayout() {
@@ -87,6 +81,11 @@ public class WelcomeActivity extends BaseActivity {
                     }
                 })
                 .subscribe();
+    }
+
+    @Override
+    public void initInjector(ApplicationComponent applicationComponent) {
+
     }
 
     protected void hideBottomUIMenu() {

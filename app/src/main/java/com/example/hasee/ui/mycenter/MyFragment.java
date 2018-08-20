@@ -18,6 +18,8 @@ import com.example.hasee.R;
 import com.example.hasee.bean.DataActivityBean;
 import com.example.hasee.bean.HistoryTodayBean;
 import com.example.hasee.bean.MeiRiYiWenBean;
+import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.ui.adpater.MyCenterAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.Event;
@@ -98,10 +100,6 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
         return newsFragment;
     }
 
-    @Override
-    public MyCenterPresenter createPresenter() {
-        return new MyCenterPresenter();
-    }
 
     @Override
     public int getContentLayout() {
@@ -165,6 +163,14 @@ public class MyFragment extends BaseFragment<MyCenterPresenter> implements MyCen
     @Override
     public void initData() {
         mPresenter.getDateActivity();
+    }
+
+    @Override
+    public void initInjector(ApplicationComponent applicationComponent) {
+        DaggerHttpComponent.builder()
+                .applicationComponent(applicationComponent)
+                .build()
+                .inject(this);
     }
 
 

@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.hasee.R;
+import com.example.hasee.di.component.ApplicationComponent;
 import com.example.hasee.ui.base.BaseFragment;
-import com.example.hasee.ui.base.BasePresenter;
 
 /**
  * Created by HASEE on 2018/4/29.
@@ -22,10 +22,7 @@ public class BookFragment extends BaseFragment {
         return newsFragment;
     }
 
-    @Override
-    public BasePresenter createPresenter() {
-        return null;
-    }
+
 
     @Override
     public int getContentLayout() {
@@ -39,6 +36,11 @@ public class BookFragment extends BaseFragment {
 
     @Override
     public void initData() {
+
+    }
+
+    @Override
+    public void initInjector(ApplicationComponent applicationComponent) {
 
     }
 

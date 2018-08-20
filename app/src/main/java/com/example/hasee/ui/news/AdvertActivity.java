@@ -13,8 +13,8 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.example.hasee.R;
+import com.example.hasee.di.component.ApplicationComponent;
 import com.example.hasee.ui.base.BaseActivity;
-import com.example.hasee.ui.base.BaseContract;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -89,14 +89,16 @@ public class AdvertActivity extends BaseActivity {
     }
 
     @Override
+    public void initInjector(ApplicationComponent applicationComponent) {
+
+    }
+
+    @Override
     public boolean isSupportSwipeBack() {
         return true;
     }
 
-    @Override
-    public BaseContract.BasePresenter createPresenter() {
-        return null;
-    }
+
 
     @Override
     public void onRetry() {

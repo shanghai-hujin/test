@@ -1,8 +1,10 @@
 package com.example.hasee.di.component;
 
+import android.content.Context;
+
 import com.example.hasee.di.module.ApplicationModule;
 import com.example.hasee.di.module.HttpModule;
-import com.example.hasee.di.scope.ActivityScope;
+import com.example.hasee.di.scope.AppScope;
 import com.example.hasee.http.OtherHttpApi;
 
 import dagger.Component;
@@ -10,7 +12,7 @@ import dagger.Component;
 /**
  * Created by HASEE on 2018/8/19.
  */
-@ActivityScope
+@AppScope
 @Component(modules = {ApplicationModule.class, HttpModule.class})
 public interface ApplicationComponent {
 
@@ -23,4 +25,5 @@ public interface ApplicationComponent {
      */
     OtherHttpApi getOtherHttpApi();
 
+    Context getContext();
 }

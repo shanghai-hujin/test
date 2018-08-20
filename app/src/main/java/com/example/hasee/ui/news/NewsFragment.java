@@ -18,8 +18,7 @@ import com.example.hasee.R;
 import com.example.hasee.bean.Channel;
 import com.example.hasee.bean.WeatherBean;
 import com.example.hasee.dao.ChannelDao;
-import com.example.hasee.di.component.DaggerNewsComponent;
-import com.example.hasee.di.module.NewsModule;
+import com.example.hasee.di.component.ApplicationComponent;
 import com.example.hasee.ui.adpater.ChannelPagerAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.Event;
@@ -103,12 +102,6 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     }
 
     @Override
-    public NewsPresenter createPresenter() {
-        return null;
-    }
-
-
-    @Override
     public int getContentLayout() {
         return R.layout.layout_news_toolbar;
     }
@@ -162,12 +155,6 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
             }
         });
-
-        DaggerNewsComponent.builder()
-                .newsModule(new NewsModule(this))
-                .build()
-                .inject(this);
-
     }
 
 
@@ -269,6 +256,14 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         mUnSelectedDatas = new ArrayList<>();
         mPresenter.getChannel();
         mPresenter.getWeather();
+    }
+
+    @Override
+    public void initInjector(ApplicationComponent applicationComponent) {
+        DaggerHttpComponent.builder()
+                .applicationComponent(applicationComponent)
+                .build()
+                .inject(this);
     }
 
 
