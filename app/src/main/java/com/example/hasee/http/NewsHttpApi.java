@@ -101,7 +101,7 @@ public class NewsHttpApi {
 
 
     public static NewsHttpApi getInstance(NewsHttpSevies newsHttpSevies){
-        if(sInstance != null){
+        if(sInstance == null){
             sInstance = new NewsHttpApi(newsHttpSevies);
         }
         return sInstance;

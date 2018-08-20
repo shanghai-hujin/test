@@ -33,11 +33,11 @@ public class HttpModule {
     public final static int WRITE_TIMEOUT = 10;
 
     @Provides
-    OkHttpClient.Builder providesOkHttpClient(){
+    OkHttpClient.Builder providesOkHttpClient() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        return  new OkHttpClient.Builder()
+        return new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
                 .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
@@ -47,35 +47,33 @@ public class HttpModule {
     }
 
     @Provides
-    OtherHttpApi providesOtherHttpApi(OkHttpClient.Builder builder){
+    OtherHttpApi providesOtherHttpApi(OkHttpClient.Builder builder) {
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-                .client(builder.cookieJar(new CookiesManager()).build())
                 .baseUrl(Common.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                ;
+                .client(builder.cookieJar(new CookiesManager()).build());
         return OtherHttpApi.getInstance(
                 retrofitBuilder.build().create(OtherHttpSevies.class));
 
     }
 
     @Provides
-    NewsHttpApi providesNewsHttpApi(OkHttpClient.Builder builder){
+    NewsHttpApi providesNewsHttpApi(OkHttpClient.Builder builder) {
         // 指定缓存路径,缓存大小100Mb
         Cache cache = new Cache(new File(MyApplication.getContext().getCacheDir(), "HttpCache"),
                 1024 * 1024 * 100);
 
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-                .client(builder
-                .addInterceptor(NewsHttpApi.sRewriteCacheControlInterceptor)
-                .addNetworkInterceptor(NewsHttpApi.sRewriteCacheControlInterceptor)
-                .addInterceptor(NewsHttpApi.sQueryParameterInterceptor)
-                        .cache(cache)
-                        .build())
                 .baseUrl(Common.IFengApi)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                ;
+                .client(builder
+                        .addInterceptor(NewsHttpApi.sRewriteCacheControlInterceptor)
+                        .addNetworkInterceptor(NewsHttpApi.sRewriteCacheControlInterceptor)
+                        .addInterceptor(NewsHttpApi.sQueryParameterInterceptor)
+                        .cache(cache)
+                        .build());
 
         return NewsHttpApi.getInstance(
                 retrofitBuilder.build().create(NewsHttpSevies.class));
