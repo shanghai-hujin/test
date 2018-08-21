@@ -9,6 +9,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -108,4 +114,7 @@ dependencies {
     compile 'com.google.dagger:dagger-android-support:2.14.1'
     compile 'com.google.dagger:dagger-android-processor:2.14.1'*/
     compile 'org.glassfish:javax.annotation:10.0-b28'
+    //組件化
+    compile 'com.alibaba:arouter-api:1.4.0'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.4.0'
 }
