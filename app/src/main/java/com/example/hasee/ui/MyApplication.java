@@ -1,5 +1,6 @@
 package com.example.hasee.ui;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.hasee.di.component.ApplicationComponent;
 import com.example.hasee.di.component.DaggerApplicationComponent;
 import com.example.hasee.di.module.ApplicationModule;
@@ -33,6 +34,7 @@ public class MyApplication extends LitePalApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        initARouter();
 
         instance = this;
 
@@ -56,7 +58,37 @@ public class MyApplication extends LitePalApplication {
                 .build();
     }
 
+    /**
+     * 是否是调试模式
+     */
+    private boolean isDebugARouter = true;
+    /**
+     *说明:初始化路由
+     *作者:hujin
+     *添加时间:2018/8/21 15:10
+     *修改人:hujin
+     *修改时间:2018/8/21 15:10
+     */
+    private void initARouter() {
+        if(isDebugARouter){
+            //打开打印
+            ARouter.openLog();
+            //打开调试模式
+            ARouter.openDebug();
+        }
+        ARouter.init(this);
+    }
+
     public static MyApplication getInstance() {
         return instance;
+    }
+
+    /**
+     * 终止方法中destory路由
+     */
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        ARouter.getInstance().destroy();
     }
 }

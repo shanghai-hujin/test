@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.hasee.R;
 import com.example.hasee.ui.MyApplication;
 import com.example.hasee.utils.DialogHelper;
@@ -44,6 +45,8 @@ public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends
         mRootView = createView(null, null, savedInstanceState);
         setContentView(mRootView);
         initInjector(MyApplication.getInstance().getApplicationComponent());
+        //基类注入
+        ARouter.getInstance().inject(this);
         attachView();
         bindView(mRootView, savedInstanceState);
         initStateView();

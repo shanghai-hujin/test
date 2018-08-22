@@ -15,10 +15,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.hasee.R;
 import com.example.hasee.bean.LoginResponse;
 import com.example.hasee.di.component.ApplicationComponent;
 import com.example.hasee.di.component.DaggerHttpComponent;
+import com.example.hasee.http.ComPath;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.PasswordHelp;
@@ -33,7 +35,7 @@ import es.dmoral.toasty.Toasty;
  * @author HASEE
  * @date 2018/4/30
  */
-
+@Route( path = ComPath.PATH_LOGINACTIVITY)
 public class LoginActivity extends BaseActivity<LoginPresenter>
         implements LoginContract.LoginView {
     @BindView(R.id.et_username)

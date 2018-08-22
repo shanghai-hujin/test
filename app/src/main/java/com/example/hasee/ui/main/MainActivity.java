@@ -15,8 +15,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.hasee.R;
 import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.http.ComPath;
 import com.example.hasee.http.cookies.CookiesManager;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.ui.base.BaseFragment;
@@ -25,7 +28,6 @@ import com.example.hasee.ui.movie.MovieFragment;
 import com.example.hasee.ui.mycenter.MyFragment;
 import com.example.hasee.ui.news.NewsFragment;
 import com.example.hasee.ui.person.LEDSettingActivity;
-import com.example.hasee.ui.person.LoginActivity;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.PasswordHelp;
 import com.example.hasee.utils.PerfectClickListener;
@@ -45,6 +47,7 @@ import es.dmoral.toasty.Toasty;
 /**
  * @author TT
  */
+@Route(path = ComPath.PATH_MainActivity)
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.MainView,  NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.contentContainer)
@@ -131,8 +134,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
                     }
                 });
-
-
     }
 
     /**
@@ -376,8 +377,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                     Intent intent = new Intent();
                     switch (view.getId()) {
                         case R.id.iv_login:
+                            ARouter.getInstance().build("/app/LoginActivity").navigation();
                             //跳登录
-                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                            //startActivity(new Intent(MainActivity.this, LoginActivity.class));
                             break;
                         default:
                             break;
