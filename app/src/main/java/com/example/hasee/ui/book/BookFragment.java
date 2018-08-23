@@ -31,7 +31,12 @@ public class BookFragment extends BaseFragment {
 
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
+        view.findViewById(R.id.tv_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
     }
 
     @Override
