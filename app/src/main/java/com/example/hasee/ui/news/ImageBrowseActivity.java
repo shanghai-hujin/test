@@ -15,11 +15,13 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.hasee.R;
 import com.example.hasee.bean.NewsArticleBean;
 import com.example.hasee.bean.NewsDetail;
 import com.example.hasee.di.component.ApplicationComponent;
 import com.example.hasee.di.component.DaggerHttpComponent;
+import com.example.hasee.http.ComPath;
 import com.example.hasee.http.Common;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.utils.StatusBarUtil;
@@ -45,7 +47,7 @@ import butterknife.OnClick;
  * @author TT
  * @date 2018/5/31 14:05
  */
-
+@Route( path = ComPath.PATH_IMAGEBROWSEACTIVITY)
 public class ImageBrowseActivity extends BaseActivity<
         ReadContentsPresenter> implements ReadContentsContract.ReadContentsView {
     private static final String AID = "aid";

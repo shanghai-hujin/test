@@ -1,11 +1,31 @@
 /*全局配置信息及第三方依赖统一管理*/
 ext {
+    //编译版本
+    compileSdkVersion = 26
+    //构建工具版本
+    buildToolsVersion = "26.1.0"
+    //最低版本要求
+    minSdkVersion = 21
+    //目标版本
+    targetSdkVersion = 26
+    //版本号
+    versionCode = 1
+    //版本名称
+    versionName = "1.0"
 
+    //其他库
+    recyclerViewVersion = '26.1.0'
+    designVersion ='26.1.0'
+    cardviewVersion = '26.1.0'
 
+    //SmartRefreshLayout
+    smartrefreshVersion = '1.0.5.1'
 
+    //flowlayout
+    flowlayoutVersion = '1.1.2'
 
-
-
+    //banner
+    bannerVersion = '1.4.9'
 
 
 }

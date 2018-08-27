@@ -12,8 +12,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.hasee.R;
 import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.http.ComPath;
 import com.example.hasee.ui.base.BaseActivity;
 
 import butterknife.BindView;
@@ -24,6 +26,7 @@ import butterknife.OnClick;
  * author: Will .
  * date: 2017/9/24 .
  */
+@Route( path = ComPath.PATH_ADVERTACTIVITY)
 public class AdvertActivity extends BaseActivity {
 
     private static final String Url = "url";

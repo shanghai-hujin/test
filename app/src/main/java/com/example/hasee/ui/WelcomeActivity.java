@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.hasee.R;
 import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.http.ComPath;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.ui.main.MainActivity;
 import com.example.hasee.utils.FrescoUtils;
@@ -25,6 +27,7 @@ import io.reactivex.functions.Consumer;
 /**
  * @author TT
  */
+@Route( path = ComPath.PATH_WELCOMEACTIVITY)
 public class WelcomeActivity extends BaseActivity {
 
 
