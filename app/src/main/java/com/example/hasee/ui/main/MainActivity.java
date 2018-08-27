@@ -24,6 +24,7 @@ import com.example.hasee.http.cookies.CookiesManager;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.ui.book.BookFragment;
+import com.example.hasee.ui.book.TestXidingActivity;
 import com.example.hasee.ui.movie.MovieFragment;
 import com.example.hasee.ui.mycenter.MyFragment;
 import com.example.hasee.ui.news.NewsFragment;
@@ -312,6 +313,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                         break;
 
                     case R.id.item_down:
+                        startActivity(new Intent(MainActivity.this, TestXidingActivity.class));
                         break;
                     case R.id.item_led:
                         //显示led字幕

@@ -13,7 +13,7 @@ import com.example.hasee.widget.vlayout.VirtualLayoutManager;
  * @author 廖望
  * @date 2018/8/27 17:31
  */
-public abstract class SubAdapter extends DelegateAdapter.Adapter<MainViewHolder> {
+public  class SubAdapter extends DelegateAdapter.Adapter<MainViewHolder> {
 
 
     private Context mContext;
@@ -44,6 +44,11 @@ public abstract class SubAdapter extends DelegateAdapter.Adapter<MainViewHolder>
     @Override
     public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MainViewHolder(parent, mResId);
+    }
+
+    @Override
+    public void onBindViewHolder(MainViewHolder holder, int position) {
+
     }
 
 

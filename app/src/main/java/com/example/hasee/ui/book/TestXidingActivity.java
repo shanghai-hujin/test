@@ -1,5 +1,6 @@
 package com.example.hasee.ui.book;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.example.hasee.ui.adpater.SubAdapter;
 import com.example.hasee.widget.vlayout.DelegateAdapter;
 import com.example.hasee.widget.vlayout.VirtualLayoutManager;
 import com.example.hasee.widget.vlayout.layout.LinearLayoutHelper;
+import com.example.hasee.widget.vlayout.layout.OnePlusNLayoutHelper;
 import com.example.hasee.widget.vlayout.layout.StickyLayoutHelper;
 
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class TestXidingActivity extends AppCompatActivity {
+public class TestXidingActivity extends Activity {
 
     private RecyclerView recyclerView;
     private List<String> testList = new ArrayList<>();
@@ -85,13 +87,15 @@ public class TestXidingActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_test);
 
+
+        final VirtualLayoutManager layoutManager = new VirtualLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
         final RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
 
         recyclerView.setRecycledViewPool(viewPool);
 
-        viewPool.setMaxRecycledViews(0, 20);
-        final VirtualLayoutManager layoutManager = new VirtualLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        viewPool.setMaxRecycledViews(0, 30);
 
         final DelegateAdapter delegateAdapter = new DelegateAdapter(layoutManager, true);
 
@@ -99,15 +103,15 @@ public class TestXidingActivity extends AppCompatActivity {
 
         List<DelegateAdapter.Adapter> adapters = new LinkedList<>();
 
-        adapters.add(new SubAdapter(this,new LinearLayoutHelper(), 3,
-                R.layout.item_test){
+        adapters.add(new SubAdapter(this,new LinearLayoutHelper(), 30,
+                R.layout.item_test_three){
 
             @Override
             public void onBindViewHolder(MainViewHolder holder, int position) {
-                TextView textView = (TextView) holder.getView(R.id.tv_item_test);
-                textView.setText("test" + position);
+
             }
         });
+
         adapters.add(new SubAdapter(this,new StickyLayoutHelper(), 1,
                 R.layout.item_tab){
 
@@ -148,9 +152,17 @@ public class TestXidingActivity extends AppCompatActivity {
             }
         });
 
+        adapters.add(new SubAdapter(this,new LinearLayoutHelper(), 30,
+                R.layout.item_test_three){
+
+            @Override
+            public void onBindViewHolder(MainViewHolder holder, int position) {
+
+            }
+        });
+
 
 
         delegateAdapter.setAdapters(adapters);
-        delegateAdapter.notifyDataSetChanged();
     }
 }
