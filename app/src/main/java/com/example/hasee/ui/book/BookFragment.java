@@ -1,5 +1,6 @@
 package com.example.hasee.ui.book;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -34,7 +35,7 @@ public class BookFragment extends BaseFragment {
         view.findViewById(R.id.tv_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(getActivity(), TestXidingActivity.class));
             }
         });
     }
