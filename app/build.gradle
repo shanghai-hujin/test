@@ -1,19 +1,20 @@
-apply plugin: 'com.android.application'
-
+apply from: "${rootProject.rootDir}/common_config.gradle"
+project.ext.setAppDefaultConfig project
 android {
-    compileSdkVersion 26
     defaultConfig {
-        applicationId "com.example.hasee"
-        minSdkVersion 21
-        targetSdkVersion 26
+        if (!project.ext.isLib) {
+            applicationId project.ext.applicationId
+        }
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [moduleName: project.getName()]
-            }
+    signingConfigs {
+        cang_wang {
+            keyAlias 'hujin'
+            keyPassword '123456'
+            storeFile file('../hujin.jks')
+            storePassword '123456'
         }
     }
     buildTypes {
@@ -39,20 +40,17 @@ allprojects {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:27.0.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestCompile('com.android.support:support-annotations:26.1.0') {
-        force = true
-    }
     //其他库
     compile project(':fabandcalendar')
     //UI控件部分
-    compile 'com.android.support:design:26.1.0'
-    compile 'com.android.support:recyclerview-v7:26.1.0'
-    compile 'com.android.support:cardview-v7:26.1.0'
+    compile 'com.android.support:design:27.0.1'
+    compile 'com.android.support:recyclerview-v7:27.0.1'
+    compile 'com.android.support:cardview-v7:27.0.1'
     //SmartRefreshLayout
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
     compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5.1'
@@ -88,7 +86,7 @@ dependencies {
     //图片加载库fresco
     compile 'com.facebook.fresco:fresco:0.12.0'
     compile 'com.facebook.fresco:animated-gif:0.12.0'
-    compile "com.facebook.fresco:imagepipeline-okhttp3:0.12.0+"
+    compile "com.facebook.fresco:imagepipeline-okhttp3:0.12.0"
     //adapter
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     //Flycotablayout
