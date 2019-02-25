@@ -1,5 +1,8 @@
 package com.example.hasee.ui;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.example.hasee.di.component.ApplicationComponent;
 import com.example.hasee.di.component.DaggerApplicationComponent;
 import com.example.hasee.di.module.ApplicationModule;
@@ -54,6 +57,12 @@ public class MyApplication extends LitePalApplication {
                 .applicationModule(new ApplicationModule(this))
                 .httpModule(new HttpModule())
                 .build();
+    }
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
     }
 
     public static MyApplication getInstance() {
