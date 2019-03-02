@@ -1,5 +1,6 @@
 package com.example.hasee.http;
 
+import com.example.hasee.bean.GanRandomBean;
 import com.example.hasee.bean.HistoryTodayBean;
 import com.example.hasee.bean.LoginResponse;
 import com.example.hasee.bean.MeiRiYiWenBean;
@@ -11,6 +12,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
@@ -135,4 +137,14 @@ public interface OtherHttpSevies {
     @GET
     Observable<MeiRiYiWenBean> getNASAOfToday(@Url String url,
                                               @Query("AppKey") String AppKey);
+
+    /**
+     * 获取干货随机数据
+     * @param type 类型
+     * @param num  数量
+     * @return
+     */
+    @GET("http://gank.io/api/random/data/{type}/{num}")
+    Observable<GanRandomBean> getGanRandom(@Path("type") String type,
+                                           @Path("num") int num);
 }

@@ -1,4 +1,4 @@
-package com.example.hasee.ui;
+package com.example.hasee.ui.welcome;
 
 import android.content.Intent;
 import android.os.Build;
@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.hasee.R;
+import com.example.hasee.bean.GanRandomBean;
 import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.ui.main.MainActivity;
 import com.example.hasee.utils.FrescoUtils;
@@ -25,7 +27,7 @@ import io.reactivex.functions.Consumer;
 /**
  * @author TT
  */
-public class WelcomeActivity extends BaseActivity {
+public class WelcomeActivity extends BaseActivity<WelcomPresenter> implements WelcomeContract.WelcomeView {
 
 
     @BindView(R.id.sdv_welcome)
@@ -33,6 +35,7 @@ public class WelcomeActivity extends BaseActivity {
     @BindView(R.id.tv_welcome_flash)
     TextView mTvWelcomeFlash;
     private Disposable mDisposable;
+
 
     @Override
     public int getContentLayout() {
@@ -43,8 +46,8 @@ public class WelcomeActivity extends BaseActivity {
     public void bindView(View view, Bundle savedInstanceState) {
        // hideBottomUIMenu();
       //  StatusBarUtil.setTranslucentForImageView(this, 0, mSdvWelcome);
-        FrescoUtils.setController("https://api.lylares.com/bing/image/?1080/1920/0", mSdvWelcome ,1);
 
+        basePresenter.getGanHuoRandomData("福利",3);
         mTvWelcomeFlash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +88,10 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     public void initInjector(ApplicationComponent applicationComponent) {
-
+        DaggerHttpComponent.builder()
+                .applicationComponent(applicationComponent)
+                .build()
+                .inject(this);
     }
 
     protected void hideBottomUIMenu() {
@@ -110,4 +116,11 @@ public class WelcomeActivity extends BaseActivity {
         }
 
     }
+
+    @Override
+    public void loadPic(GanRandomBean ganRandomBean) {
+        FrescoUtils.setController(ganRandomBean.getResults().get(0).getUrl(), mSdvWelcome ,1);
+    }
+
+
 }

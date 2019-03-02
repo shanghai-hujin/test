@@ -1,5 +1,6 @@
 package com.example.hasee.http;
 
+import com.example.hasee.bean.GanRandomBean;
 import com.example.hasee.bean.HistoryTodayBean;
 import com.example.hasee.bean.LoginResponse;
 import com.example.hasee.bean.MeiRiYiWenBean;
@@ -145,5 +146,15 @@ public class OtherHttpApi {
      */
     public Observable<MeiRiYiWenBean> getNASAOfToday(){
         return httpSevies.getNASAOfToday("https://api.lylares.com/bing/asc",Common.API_BERRY);
+    }
+
+    /**
+     * 获取干货随机数据
+     * @param type
+     * @param num
+     * @return
+     */
+    public Observable<GanRandomBean> getGanRandom(String type, int num){
+        return httpSevies.getGanRandom(type, num);
     }
 }

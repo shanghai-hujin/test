@@ -67,7 +67,7 @@
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity
-            android:name=".ui.WelcomeActivity"
+            android:name=".ui.welcome.WelcomeActivity"
             android:resizeableActivity="true"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleFullscreen">

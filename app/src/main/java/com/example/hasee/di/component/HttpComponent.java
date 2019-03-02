@@ -9,6 +9,7 @@ import com.example.hasee.ui.news.ImageBrowseActivity;
 import com.example.hasee.ui.news.NewsFragment;
 import com.example.hasee.ui.news.ReadTextActivity;
 import com.example.hasee.ui.person.LoginActivity;
+import com.example.hasee.ui.welcome.WelcomeActivity;
 
 import dagger.Component;
 
@@ -38,5 +39,7 @@ public interface HttpComponent {
     void inject(ImageBrowseActivity imageBrowseActivity);
 
     void inject(ReadTextActivity readTextActivity);
+
+    void inject(WelcomeActivity welcomeActivity);
 
 }
