@@ -3,12 +3,20 @@ package com.example.hasee.ui.person;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,10 +28,18 @@ import com.example.hasee.bean.LoginResponse;
 import com.example.hasee.di.component.ApplicationComponent;
 import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.ui.base.BaseActivity;
+import com.example.hasee.utils.BitmapUtil;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.PasswordHelp;
 import com.example.hasee.utils.RxBus;
 import com.example.hasee.utils.StatusBarUtil;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Random;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -62,6 +78,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
     LinearLayout llLoginPull;
     @BindView(R.id.toolbar_login)
     Toolbar mToolbarLogin;
+    private Bitmap bitmap;
+    private Bitmap bitmap1;
+    private Bitmap bitmap2;
 
     @Override
     public int getContentLayout() {
@@ -278,6 +297,144 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
     @Override
     public void loginFail(String errormsg) {
         Toasty.error(this,"账号密码错误...", Toast.LENGTH_SHORT,true).show();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewShot(cv);
+        viewShot2(llLoginOptions);
+
+    }
+
+    private Bitmap getCacheBitmapFromView(View view) {
+        final boolean drawingCacheEnabled = true;
+        view.setDrawingCacheEnabled(drawingCacheEnabled);
+        view.buildDrawingCache(drawingCacheEnabled);
+        final Bitmap drawingCache = view.getDrawingCache();
+        Bitmap bitmap;
+        if (drawingCache != null) {
+            bitmap = Bitmap.createBitmap(drawingCache);
+            view.setDrawingCacheEnabled(false);
+        } else {
+            bitmap = null;
+        }
+        return bitmap;
+    }
+
+    public static Bitmap getViewBp(View v) {
+        if (null == v) {
+            return null;
+        }
+        v.setDrawingCacheEnabled(true);
+        v.buildDrawingCache();
+        if (Build.VERSION.SDK_INT >= 11) {
+            v.measure(View.MeasureSpec.makeMeasureSpec(v.getWidth(),
+                    View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(
+                    v.getHeight(), View.MeasureSpec.EXACTLY));
+            v.layout((int) v.getX(), (int) v.getY(),
+                    (int) v.getX() + v.getMeasuredWidth(),
+                    (int) v.getY() + v.getMeasuredHeight());
+        } else {
+            v.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+        }
+        Bitmap b = Bitmap.createBitmap(v.getDrawingCache(), 0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+
+        v.setDrawingCacheEnabled(false);
+        v.destroyDrawingCache();
+        return b;
+    }
+
+    private Bitmap addBitmap(Bitmap first, Bitmap second) {
+        int width = Math.max(first.getWidth(),second.getWidth());
+        int height = first.getHeight() + second.getHeight();
+        Bitmap result = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(result);
+        canvas.drawBitmap(first, 0, 0, null);
+        canvas.drawBitmap(second, 0, first.getHeight(),null);
+        return result;
+    }
+
+    public  void viewShot(final View v){
+        v.post(new Runnable() {
+            @Override
+            public void run() {
+                bitmap1 = Bitmap.createBitmap(v.getWidth() , v.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas c = new Canvas(bitmap1);
+                v.draw(c);;
+            }
+        });
+    }
+
+    public  void viewShot2(final View v){
+        v.post(new Runnable() {
+            @Override
+            public void run() {
+                bitmap2 = Bitmap.createBitmap(v.getWidth() , v.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas c = new Canvas(bitmap2);
+                v.draw(c);;
+                Bitmap addBitmap = addBitmap(bitmap1, bitmap2);
+                saveImg(addBitmap);
+            }
+        });
+    }
+
+    public  boolean saveImg(Bitmap bitmap) {
+        Random r = new Random();
+        String filename = String.valueOf(r.nextInt(10)) + ".png";
+        File sd = Environment.getExternalStorageDirectory();
+        File dest = new File(sd, filename);
+
+        try {
+            FileOutputStream out = new FileOutputStream(dest);
+            if (bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)) {
+                out.flush();
+                out.close();
+            }
+            out.flush();
+            out.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private  Bitmap mergeBitmap(Bitmap firstBitmap, Bitmap secondBitmap, Bitmap threeBitmap) {
+        Bitmap bitmap = Bitmap.createBitmap(firstBitmap.getWidth(), firstBitmap.getHeight() + secondBitmap.getHeight() + threeBitmap.getHeight(), firstBitmap.getConfig());
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawBitmap(firstBitmap, new Matrix(), null);
+        canvas.drawBitmap(secondBitmap, 0, firstBitmap.getHeight(), null);
+        canvas.drawBitmap(threeBitmap, secondBitmap.getWidth(), firstBitmap.getHeight(), null);
+        return bitmap;
+    }
+
+    public static Bitmap mergeBitmap(Bitmap firstBitmap, Bitmap secondBitmap) {
+        Bitmap bitmap = Bitmap.createBitmap(firstBitmap.getWidth(), firstBitmap.getHeight(),firstBitmap.getConfig());
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawBitmap(firstBitmap, new Matrix(), null);
+        canvas.drawBitmap(secondBitmap, 0, 0, null);
+        return bitmap;
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(bitmap1 != null && !bitmap1.isRecycled()){
+            bitmap1.recycle();
+            bitmap1 = null;
+        }
+        if(bitmap2 != null && !bitmap2.isRecycled()){
+            bitmap2.recycle();
+            bitmap2 = null;
+        }
+        super.onDestroy();
 
     }
 }

@@ -1,0 +1,43 @@
+priject.ext{
+
+    compileSdkVersion = 26
+    buildToolsVersion = "26.1.0"
+    minSdkVersion = 21
+    targetSdkVersion = 26
+    applicationId = "com.example.hasee"
+
+    isDebug = false;
+    isLib = false;
+    isLoginDebug = false;
+
+    //设置App配置
+    setAppDefaultConfig = {
+        extension->
+            extension.apply plugin: 'com.android.application'
+            extension.description "app"
+            setAndroidConfig extension.android
+            setDependencies extension.dependencies
+    }
+
+    //设置Lib配置
+    // extension相当于方法区
+    setLibDefaultConfig = {
+        extension ->
+            extension.apply plugin: 'com.android.library'
+            extension.description "lib"
+            setAndroidConfig extension.android
+            extension.android {
+                defaultConfig {
+                    defaultPublishConfig 'release'
+                    publishNonDefault true
+                }
+            }
+            setDependencies extension.dependencies
+    }
+
+    setDefaultConfig = {
+        extension->
+            setAndroidConfig extension.android
+            setDependencies extension.dependencies
+    }
+}

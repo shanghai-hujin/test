@@ -1,5 +1,6 @@
 package com.example.hasee.ui;
 
+import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
@@ -27,6 +28,8 @@ public class MyApplication extends LitePalApplication {
 
     private static MyApplication instance;
 
+
+
     public ApplicationComponent getApplicationComponent() {
         return mApplicationComponent;
     }
@@ -38,7 +41,6 @@ public class MyApplication extends LitePalApplication {
         super.onCreate();
 
         instance = this;
-
         Logger.addLogAdapter(new AndroidLogAdapter(){
             @Override
             public boolean isLoggable(int priority, String tag) {
