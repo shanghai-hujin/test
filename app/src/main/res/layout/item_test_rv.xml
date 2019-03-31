@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_item_test"
     android:orientation="horizontal"
+    android:background="@color/colorAccent"
     android:layout_width="match_parent"
     android:layout_height="60dp">
     <TextView
