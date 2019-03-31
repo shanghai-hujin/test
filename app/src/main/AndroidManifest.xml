@@ -29,6 +29,14 @@
         >
 
         </activity>
+
+        <activity
+            android:name=".ui.person.TestViewActivity"
+            android:resizeableActivity="true"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
         <activity
             android:name=".ui.person.LoginActivity"
             android:hardwareAccelerated="true"

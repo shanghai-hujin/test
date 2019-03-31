@@ -1,5 +1,6 @@
 package com.example.hasee.ui.news;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
@@ -22,6 +23,7 @@ import com.example.hasee.di.component.DaggerNewsComponent;
 import com.example.hasee.di.module.NewsModule;
 import com.example.hasee.ui.adpater.ChannelPagerAdapter;
 import com.example.hasee.ui.base.BaseFragment;
+import com.example.hasee.ui.person.TestViewActivity;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.FrescoUtils;
 import com.example.hasee.utils.RxBus;
@@ -126,6 +128,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             case R.id.menu_me:
                 break;
             case R.id.menu_more:
+                startActivity(new Intent(getActivity(), TestViewActivity.class));
                 break;
             case R.id.menu_search:
                 break;
@@ -267,8 +270,8 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     public void initData() {
         mSelectedDatas = new ArrayList<>();
         mUnSelectedDatas = new ArrayList<>();
-        mPresenter.getChannel();
-        mPresenter.getWeather();
+      //  mPresenter.getChannel();
+      //  mPresenter.getWeather();
     }
 
 
