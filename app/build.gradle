@@ -1,14 +1,13 @@
-apply plugin: 'com.android.application'
+apply from: "${rootProject.rootDir}/config.gradle"
 
+project.ext.setAppDefaultConfig project
 android {
-    compileSdkVersion 26
     defaultConfig {
-        applicationId "com.example.hasee"
-        minSdkVersion 21
-        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        if (!project.ext.isLib) {
+            applicationId project.ext.applicationId
+        }
 
         multiDexEnabled true
     }
@@ -23,6 +22,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildToolsVersion '26.0.2'
 }
 
 allprojects {

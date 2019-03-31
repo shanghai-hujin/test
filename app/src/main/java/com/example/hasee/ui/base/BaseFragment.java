@@ -79,7 +79,7 @@ public abstract class BaseFragment<P extends BaseContract.BasePresenter> extends
 
 
     @Override
-    public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(getContentLayout(), container, false);
         unbinder = ButterKnife.bind(this, view);

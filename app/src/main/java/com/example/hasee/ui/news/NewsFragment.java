@@ -1,5 +1,6 @@
 package com.example.hasee.ui.news;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
@@ -120,6 +121,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             case R.id.menu_me:
                 break;
             case R.id.menu_more:
+                startActivity(new Intent(getActivity(), TestViewActivity.class));
                 break;
             case R.id.menu_search:
                 break;
