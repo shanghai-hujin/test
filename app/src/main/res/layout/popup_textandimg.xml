@@ -14,14 +14,10 @@
         app:cardCornerRadius="4dp"
         app:cardMaxElevation="3dp">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/sd_nasaimg"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            fresco:actualImageScaleType="fitXY"
-            fresco:progressBarAutoRotateInterval="5000"
-            fresco:progressBarImage="@mipmap/icon_progress_bar"
-            fresco:progressBarImageScaleType="centerInside"/>
+            android:layout_height="match_parent"/>
 
         <TextView
             android:id="@+id/tv_nasa_con"

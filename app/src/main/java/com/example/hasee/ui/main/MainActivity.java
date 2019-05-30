@@ -36,7 +36,6 @@ import com.example.hasee.utils.RxBus;
 import com.example.hasee.utils.StatusBarUtil;
 import com.example.hasee.widget.BottomBar;
 import com.example.hasee.widget.BottomBarTab;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.listener.OnBtnClickL;
@@ -72,7 +71,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private TextView mTvB;
     private ImageView mIvHeadNoftiy;
     private ImageView mIvHeadSwitchMode;
-    private SimpleDraweeView mIcUser;
+    private ImageView mIcUser;
     private ConstraintLayout mClLogin;
     private ImageView mIvLogin;
 
@@ -238,7 +237,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         mTvB = (TextView)headerView.findViewById(R.id.tv_b);
         mIvHeadNoftiy = (ImageView)headerView.findViewById(R.id.iv_head_noftiy);
         mIvHeadSwitchMode = (ImageView)headerView.findViewById(R.id.iv_head_switch_mode);
-        mIcUser = (SimpleDraweeView)headerView.findViewById(R.id.ic_user);
+        mIcUser = (ImageView) headerView.findViewById(R.id.ic_user);
         mClLogin = (ConstraintLayout) headerView.findViewById(R.id.cl_login);
         mIvLogin = (ImageView) headerView.findViewById(R.id.iv_login);
 

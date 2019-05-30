@@ -5,12 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.hasee.R;
 import com.example.hasee.bean.MovieDataBean;
-import com.example.hasee.utils.FrescoUtils;
+import com.example.hasee.utils.GlideApp;
 import com.example.hasee.widget.recyclebanner.BannerAdapterHelper;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +49,11 @@ public class MovieHorizontalAdapter extends RecyclerView.Adapter<MovieHorizontal
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         mBannerAdapterHelper.onBindViewHolder(holder.itemView, position, getItemCount());
-        SimpleDraweeView imageView = holder.mImageView;
+        ImageView imageView = holder.mImageView;
         if(subjectsBeanList.size() == 0)return;
-        FrescoUtils.setController(subjectsBeanList.get(position%subjectsBeanList.size()).getImages().getMedium(), imageView);
+        GlideApp.with(mContext)
+                .load(subjectsBeanList.get(position%subjectsBeanList.size()).getImages().getMedium())
+                .into(imageView);
     }
 
     @Override
@@ -61,11 +63,11 @@ public class MovieHorizontalAdapter extends RecyclerView.Adapter<MovieHorizontal
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final SimpleDraweeView mImageView;
+        public final ImageView mImageView;
 
         public ViewHolder(final View itemView) {
             super(itemView);
-            mImageView = (SimpleDraweeView) itemView.findViewById(R.id.sd_movie_banner);
+            mImageView = (ImageView) itemView.findViewById(R.id.sd_movie_banner);
         }
 
     }

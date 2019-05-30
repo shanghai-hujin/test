@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,11 +24,10 @@ import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.ui.adpater.ChannelPagerAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.Event;
-import com.example.hasee.utils.FrescoUtils;
+import com.example.hasee.utils.GlideApp;
 import com.example.hasee.utils.RxBus;
 import com.example.hasee.widget.NoScrollViewPager;
 import com.example.hasee.widget.dragtab.ChannelDialogFragment;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     private static final String TAG = "NewsFragment";
     @BindView(R.id.toolbar_user_avatar)
-    SimpleDraweeView mToolbarUserAvatar;
+    ImageView mToolbarUserAvatar;
     @BindView(R.id.ll_navigation)
     LinearLayout mLlNavigation;
     @BindView(R.id.toolbar)
@@ -296,7 +296,9 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     public void showWeather(WeatherBean weatherBean) {
         int code = Integer.parseInt(weatherBean.getResults().get(0).getNow().getCode());
         String url = "res://com.example.hasee/" + weather[code];
-        FrescoUtils.setController(url, mToolbarUserAvatar);
+        GlideApp.with(mContext)
+                .load(url)
+                .into(mToolbarUserAvatar);
         mTvWeather.setText(weatherBean.getResults().get(0).getNow().getText()
                 + ": " + weatherBean.getResults().get(0).getNow().getTemperature() + "度");
     }

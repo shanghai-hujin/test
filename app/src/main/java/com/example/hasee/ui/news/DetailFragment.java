@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.animation.BaseAnimation;
@@ -29,11 +30,10 @@ import com.example.hasee.ui.adpater.NewsDetailAdapter;
 import com.example.hasee.ui.base.BaseFragment;
 import com.example.hasee.utils.ContextUtils;
 import com.example.hasee.utils.Event;
-import com.example.hasee.utils.FrescoUtils;
+import com.example.hasee.utils.GlideApp;
 import com.example.hasee.utils.RxBus;
 import com.example.hasee.widget.NewsActionPopup;
 import com.example.hasee.widget.SimpleImageView;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.flyco.animation.SlideEnter.SlideRightEnter;
 import com.flyco.animation.SlideExit.SlideRightExit;
 import com.orhanobut.logger.Logger;
@@ -143,7 +143,10 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
                     @Override
                     public void displayImage(Context context, Object path, View imageView) {
                         //加载图片
-                        FrescoUtils.setController((String) path, ((SimpleDraweeView) imageView));
+                        GlideApp.with(mContext)
+                                .load((String) path)
+                                .into(((ImageView) imageView));
+
                     }
 
                 })

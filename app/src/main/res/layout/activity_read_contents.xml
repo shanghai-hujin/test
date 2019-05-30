@@ -56,14 +56,13 @@
                 android:layout_height="wrap_content">
 
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <ImageView
                     android:id="@+id/sd_offlogo"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="8dp"
-                    fresco:placeholderImage="@mipmap/shuaige"
-                    fresco:failureImage="@mipmap/shuaige"
+
                 />
 
                 <TextView

@@ -10,7 +10,7 @@
     app:cardMaxElevation="10dp"
     app:cardUseCompatPadding="true">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/sd_movie_banner"
         android:layout_width="match_parent"
         fresco:actualImageScaleType ="fitXY"

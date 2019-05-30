@@ -40,14 +40,11 @@
                         android:scaleType="fitXY"
                         android:src="@mipmap/ic_drawer_main"/>
 
-                    <com.facebook.drawee.view.SimpleDraweeView
+                    <ImageView
                         android:id="@+id/toolbar_user_avatar"
                         android:layout_width="48dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="16dp"
-                        fresco:placeholderImage="@mipmap/shuaige"
-                        fresco:failureImage="@mipmap/shuaige"
-                        fresco:actualImageScaleType="fitXY"
                         />
 
                     <TextView

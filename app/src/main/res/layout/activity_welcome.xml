@@ -9,16 +9,14 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.hasee.ui.WelcomeActivity">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/sdv_welcome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        fresco:actualImageScaleType="fitXY"
-        fresco:fadeDuration="500"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tv_welcome_flash"

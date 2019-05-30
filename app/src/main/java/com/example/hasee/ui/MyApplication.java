@@ -5,7 +5,6 @@ import com.example.hasee.di.component.ApplicationComponent;
 import com.example.hasee.di.component.DaggerApplicationComponent;
 import com.example.hasee.di.module.ApplicationModule;
 import com.example.hasee.di.module.HttpModule;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
@@ -45,8 +44,6 @@ public class MyApplication extends LitePalApplication {
             }
         });
 
-        //初始化图片加载库
-        Fresco.initialize(this);
         //数据库初始化
         LitePal.initialize(this);
         //初始化侧滑

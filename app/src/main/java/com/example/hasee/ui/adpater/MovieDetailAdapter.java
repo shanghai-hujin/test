@@ -2,6 +2,7 @@ package com.example.hasee.ui.adpater;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -9,10 +10,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hasee.R;
 import com.example.hasee.bean.MovieDataBean;
 import com.example.hasee.utils.ContextUtils;
-import com.example.hasee.utils.FrescoUtils;
+import com.example.hasee.utils.GlideApp;
 import com.example.hasee.utils.PerfectClickListener;
 import com.example.hasee.widget.ZhiHuImageView;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import java.util.List;
 public class MovieDetailAdapter extends BaseQuickAdapter<MovieDataBean.SubjectsBean, BaseViewHolder> {
 
     private Context mContext;
-    private SimpleDraweeView simpleDraweeView;
+    private ImageView simpleDraweeView;
     private ZhiHuImageView zhiHuImageView;
 
     public MovieDetailAdapter(Context context, List<MovieDataBean.SubjectsBean> data) {
@@ -42,7 +42,9 @@ public class MovieDetailAdapter extends BaseQuickAdapter<MovieDataBean.SubjectsB
 
             llItem.setVisibility(View.GONE);
             zhiHuImageView.setVisibility(View.VISIBLE);
-            FrescoUtils.setController(data.getImages().getLarge(), zhiHuImageView);
+            GlideApp.with(mContext)
+                    .load(data.getImages().getLarge())
+                    .into(zhiHuImageView);
         } else {
             llItem.setVisibility(View.VISIBLE);
             zhiHuImageView.setVisibility(View.GONE);
@@ -54,7 +56,10 @@ public class MovieDetailAdapter extends BaseQuickAdapter<MovieDataBean.SubjectsB
                 .setText(R.id.tv_one_genres, ContextUtils.formatGenres(data.getGenres()))
                 .setText(R.id.tv_one_rating_rate,"评分"+data.getRating().getAverage());
         simpleDraweeView = helper.getView(R.id.iv_one_photo);
-        FrescoUtils.setController(data.getImages().getLarge(), simpleDraweeView);
+
+        GlideApp.with(mContext)
+                .load(data.getImages().getLarge())
+                .into(simpleDraweeView);
 
         helper.itemView.setOnClickListener(new PerfectClickListener() {
             @Override

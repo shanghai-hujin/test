@@ -1,13 +1,13 @@
 package com.example.hasee.ui.adpater;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hasee.R;
 import com.example.hasee.bean.NewsDetail;
-import com.example.hasee.utils.FrescoUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.example.hasee.utils.GlideApp;
 
 import java.util.List;
 
@@ -51,7 +51,10 @@ public class NewsDetailAdapter extends BaseMultiItemQuickAdapter<NewsDetail.Item
                 baseViewHolder.setText(R.id.tv_title,item.getTitle());
                 baseViewHolder.setText(R.id.tv_source,item.getSource());
                 baseViewHolder.setText(R.id.tv_commnetsize,  String.format(mContext.getResources().getString(R.string.news_commentsize), item.getCommentsall()));
-                FrescoUtils.setController(item.getThumbnail(),((SimpleDraweeView)baseViewHolder.getView(R.id.iv_logo)));
+                GlideApp.with(mContext)
+                        .load(item.getThumbnail())
+                        .into((ImageView)baseViewHolder.getView(R.id.iv_logo));
+
                 baseViewHolder.addOnClickListener(R.id.iv_logo);
                 break;
             case NewsDetail.ItemBean.TYPE_DOC_SLIDEIMG:
@@ -60,9 +63,15 @@ public class NewsDetailAdapter extends BaseMultiItemQuickAdapter<NewsDetail.Item
                 baseViewHolder.setText(R.id.tv_commnetsize,
                         String.format(mContext.getResources().getString(R.string.news_commentsize), item.getCommentsall()));
                 try {
-                    FrescoUtils.setController(item.getStyle().getImages().get(0),((SimpleDraweeView)baseViewHolder.getView(R.id.iv_1)));
-                    FrescoUtils.setController(item.getStyle().getImages().get(1),((SimpleDraweeView)baseViewHolder.getView(R.id.iv_2)));
-                    FrescoUtils.setController(item.getStyle().getImages().get(2),((SimpleDraweeView)baseViewHolder.getView(R.id.iv_3)));
+                    GlideApp.with(mContext)
+                            .load(item.getStyle().getImages().get(0))
+                            .into((ImageView) baseViewHolder.getView(R.id.iv_1));
+                    GlideApp.with(mContext)
+                            .load(item.getStyle().getImages().get(1))
+                            .into((ImageView) baseViewHolder.getView(R.id.iv_2));
+                    GlideApp.with(mContext)
+                            .load(item.getStyle().getImages().get(2))
+                            .into((ImageView) baseViewHolder.getView(R.id.iv_3));
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -71,15 +80,25 @@ public class NewsDetailAdapter extends BaseMultiItemQuickAdapter<NewsDetail.Item
                 break;
             case NewsDetail.ItemBean.TYPE_ADVERT_TITLEIMG:
                 baseViewHolder.setText(R.id.tv_title, item.getTitle());
-                FrescoUtils.setController(item.getThumbnail(),((SimpleDraweeView)baseViewHolder.getView(R.id.iv_logo)));
+                GlideApp.with(mContext)
+                        .load(item.getThumbnail())
+                        .into((ImageView) baseViewHolder.getView(R.id.iv_logo));
+
                 baseViewHolder.addOnClickListener(R.id.iv_close);
                 break;
             case NewsDetail.ItemBean.TYPE_ADVERT_SLIDEIMG:
                 baseViewHolder.setText(R.id.tv_title, item.getTitle());
                 try {
-                    FrescoUtils.setController(item.getStyle().getImages().get(0),((SimpleDraweeView)baseViewHolder.getView(R.id.iv_1)));
-                    FrescoUtils.setController(item.getStyle().getImages().get(1),((SimpleDraweeView)baseViewHolder.getView(R.id.iv_2)));
-                    FrescoUtils.setController(item.getStyle().getImages().get(2),((SimpleDraweeView)baseViewHolder.getView(R.id.iv_3)));
+                    GlideApp.with(mContext)
+                            .load(item.getStyle().getImages().get(0))
+                            .into((ImageView) baseViewHolder.getView(R.id.iv_1));
+                    GlideApp.with(mContext)
+                            .load(item.getStyle().getImages().get(1))
+                            .into((ImageView) baseViewHolder.getView(R.id.iv_2));
+                    GlideApp.with(mContext)
+                            .load(item.getStyle().getImages().get(2))
+                            .into((ImageView) baseViewHolder.getView(R.id.iv_3));
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -87,7 +106,11 @@ public class NewsDetailAdapter extends BaseMultiItemQuickAdapter<NewsDetail.Item
                 break;
             case NewsDetail.ItemBean.TYPE_ADVERT_LONGIMG:
                 baseViewHolder.setText(R.id.tv_title, item.getTitle());
-                FrescoUtils.setController(item.getThumbnail(),((SimpleDraweeView)baseViewHolder.getView(R.id.iv_logo)));
+
+                GlideApp.with(mContext)
+                        .load(item.getThumbnail())
+                        .into((ImageView) baseViewHolder.getView(R.id.iv_logo));
+
                 baseViewHolder.addOnClickListener(R.id.iv_close);
                 break;
             case NewsDetail.ItemBean.TYPE_SLIDE:
@@ -95,7 +118,11 @@ public class NewsDetailAdapter extends BaseMultiItemQuickAdapter<NewsDetail.Item
                 baseViewHolder.setText(R.id.tv_source, item.getSource());
                 baseViewHolder.setText(R.id.tv_commnetsize,
                         String.format(mContext.getResources().getString(R.string.news_commentsize), item.getCommentsall()));
-                FrescoUtils.setController(item.getThumbnail(),((SimpleDraweeView)baseViewHolder.getView(R.id.iv_logo)));
+
+                GlideApp.with(mContext)
+                        .load(item.getThumbnail())
+                        .into((ImageView) baseViewHolder.getView(R.id.iv_logo));
+
                 baseViewHolder.addOnClickListener(R.id.iv_close);
                 break;
             case NewsDetail.ItemBean.TYPE_PHVIDEO:
@@ -104,7 +131,10 @@ public class NewsDetailAdapter extends BaseMultiItemQuickAdapter<NewsDetail.Item
                 baseViewHolder.setText(R.id.tv_commnetsize,
                         String.format(mContext.getResources().getString(R.string.news_commentsize), item.getCommentsall()));
                 baseViewHolder.addOnClickListener(R.id.iv_close);
-                FrescoUtils.setController(item.getThumbnail(),((SimpleDraweeView)baseViewHolder.getView(R.id.iv_logo)));
+
+                GlideApp.with(mContext)
+                        .load(item.getThumbnail())
+                        .into((ImageView) baseViewHolder.getView(R.id.iv_logo));
                 break;
             default:
                 break;

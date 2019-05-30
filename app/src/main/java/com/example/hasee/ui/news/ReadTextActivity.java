@@ -14,6 +14,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -24,8 +25,7 @@ import com.example.hasee.di.component.DaggerHttpComponent;
 import com.example.hasee.http.ComPath;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.utils.DateUtil;
-import com.example.hasee.utils.FrescoUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.example.hasee.utils.GlideApp;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -46,7 +46,7 @@ public class ReadTextActivity extends BaseActivity<ReadContentsPresenter> implem
     @BindView(R.id.fab_read)
     FloatingActionButton mFabRead;
     @BindView(R.id.sd_offlogo)
-    SimpleDraweeView mSdOfflogo;
+    ImageView mSdOfflogo;
     @BindView(R.id.tv_offname)
     TextView mTvOffname;
     @BindView(R.id.tv_offupdateTime)
@@ -140,7 +140,9 @@ public class ReadTextActivity extends BaseActivity<ReadContentsPresenter> implem
                 DateUtil.string2Date(newsArticleBean.getBody().getUpdateTime(),"yyyy/MM/dd HH:mm:ss")));
 
         if(newsArticleBean.getBody().getSubscribe() != null){
-            FrescoUtils.setController(newsArticleBean.getBody().getSubscribe().getLogo(),mSdOfflogo);
+            GlideApp.with(this)
+                    .load(newsArticleBean.getBody().getSubscribe().getLogo())
+                    .into(mSdOfflogo);
             mTvOffname.setText(newsArticleBean.getBody().getSubscribe().getCateSource());
 
         }else {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -12,8 +13,8 @@ import com.example.hasee.di.component.ApplicationComponent;
 import com.example.hasee.http.ComPath;
 import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.ui.main.MainActivity;
-import com.example.hasee.utils.FrescoUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.example.hasee.utils.GlideApp;
+import com.readystatesoftware.chuck.Chuck;
 
 import java.util.concurrent.TimeUnit;
 
@@ -32,7 +33,7 @@ public class WelcomeActivity extends BaseActivity {
 
 
     @BindView(R.id.sdv_welcome)
-    SimpleDraweeView mSdvWelcome;
+    ImageView mSdvWelcome;
     @BindView(R.id.tv_welcome_flash)
     TextView mTvWelcomeFlash;
     private Disposable mDisposable;
@@ -46,7 +47,11 @@ public class WelcomeActivity extends BaseActivity {
     public void bindView(View view, Bundle savedInstanceState) {
        // hideBottomUIMenu();
       //  StatusBarUtil.setTranslucentForImageView(this, 0, mSdvWelcome);
-        FrescoUtils.setController("https://api.lylares.com/bing/image/?1080/1920/0", mSdvWelcome ,1);
+
+        GlideApp.with(this)
+                .load("https://i.meizitu.net/2019/04/26c03.jpg")
+                .into(mSdvWelcome);
+
 
         mTvWelcomeFlash.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +89,7 @@ public class WelcomeActivity extends BaseActivity {
                     }
                 })
                 .subscribe();
+
     }
 
     @Override

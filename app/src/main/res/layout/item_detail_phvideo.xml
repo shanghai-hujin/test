@@ -19,7 +19,7 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -7,6 +7,7 @@ import com.example.hasee.http.OtherHttpApi;
 import com.example.hasee.http.OtherHttpSevies;
 import com.example.hasee.http.cookies.CookiesManager;
 import com.example.hasee.ui.MyApplication;
+import com.readystatesoftware.chuck.ChuckInterceptor;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +40,7 @@ public class HttpModule {
 
         return new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(new ChuckInterceptor(MyApplication.getContext()))
                 .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
@@ -52,7 +54,8 @@ public class HttpModule {
                 .baseUrl(Common.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(builder.cookieJar(new CookiesManager()).build());
+                .client(builder
+                        .cookieJar(new CookiesManager()).build());
         return OtherHttpApi.getInstance(
                 retrofitBuilder.build().create(OtherHttpSevies.class));
 

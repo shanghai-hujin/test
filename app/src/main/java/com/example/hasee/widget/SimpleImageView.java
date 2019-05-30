@@ -3,7 +3,6 @@ package com.example.hasee.widget;
 import android.content.Context;
 import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.youth.banner.loader.ImageLoaderInterface;
 
 /**
@@ -16,7 +15,7 @@ import com.youth.banner.loader.ImageLoaderInterface;
 public abstract class SimpleImageView implements ImageLoaderInterface {
     @Override
     public ImageView createImageView(Context context) {
-        SimpleDraweeView imageView = new SimpleDraweeView(context);
+        ImageView imageView = new ImageView(context);
         return imageView;
     }
 }

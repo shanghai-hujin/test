@@ -28,10 +28,6 @@ import com.example.hasee.utils.StatusBarUtil;
 import com.example.hasee.widget.swipeback.HackyViewPager;
 import com.example.hasee.widget.swipeback.HalfScrollView;
 import com.example.hasee.widget.swipeback.SwipeBackLayout;
-import com.example.hasee.widget.zoom.DoubleTapGestureListener;
-import com.example.hasee.widget.zoom.ZoomableDraweeView;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -222,7 +218,6 @@ public class ImageBrowseActivity extends BaseActivity<
 
 
         private List<NewsArticleBean.BodyBean.SlidesBean> mSlidesBeans;
-        private ZoomableDraweeView mPhotoView;
         private ProgressBar mProgressBar;
 
         public ViewPagerAdapter(List<NewsArticleBean.BodyBean.SlidesBean> slidesBeanList) {
@@ -232,28 +227,28 @@ public class ImageBrowseActivity extends BaseActivity<
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             View view = LayoutInflater.from(ImageBrowseActivity.this).inflate(R.layout.pager_photo, null);
-            mPhotoView = (ZoomableDraweeView) view.findViewById(R.id.photoview);
-            mProgressBar = (ProgressBar) view
-                    .findViewById(R.id.loading);
-
-
-            mProgressBar.setVisibility(View.GONE);
-
-            //允许缩放时切换
-            mPhotoView.setAllowTouchInterceptionWhileZoomed(true);
-            //长按
-            mPhotoView.setIsLongpressEnabled(false);
-
-            //双击击放大或缩小
-            mPhotoView.setTapListener(new DoubleTapGestureListener(mPhotoView));
-
-            DraweeController draweeController = Fresco.newDraweeControllerBuilder()
-                    .setUri(mSlidesBeans.get(position).getImage())
-                    .build();
-            //加载图片
-            mPhotoView.setController(draweeController);
-            container.addView(view);
-            view.requestLayout();
+//            mPhotoView = (ZoomableDraweeView) view.findViewById(R.id.photoview);
+//            mProgressBar = (ProgressBar) view
+//                    .findViewById(R.id.loading);
+//
+//
+//            mProgressBar.setVisibility(View.GONE);
+//
+//            //允许缩放时切换
+//            mPhotoView.setAllowTouchInterceptionWhileZoomed(true);
+//            //长按
+//            mPhotoView.setIsLongpressEnabled(false);
+//
+//            //双击击放大或缩小
+//            mPhotoView.setTapListener(new DoubleTapGestureListener(mPhotoView));
+//
+////            DraweeController draweeController = Fresco.newDraweeControllerBuilder()
+////                    .setUri(mSlidesBeans.get(position).getImage())
+////                    .build();
+////            //加载图片
+////            mPhotoView.setController(draweeController);
+//            container.addView(view);
+//            view.requestLayout();
 
             return view;
         }
