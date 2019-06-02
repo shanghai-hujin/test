@@ -5,7 +5,7 @@ project.ext {
     //构建工具版本
     buildToolsVersion = '26.1.0'
     //最低版本要求
-    minSdkVersion = 21
+    minSdkVersion = 23
     //目标版本
     targetSdkVersion = 27
     //版本号
@@ -69,10 +69,10 @@ project.ext {
             }
             extension.buildTypes{
                 debug{
-                    extension.defaultConfig{minSdkVersion 21}
+                    extension.defaultConfig{minSdkVersion 23}
                 }
                 release{
-                    extension.defaultConfig{minSdkVersion 21}
+                    extension.defaultConfig{minSdkVersion 23}
                 }
             }
 
