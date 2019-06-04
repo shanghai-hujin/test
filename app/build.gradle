@@ -40,7 +40,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //其他库
     compile project(':fabandcalendar')
-    compile project(':network')
+    compile project(':common')
     //UI控件部分
     compile 'com.android.support:design:27.0.1'
     compile 'com.android.support:recyclerview-v7:27.0.1'
@@ -66,8 +66,7 @@ dependencies {
     //图片加载
     compile 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
-    //fragmentation
-    compile 'me.yokeyword:fragmentation:1.0.0'
+
     //adapter
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     //Flycotablayout
@@ -78,8 +77,8 @@ dependencies {
     compile 'cn.bingoogolapple:bga-swipebacklayout:1.1.0@aar'
     //視頻
     //dagger2
-    compile 'com.google.dagger:dagger:2.7'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
+    compile 'com.google.dagger:dagger:2.14.1'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
     /*compile 'com.google.dagger:dagger-android:2.14.1'
     compile 'com.google.dagger:dagger-android-support:2.14.1'
     compile 'com.google.dagger:dagger-android-processor:2.14.1'*/
@@ -89,4 +88,6 @@ dependencies {
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
     //网络数据
     implementation 'com.readystatesoftware.chuck:library:1.1.0'
+    //appjoint
+    implementation "io.github.prototypez:app-joint-core:1.6.1"
 }

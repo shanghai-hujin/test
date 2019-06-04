@@ -26,6 +26,7 @@ project.ext {
     setAppDefaultConfig = {
         extension->
             extension.apply plugin: 'com.android.application'
+            extension.apply plugin: 'app-joint'
             extension.description "app"
             setAndroidConfig extension.android
             setDependencies extension.dependencies

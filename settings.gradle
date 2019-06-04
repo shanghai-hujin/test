@@ -1,1 +1,2 @@
-include ':app', ':fabandcalendar', ':login', ':network'
+include ':app', ':fabandcalendar', ':common', ':commonui', ':login'
+include 'standalone:loginmodule'

@@ -9,9 +9,12 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/commonui" />
             <option value="$PROJECT_DIR$/fabandcalendar" />
             <option value="$PROJECT_DIR$/login" />
-            <option value="$PROJECT_DIR$/network" />
+            <option value="$PROJECT_DIR$/standalone" />
+            <option value="$PROJECT_DIR$/standalone/loginmodule" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
