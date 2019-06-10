@@ -2,8 +2,6 @@ package com.example.hasee.bean;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
-import org.litepal.annotation.Column;
-import org.litepal.crud.DataSupport;
 
 import java.io.Serializable;
 
@@ -12,14 +10,13 @@ import java.io.Serializable;
  * author: Will .
  * date: 2017/9/3 .
  */
-public class Channel extends DataSupport implements Serializable, MultiItemEntity {
+public class Channel implements Serializable, MultiItemEntity {
 
     public static final int TYPE_MY = 1;
     public static final int TYPE_OTHER = 2;
     public static final int TYPE_MY_CHANNEL = 3;
     public static final int TYPE_OTHER_CHANNEL = 4;
 
-    @Column(ignore = true)
     public int itemtype;
 
     private String channelId;

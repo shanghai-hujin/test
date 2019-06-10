@@ -20,7 +20,6 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 
 /**
  * Demo ${CLASS}
@@ -30,19 +29,17 @@ import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
  */
 
 public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends SupportActivity
-        implements IBase,BaseContract.BaseView, BGASwipeBackHelper.Delegate{
+        implements IBase,BaseContract.BaseView{
 
     private View mRootView;
     @Inject
     protected P basePresenter;
     private Unbinder unbinder;
     private Dialog mLoadingDialog;
-    protected BGASwipeBackHelper mSwipeBackHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initSwipeBackFinish();
         mRootView = createView(null, null, savedInstanceState);
         setContentView(mRootView);
         initInjector(MyApplication.getInstance().getApplicationComponent());
@@ -54,26 +51,6 @@ public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends
         mLoadingDialog = DialogHelper.getLoadingDialog(this);
     }
 
-    /**
-     * 初始化滑动返回。在 super.onCreate(savedInstanceState) 之前调用该方法
-     */
-    private void initSwipeBackFinish() {
-        mSwipeBackHelper = new BGASwipeBackHelper(this, this);
-        // 设置滑动返回是否可用。默认值为 true
-        mSwipeBackHelper.setSwipeBackEnable(true);
-        // 设置是否仅仅跟踪左侧边缘的滑动返回。默认值为 true
-        mSwipeBackHelper.setIsOnlyTrackingLeftEdge(false);
-        // 设置是否是微信滑动返回样式。默认值为 true
-        mSwipeBackHelper.setIsWeChatStyle(true);
-        // 设置阴影资源 id。默认值为 R.drawable.bga_sbl_shadow
-        mSwipeBackHelper.setShadowResId(R.drawable.bga_sbl_shadow);
-        // 设置是否显示滑动返回的阴影效果。默认值为 true
-        mSwipeBackHelper.setIsNeedShowShadow(true);
-        // 设置阴影区域的透明度是否根据滑动的距离渐变。默认值为 true
-        mSwipeBackHelper.setIsShadowAlphaGradient(true);
-        // 设置触发释放后自动滑动返回的阈值，默认值为 0.3f
-        mSwipeBackHelper.setSwipeBackThreshold(0.3f);
-    }
 
     /**
      * 静态页
@@ -209,8 +186,4 @@ public abstract class BaseActivity<P extends BaseContract.BasePresenter> extends
 
     }
 
-    @Override
-    public void onSwipeBackLayoutExecuted() {
-        mSwipeBackHelper.swipeBackward();
-    }
 }

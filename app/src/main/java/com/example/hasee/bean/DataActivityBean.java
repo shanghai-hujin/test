@@ -1,6 +1,5 @@
 package com.example.hasee.bean;
 
-import org.litepal.crud.DataSupport;
 
 import java.io.Serializable;
 
@@ -11,7 +10,7 @@ import java.io.Serializable;
  * @date 2018/5/22 10:53
  */
 
-public class DataActivityBean extends DataSupport implements Serializable {
+public class DataActivityBean implements Serializable {
     //活动名字
     private String activityName;
 

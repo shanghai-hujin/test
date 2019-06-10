@@ -1,6 +1,13 @@
 package com.example.hasee.ui;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.example.hasee.common.Constants;
+import com.example.hasee.common.base.InitializeService;
+import com.example.hasee.common.base.app.BaseApplication;
+import com.example.hasee.common.net.IDataHelper;
 import com.example.hasee.di.component.ApplicationComponent;
 import com.example.hasee.di.component.DaggerApplicationComponent;
 import com.example.hasee.di.module.ApplicationModule;
@@ -8,10 +15,9 @@ import com.example.hasee.di.module.HttpModule;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
-import org.litepal.LitePal;
-import org.litepal.LitePalApplication;
+import okhttp3.Interceptor;
+import retrofit2.Converter;
 
-import cn.bingoogolapple.swipebacklayout.BGASwipeBackManager;
 
 /**
  * Demo ${CLASS}
@@ -20,7 +26,7 @@ import cn.bingoogolapple.swipebacklayout.BGASwipeBackManager;
  * @date 2018/4/28 16:12
  */
 
-public class MyApplication extends LitePalApplication {
+public class MyApplication extends BaseApplication {
 
     private static MyApplication instance;
 
@@ -33,10 +39,12 @@ public class MyApplication extends LitePalApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        initARouter();
 
         instance = this;
 
+        /**
+         * 日志系统
+         */
         Logger.addLogAdapter(new AndroidLogAdapter(){
             @Override
             public boolean isLoggable(int priority, String tag) {
@@ -44,40 +52,32 @@ public class MyApplication extends LitePalApplication {
             }
         });
 
-        //数据库初始化
-        LitePal.initialize(this);
-        //初始化侧滑
-        BGASwipeBackManager.getInstance().init(this);
-
-        mApplicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .httpModule(new HttpModule())
-                .build();
-    }
-
-    /**
-     * 是否是调试模式
-     */
-    private boolean isDebugARouter = true;
-    /**
-     *说明:初始化路由
-     *作者:hujin
-     *添加时间:2018/8/21 15:10
-     *修改人:hujin
-     *修改时间:2018/8/21 15:10
-     */
-    private void initARouter() {
-        if(isDebugARouter){
-            //打开打印
-            ARouter.openLog();
-            //打开调试模式
-            ARouter.openDebug();
-        }
-        ARouter.init(this);
+        ARouter.getInstance().inject(this);
+        //耗时并不重要的初始化
+        InitializeService.start(this);
     }
 
     public static MyApplication getInstance() {
         return instance;
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+    }
+
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    /**
+     * 必须重新设置网络config
+     * @return
+     */
+    @Override
+    public IDataHelper.NetConfig getNewConfig() {
+        return new IDataHelper.NetConfig();
     }
 
     /**
