@@ -8,6 +8,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:name=".LoginMoudleApplication"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".LoginMoudleActivity"

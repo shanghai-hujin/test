@@ -1,4 +1,4 @@
-package com.example.hasee.common.base.subscriber;
+package com.example.hasee.common.net.subscriber;
 
 /**
  * 出参 需要实现的
@@ -9,6 +9,8 @@ public interface IResponse<T> {
     boolean isSuccess();
 
     boolean isLogin();
+
+    String getErrorMsg();
 
     T getData();
 }

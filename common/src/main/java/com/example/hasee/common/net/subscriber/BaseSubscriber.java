@@ -1,4 +1,4 @@
-package com.example.hasee.common.base.subscriber;
+package com.example.hasee.common.net.subscriber;
 
 import com.example.hasee.common.net.NetError;
 

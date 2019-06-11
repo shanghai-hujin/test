@@ -11,6 +11,7 @@ public class BaseApplication extends Application implements IBaseApplication{
     private XAppDelegate xAppDelegate;
 
 
+
     @Override
     public void onCreate() {
         super.onCreate();

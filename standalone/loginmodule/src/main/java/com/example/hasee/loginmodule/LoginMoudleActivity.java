@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 import com.example.hasee.login.MainLoginActivity;
 
+/**
+ * 模块启动的activity
+ */
 public class LoginMoudleActivity extends Activity {
 
     @Override

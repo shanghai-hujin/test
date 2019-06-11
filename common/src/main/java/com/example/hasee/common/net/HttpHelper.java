@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.example.hasee.common.net.cache.CacheInterceptor;
 import com.example.hasee.common.net.cache.ICache;
+import com.example.hasee.common.net.interceptor.CallInterceptor;
 import com.example.hasee.common.utils.FileUtil;
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;

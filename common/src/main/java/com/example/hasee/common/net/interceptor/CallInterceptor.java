@@ -1,4 +1,6 @@
-package com.example.hasee.common.net;
+package com.example.hasee.common.net.interceptor;
+
+import com.example.hasee.common.net.IDataHelper;
 
 import java.io.IOException;
 
