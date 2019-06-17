@@ -1,4 +1,4 @@
-package com.example.hasee.common.utils;
+package com.example.hasee.common.base.app;
 
 import android.content.Context;
 

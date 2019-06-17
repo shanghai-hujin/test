@@ -88,7 +88,7 @@ public class HttpHelper implements IDataHelper {
                 baseUrl = netConfig.baseURL;
             }
             if (TextUtils.isEmpty(baseUrl)) {
-                throw new RuntimeException("hujin de xiangmu : baseurl is null or empty");
+                throw new RuntimeException("hujin de xiangmu : baseurl is null or empt,未设置netconfig");
             }
         }
         //需要比较  上次的retrofit 和这次的retrofit 的baseurl 是否一致

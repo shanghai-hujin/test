@@ -10,6 +10,8 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 
+import com.example.hasee.common.base.app.AppContext;
+
 import java.lang.reflect.Field;
 
 public class ScreenUtil {

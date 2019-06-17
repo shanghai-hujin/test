@@ -16,7 +16,9 @@ public class NetError extends Exception {
 
         NetError("-4","网络异常"),
 
-        SocketError("-5","连接超时异常");
+        SocketError("-5","连接超时异常"),
+
+        NoTypeError("-6","未知异常");
 
         final String eType;
         final String eDescription;

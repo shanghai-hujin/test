@@ -44,6 +44,8 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
         lifecycleSubject.onNext(ActivityEvent.CREATE);
         mRootView = createView(null, null, savedInstanceState);
         setContentView(mRootView);
+        //存放静态页面，后续添加
+        bindView(mRootView, savedInstanceState);
     }
 
 
@@ -56,8 +58,6 @@ public abstract class BaseActivity extends SupportActivity implements LifecycleP
     @Override
     public View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = getLayoutInflater().inflate(getLayoutId(), container);
-        //存放静态页面，后续添加
-        bindView(view, savedInstanceState);
         return view;
     }
 

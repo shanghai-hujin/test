@@ -12,9 +12,10 @@ import com.example.hasee.common.di.component.DaggerAppComponent;
 import com.example.hasee.common.di.module.AppModule;
 import com.example.hasee.common.di.module.DataModule;
 import com.example.hasee.common.net.IDataHelper;
-import com.example.hasee.common.utils.AppContext;
 import com.example.hasee.common.utils.AppUtil;
 import com.example.hasee.common.utils.ScreenUtil;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 
 public class XAppDelegateImpl implements XAppDelegate {
@@ -41,6 +42,17 @@ public class XAppDelegateImpl implements XAppDelegate {
 
         //目前没有接阿里路由，后期再说吧
         application.registerActivityLifecycleCallbacks(new LifeBackgroundCallbacks());
+
+
+        /**
+         * 日志系统
+         */
+        Logger.addLogAdapter(new AndroidLogAdapter(){
+            @Override
+            public boolean isLoggable(int priority, String tag) {
+                return true;
+            }
+        });
 
 
     }

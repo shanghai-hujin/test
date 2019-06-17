@@ -14,7 +14,6 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 
-
 /**
  * Demo ${CLASS}
  *
@@ -30,22 +29,12 @@ public class MyApplication extends BaseApplication {
     ApplicationLike mApplicationLikeMoudle1;
 
 
-
     @Override
     public void onCreate() {
         super.onCreate();
 
         instance = this;
 
-        /**
-         * 日志系统
-         */
-        Logger.addLogAdapter(new AndroidLogAdapter(){
-            @Override
-            public boolean isLoggable(int priority, String tag) {
-                return true;
-            }
-        });
 
         ARouter.getInstance().inject(this);
         //耗时并不重要的初始化
@@ -68,6 +57,7 @@ public class MyApplication extends BaseApplication {
 
     /**
      * 必须重新设置网络config
+     *
      * @return
      */
     @Override

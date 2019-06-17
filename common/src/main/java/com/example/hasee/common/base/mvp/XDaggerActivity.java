@@ -22,7 +22,6 @@ public abstract class XDaggerActivity<T extends IBasePresenter> extends BaseActi
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         initInject(savedInstanceState);
         if(mPresenter != null){
             mPresenter.attachView(this);
@@ -41,7 +40,7 @@ public abstract class XDaggerActivity<T extends IBasePresenter> extends BaseActi
     }
 
     /**
-     * 目前不知道用途
+     * 抽取 返回的 module
      * @return
      */
     protected ActivityModule getActivityModule() {

@@ -8,9 +8,8 @@ public interface IResponse<T> {
 
     boolean isSuccess();
 
-    boolean isLogin();
+    boolean checkReLogin();
 
-    String getErrorMsg();
 
     T getData();
 }
