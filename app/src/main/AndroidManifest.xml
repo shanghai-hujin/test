@@ -25,42 +25,8 @@
             android:resizeableActivity="true"
             android:screenOrientation="portrait">
         </activity>
-        <activity
-            android:name=".ui.person.LoginActivity"
-            android:hardwareAccelerated="true"
-            android:resizeableActivity="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity
-            android:name=".ui.person.LEDSettingActivity"
-            android:hardwareAccelerated="true"
-            android:resizeableActivity="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity
-            android:name=".ui.news.ReadTextActivity"
-            android:resizeableActivity="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity
-            android:name=".ui.news.AdvertActivity"
-            android:resizeableActivity="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity
-            android:name=".ui.news.ImageBrowseActivity"
-            android:resizeableActivity="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+
+
         <activity
             android:name=".ui.WelcomeActivity"
             android:resizeableActivity="true"
@@ -71,12 +37,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".ui.book.TestXidingActivity"
-            android:resizeableActivity="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
     </application>
 

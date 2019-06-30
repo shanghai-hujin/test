@@ -18,17 +18,11 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.hasee.R;
-import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.common.base.mvp.XDaggerActivity;
+import com.example.hasee.di.ClientDiHelper;
 import com.example.hasee.http.ComPath;
 import com.example.hasee.http.cookies.CookiesManager;
-import com.example.hasee.ui.base.BaseActivity;
-import com.example.hasee.ui.base.BaseFragment;
-import com.example.hasee.ui.book.BookFragment;
-import com.example.hasee.ui.book.TestXidingActivity;
-import com.example.hasee.ui.movie.MovieFragment;
-import com.example.hasee.ui.mycenter.MyFragment;
-import com.example.hasee.ui.news.NewsFragment;
-import com.example.hasee.ui.person.LEDSettingActivity;
+import com.example.hasee.news.NewsFragment;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.PasswordHelp;
 import com.example.hasee.utils.PerfectClickListener;
@@ -41,27 +35,26 @@ import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.widget.MaterialDialog;
 
-import butterknife.BindView;
 import es.dmoral.toasty.Toasty;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * @author TT
  */
 @Route(path = ComPath.PATH_MainActivity)
-public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.MainView,  NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends XDaggerActivity<MainPresenter> implements MainContract.MainView, NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.contentContainer)
-    FrameLayout contentContainer;
-    @BindView(R.id.bottomBar)
-    BottomBar bottomBar;
+    private FrameLayout contentContainer;
+    private BottomBar bottomBar;
 
-    @BindView(R.id.nav_view)
-    NavigationView navView;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
+    private NavigationView navView;
+    private DrawerLayout drawerLayout;
 
 
-    private BaseFragment[] baseFragments = new BaseFragment[4];
+    /**
+     * 先加2个
+     */
+    private SupportFragment[] baseFragments = new SupportFragment[2];
     private double exitTime;
     private ConstraintLayout mClHeader;
     private TextView mTvName;
@@ -75,26 +68,28 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private ConstraintLayout mClLogin;
     private ImageView mIvLogin;
 
-    @Override
-    public int getContentLayout() {
-        return R.layout.activity_main_nv;
-    }
 
-    @Override
     /**
      * 加载布局
      * view 返回的布局view
      */
+    @Override
     public void bindView(View view, Bundle savedInstanceState) {
+        contentContainer = (FrameLayout) find(R.id.contentContainer);
+        bottomBar = (BottomBar) find(R.id.bottomBar);
+        navView = (NavigationView) find(R.id.nav_view);
+        drawerLayout = (DrawerLayout) find(R.id.drawer_layout);
+
         StatusBarUtil.setColor(MainActivity.this, getResources().getColor(R.color.colorPrimary), 125);
         disableNavigationViewScrollbars(navView);
 
         if (savedInstanceState == null) {
+            //阿里路由+supportfragment 拆分fragment
+            baseFragments[0] = (SupportFragment) ARouter.getInstance().build("/home/NewsFragment").navigation();
+           // baseFragments[1] = (SupportFragment) ARouter.getInstance().build("/home/BookFragment").navigation();
+            //baseFragments[2] = (SupportFragment) ARouter.getInstance().build("/home/MovieFragment").navigation();
+            baseFragments[1] = (SupportFragment) ARouter.getInstance().build("/home/MyFragment").navigation();
 
-            baseFragments[0] = NewsFragment.newInstance("0");
-            baseFragments[1] = BookFragment.newInstance("1");
-            baseFragments[2] = MovieFragment.newInstance("2");
-            baseFragments[3] = MyFragment.newInstance("3");
 
             /**
              * 加载多个同级根Fragment,类似Wechat, QQ主页的场景
@@ -103,20 +98,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
              * 后续fragments
              */
             getSupportDelegate().loadMultipleRootFragment(R.id.contentContainer, 0,
-                    baseFragments[0],
-                    baseFragments[1],
-                    baseFragments[2],
-                    baseFragments[3]);
+                    baseFragments[0]);
         } else {
             baseFragments[0] = findFragment(NewsFragment.class);
-            baseFragments[1] = findFragment(BookFragment.class);
-            baseFragments[2] = findFragment(MovieFragment.class);
-            baseFragments[3] = findFragment(MyFragment.class);
         }
 
         bottomBar.addItem(new BottomBarTab(this, R.mipmap.bootom_news, "新闻"))
-                .addItem(new BottomBarTab(this, R.mipmap.bootom_book, "书籍"))
-                .addItem(new BottomBarTab(this, R.mipmap.bootom_movie, "电影"))
+              //  .addItem(new BottomBarTab(this, R.mipmap.bootom_book, "书籍"))
+               // .addItem(new BottomBarTab(this, R.mipmap.bootom_movie, "电影"))
                 .addItem(new BottomBarTab(this, R.mipmap.bootom_my, "我的"))
                 .setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
                     @Override
@@ -134,6 +123,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
                     }
                 });
+
+        initData();
     }
 
     /**
@@ -151,10 +142,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
 
-    @Override
-    /**
-     * 初始化数据数据
-     */
     public void initData() {
         initToolbar();
         initHttpData();
@@ -192,10 +179,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     }
 
-    @Override
-    public void initInjector(ApplicationComponent applicationComponent) {
 
-    }
 
     /**
      * 初始化登录状态
@@ -286,6 +270,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             } else {
                 if (System.currentTimeMillis() - exitTime > 2000) {
                     Toasty.normal(MainActivity.this, "再按一次退出", 1).show();
+
                     exitTime = System.currentTimeMillis();
                 } else {
                     finish();
@@ -312,11 +297,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                         break;
 
                     case R.id.item_down:
-                        startActivity(new Intent(MainActivity.this, TestXidingActivity.class));
+                      //  startActivity(new Intent(MainActivity.this, TestXidingActivity.class));
                         break;
                     case R.id.item_led:
                         //显示led字幕
-                        startActivity(new Intent(MainActivity.this, LEDSettingActivity.class));
+                    //    startActivity(new Intent(MainActivity.this, LEDSettingActivity.class));
                         break;
                     case R.id.item_theme:
 
@@ -390,4 +375,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         }
     };
 
+    @Override
+    public void initInject(Bundle savedInstanceState) {
+        ClientDiHelper.getActivityComponent(getActivityModule()).inject(this);
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_main_nv;
+    }
 }

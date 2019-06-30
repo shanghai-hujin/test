@@ -51,7 +51,7 @@ public class PasswordHelp {
         number = Base64.encodeToString(numberByte, Base64.DEFAULT);
         password = Base64.encodeToString(passwordByte, Base64.DEFAULT);
 
-        SharedPreferences sharedPreferences = MyApplication.getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = MyApplication.getInstance().getSharedPreferences("user", Context.MODE_PRIVATE);
         if (sharedPreferences != null) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("number", number);
@@ -66,7 +66,7 @@ public class PasswordHelp {
      * 清除user的sp文件
      */
     public static void cleanPassword(){
-        SharedPreferences sharedPreferences = MyApplication.getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = MyApplication.getInstance().getSharedPreferences("user", Context.MODE_PRIVATE);
         if (sharedPreferences != null) {
             SharedPreferences.Editor edit = sharedPreferences.edit();
             edit.clear();
@@ -76,7 +76,7 @@ public class PasswordHelp {
 
     //读取账号密码
     public static String[] readPassword() {
-        SharedPreferences sharedPreferences = MyApplication.getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = MyApplication.getInstance().getSharedPreferences("user", Context.MODE_PRIVATE);
         if (sharedPreferences != null) {
             String str[] = new String[]{sharedPreferences.getString("number", ""),
                     sharedPreferences.getString("password", ""),
@@ -90,7 +90,7 @@ public class PasswordHelp {
 
     //读取状态
     public static boolean readLoginStatus() {
-        SharedPreferences sharedPreferences = MyApplication.getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = MyApplication.getInstance().getSharedPreferences("user", Context.MODE_PRIVATE);
         if (sharedPreferences != null) {
             boolean isLogin = sharedPreferences.getBoolean("isLogin", false);
             String number = sharedPreferences.getString("number", "");

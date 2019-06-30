@@ -8,6 +8,7 @@ import com.example.hasee.login.MainLoginActivity;
 
 /**
  * 模块启动的activity
+ * 前往某个页面以及创建 Mock 数据
  */
 public class LoginMoudleActivity extends Activity {
 

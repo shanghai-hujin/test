@@ -8,6 +8,8 @@
       <module fileurl="file://$PROJECT_DIR$/fabandcalendar/fabandcalendar.iml" filepath="$PROJECT_DIR$/fabandcalendar/fabandcalendar.iml" />
       <module fileurl="file://$PROJECT_DIR$/login/login.iml" filepath="$PROJECT_DIR$/login/login.iml" />
       <module fileurl="file://$PROJECT_DIR$/standalone/loginmodule/loginmodule.iml" filepath="$PROJECT_DIR$/standalone/loginmodule/loginmodule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/news/news.iml" filepath="$PROJECT_DIR$/news/news.iml" />
+      <module fileurl="file://$PROJECT_DIR$/standalone/newsmodule/newsmodule.iml" filepath="$PROJECT_DIR$/standalone/newsmodule/newsmodule.iml" />
       <module fileurl="file://$PROJECT_DIR$/standalone/standalone.iml" filepath="$PROJECT_DIR$/standalone/standalone.iml" />
       <module fileurl="file://$PROJECT_DIR$/test.iml" filepath="$PROJECT_DIR$/test.iml" />
     </modules>

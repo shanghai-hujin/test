@@ -8,17 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.bumptech.glide.Glide;
 import com.example.hasee.R;
-import com.example.hasee.di.component.ApplicationComponent;
+import com.example.hasee.common.base.ui.BaseActivity;
 import com.example.hasee.http.ComPath;
-import com.example.hasee.ui.base.BaseActivity;
 import com.example.hasee.ui.main.MainActivity;
-import com.example.hasee.utils.GlideApp;
-import com.readystatesoftware.chuck.Chuck;
 
 import java.util.concurrent.TimeUnit;
 
-import butterknife.BindView;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -32,23 +29,19 @@ import io.reactivex.functions.Consumer;
 public class WelcomeActivity extends BaseActivity {
 
 
-    @BindView(R.id.sdv_welcome)
-    ImageView mSdvWelcome;
-    @BindView(R.id.tv_welcome_flash)
-    TextView mTvWelcomeFlash;
+    private ImageView mSdvWelcome;
+    private TextView mTvWelcomeFlash;
     private Disposable mDisposable;
 
-    @Override
-    public int getContentLayout() {
-        return R.layout.activity_welcome;
-    }
 
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
-       // hideBottomUIMenu();
+        mSdvWelcome= (ImageView) find(R.id.sdv_welcome);
+        mTvWelcomeFlash= (TextView) find(R.id.tv_welcome_flash);
+        // hideBottomUIMenu();
       //  StatusBarUtil.setTranslucentForImageView(this, 0, mSdvWelcome);
 
-        GlideApp.with(this)
+        Glide.with(this)
                 .load("https://i.meizitu.net/2019/04/26c03.jpg")
                 .into(mSdvWelcome);
 
@@ -64,9 +57,10 @@ public class WelcomeActivity extends BaseActivity {
                 finish();
             }
         });
+
+        initData();
     }
 
-    @Override
     public void initData() {
         //回调在主线程
         mDisposable = Flowable.intervalRange(0, 5, 0, 1, TimeUnit.SECONDS)
@@ -92,10 +86,6 @@ public class WelcomeActivity extends BaseActivity {
 
     }
 
-    @Override
-    public void initInjector(ApplicationComponent applicationComponent) {
-
-    }
 
     protected void hideBottomUIMenu() {
         //隐藏虚拟按键，并且全屏
@@ -118,5 +108,10 @@ public class WelcomeActivity extends BaseActivity {
             mDisposable.dispose();
         }
 
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_welcome;
     }
 }

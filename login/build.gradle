@@ -43,4 +43,5 @@ dependencies {
     implementation project(':common')
     implementation project(':commonui')
     annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
 }

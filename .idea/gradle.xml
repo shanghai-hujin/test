@@ -13,8 +13,10 @@
             <option value="$PROJECT_DIR$/commonui" />
             <option value="$PROJECT_DIR$/fabandcalendar" />
             <option value="$PROJECT_DIR$/login" />
+            <option value="$PROJECT_DIR$/news" />
             <option value="$PROJECT_DIR$/standalone" />
             <option value="$PROJECT_DIR$/standalone/loginmodule" />
+            <option value="$PROJECT_DIR$/standalone/newsmodule" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

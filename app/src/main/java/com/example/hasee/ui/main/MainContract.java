@@ -1,6 +1,8 @@
 package com.example.hasee.ui.main;
 
-import com.example.hasee.ui.base.BaseContract;
+import com.example.hasee.common.base.mvp.IBaseModle;
+import com.example.hasee.common.base.mvp.IBasePresenter;
+import com.example.hasee.common.base.mvp.IBaseView;
 
 /**
  * Demo ${CLASS}
@@ -11,13 +13,15 @@ import com.example.hasee.ui.base.BaseContract;
 
 public interface MainContract {
 
-    interface MainView extends BaseContract.BaseView{
+    interface MainView extends IBaseView {
 
     }
 
-    interface MainPresenter extends BaseContract.BasePresenter<MainView>{
+    interface MainPresenter extends IBasePresenter<MainView> {
 
+    }
 
+    interface MainModule extends IBaseModle{
 
     }
 }

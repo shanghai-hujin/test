@@ -1,2 +1,4 @@
-include ':app', ':fabandcalendar', ':common', ':commonui', ':login'
+include ':app', ':login', ':news'
+include 'common', ':commonui', ':fabandcalendar'
 include 'standalone:loginmodule'
+include 'standalone:newsmodule'

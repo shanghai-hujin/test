@@ -1,6 +1,9 @@
 package com.example.hasee.ui.main;
 
-import com.example.hasee.ui.base.BasePresenter;
+
+import com.example.hasee.common.base.mvp.BasePresenter;
+
+import javax.inject.Inject;
 
 /**
  * Demo ${CLASS}
@@ -11,6 +14,11 @@ import com.example.hasee.ui.base.BasePresenter;
 
 public class MainPresenter extends BasePresenter<MainContract.MainView> implements MainContract.MainPresenter {
 
+    private MainService mainService;
 
+    @Inject
+    public MainPresenter(MainService loginDataService) {
+        this.mainService = loginDataService;
+    }
 
 }
