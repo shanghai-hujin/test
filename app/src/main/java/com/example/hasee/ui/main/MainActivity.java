@@ -6,8 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +25,8 @@ import com.example.hasee.common.base.mvp.XDaggerActivity;
 import com.example.hasee.di.ClientDiHelper;
 import com.example.hasee.http.ComPath;
 import com.example.hasee.http.cookies.CookiesManager;
-import com.example.hasee.news.NewsFragment;
+import com.example.hasee.login.MainLoginActivity;
+import com.example.hasee.news.ui.main.NewsFragment;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.PasswordHelp;
 import com.example.hasee.utils.PerfectClickListener;
@@ -54,7 +58,7 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
     /**
      * 先加2个
      */
-    private SupportFragment[] baseFragments = new SupportFragment[2];
+    private SupportFragment[] baseFragments = new SupportFragment[4];
     private double exitTime;
     private ConstraintLayout mClHeader;
     private TextView mTvName;
@@ -86,9 +90,12 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
         if (savedInstanceState == null) {
             //阿里路由+supportfragment 拆分fragment
             baseFragments[0] = (SupportFragment) ARouter.getInstance().build("/home/NewsFragment").navigation();
+
+
+
            // baseFragments[1] = (SupportFragment) ARouter.getInstance().build("/home/BookFragment").navigation();
             //baseFragments[2] = (SupportFragment) ARouter.getInstance().build("/home/MovieFragment").navigation();
-            baseFragments[1] = (SupportFragment) ARouter.getInstance().build("/home/MyFragment").navigation();
+            //baseFragments[1] = (SupportFragment) ARouter.getInstance().build("/home/MyFragment").navigation();
 
 
             /**
@@ -123,6 +130,20 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
 
                     }
                 });
+
+        getSupportFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
+            @Override
+            public void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
+                super.onFragmentCreated(fm, f, savedInstanceState);
+                Log.i("MainActivity", "onFragmentCreated--->" + f.getClass().getSimpleName());
+            }
+
+            @Override
+            public void onFragmentStopped(FragmentManager fm, Fragment f) {
+                super.onFragmentStopped(fm, f);
+                Log.i("MainActivity", "onFragmentStopped--->" + f.getClass().getSimpleName());
+            }
+        },true);
 
         initData();
     }
@@ -363,9 +384,9 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
                     Intent intent = new Intent();
                     switch (view.getId()) {
                         case R.id.iv_login:
-                            ARouter.getInstance().build("/app/LoginActivity").navigation();
+                           // ARouter.getInstance().build("/app/LoginActivity").navigation();
                             //跳登录
-                            //startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                            startActivity(new Intent(MainActivity.this, MainLoginActivity.class));
                             break;
                         default:
                             break;

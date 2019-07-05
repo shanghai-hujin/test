@@ -6,15 +6,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.hasee.common.base.mvp.XDaggerActivity;
-import com.example.hasee.common.base.ui.BaseActivity;
 import com.example.hasee.login.di.LoginDiHelper;
-import com.example.hasee.login.di.component.DaggerLoginActivityComponent;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+@Route(path = "/app/LoginActivity")
 public class MainLoginActivity extends XDaggerActivity<LoginPresenter> implements ILoginContract.IView {
 
     private Button btnLogin;

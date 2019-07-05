@@ -1,6 +1,7 @@
 package com.example.hasee.common.net.bean.wapper;
 
 import com.example.hasee.common.net.subscriber.IResponse;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
@@ -12,11 +13,8 @@ import java.io.Serializable;
  */
 public class WanResponseWapper<T> implements IResponse<T>, Serializable {
 
-    public void setResult(T result) {
-        this.result = result;
-    }
-
-    private T result;
+    @SerializedName("data")
+    private T data;
 
     public String getErrorMsg() {
         return errorMsg;
@@ -47,6 +45,10 @@ public class WanResponseWapper<T> implements IResponse<T>, Serializable {
         }
     }
 
+    /**
+     * 根据 后台规定的 错误码去判断
+     * @return
+     */
     @Override
     public boolean checkReLogin() {
         if(errorCode == -1001){
@@ -59,6 +61,10 @@ public class WanResponseWapper<T> implements IResponse<T>, Serializable {
 
     @Override
     public T getData() {
-        return result;
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }

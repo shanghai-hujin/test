@@ -8,6 +8,8 @@ import com.example.hasee.common.base.InitializeService;
 import com.example.hasee.common.base.app.BaseApplication;
 import com.example.hasee.common.net.IDataHelper;
 
+import io.github.prototypez.appjoint.core.AppSpec;
+
 
 /**
  * Demo ${CLASS}
@@ -15,7 +17,7 @@ import com.example.hasee.common.net.IDataHelper;
  * @author TT
  * @date 2018/4/28 16:12
  */
-
+@AppSpec
 public class MyApplication extends BaseApplication {
 
     private static MyApplication instance;

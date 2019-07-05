@@ -12,7 +12,7 @@ import java.net.UnknownHostException;
 
 import retrofit2.HttpException;
 
-public abstract class BaseSubscriberListener<T> extends SubscriberListener {
+public abstract class BaseSubscriberListener<T> extends SubscriberListener<T> {
 
     @Override
     public void onFail(NetError error) {

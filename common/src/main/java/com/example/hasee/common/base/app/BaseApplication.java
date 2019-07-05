@@ -7,6 +7,9 @@ import com.example.hasee.common.di.component.AppComponent;
 import com.example.hasee.common.di.component.DaggerAppComponent;
 import com.example.hasee.common.net.IDataHelper;
 
+import io.github.prototypez.appjoint.core.ModuleSpec;
+
+@ModuleSpec
 public class BaseApplication extends Application implements IBaseApplication{
     private XAppDelegate xAppDelegate;
 

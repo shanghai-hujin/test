@@ -35,13 +35,15 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:27.0.0'
+    implementation 'com.android.support:appcompat-v7:27.0.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation project(':common')
-    implementation project(':commonui')
+    api project(':common')
+    api project(':commonui')
     annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+
+    implementation "io.github.prototypez:app-joint-core:1.6.1"
 }

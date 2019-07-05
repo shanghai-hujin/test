@@ -1,4 +1,4 @@
-package com.example.hasee.utils;
+package com.example.hasee.commonui;
 
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
