@@ -5,13 +5,15 @@ import com.example.hasee.common.net.bean.response.LoginResponce;
 import com.example.hasee.common.net.bean.wapper.WanResponseWapper;
 
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 public interface LoginApi {
+
+    public String baseurl  = "https://www.wanandroid.com/";
+
     /**
      * 登陆
      * http://www.wanandroid.com/user/login

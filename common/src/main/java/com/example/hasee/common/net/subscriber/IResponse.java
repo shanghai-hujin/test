@@ -10,6 +10,7 @@ public interface IResponse<T> {
 
     boolean checkReLogin();
 
+    String getErrorMsg();
 
     T getData();
 }

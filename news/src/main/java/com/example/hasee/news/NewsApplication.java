@@ -6,6 +6,7 @@ import com.example.hasee.common.Constants;
 import com.example.hasee.common.base.app.BaseApplication;
 import com.example.hasee.common.net.IDataHelper;
 
+//@Route(path = "/news/application1")
 public class NewsApplication extends BaseApplication {
 
     @Override

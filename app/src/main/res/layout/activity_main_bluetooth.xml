@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btn_open_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="15dp"
+        android:text="开启蓝牙"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_hav_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已匹配设置"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_open_blue"
+        app:layout_constraintEnd_toStartOf="@+id/btn_searcher_blue"
+        app:layout_constraintStart_toEndOf="@+id/btn_open_blue"
+        app:layout_constraintTop_toTopOf="@+id/btn_open_blue" />
+
+    <Button
+        android:id="@+id/btn_searcher_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="搜索蓝牙"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_open_blue"
+        app:layout_constraintTop_toTopOf="@+id/btn_open_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_hav_blue" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_devices_has"
+        app:layout_constraintTop_toBottomOf="@+id/btn_hav_blue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</android.support.constraint.ConstraintLayout>

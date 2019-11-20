@@ -26,16 +26,16 @@ public class LoginPresenter extends BasePresenter<ILoginContract.IView> implemen
         loginDataService.getLoginData(username,password)
                 .compose(getV().<WanResponseWapper<LoginResponce>>bindLifecycle())
                 .subscribe(new LoginSubscriber(new LoginSubscriberListener<LoginResponce>() {
-
-
                     @Override
                     public void onSuccess(LoginResponce response) {
+                        getV().showLoginSucess(response);
 
                     }
 
                     @Override
                     public void onFail(NetError error) {
                         super.onFail(error);
+                        getV().showLoginFaile(error.getMessage());
                     }
                 }));
 

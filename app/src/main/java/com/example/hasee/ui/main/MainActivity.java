@@ -25,8 +25,10 @@ import com.example.hasee.common.base.mvp.XDaggerActivity;
 import com.example.hasee.di.ClientDiHelper;
 import com.example.hasee.http.ComPath;
 import com.example.hasee.http.cookies.CookiesManager;
-import com.example.hasee.login.MainLoginActivity;
 import com.example.hasee.news.ui.main.NewsFragment;
+import com.example.hasee.ui.MyApplication;
+import com.example.hasee.ui.drawer.BluetoothActivity;
+import com.example.hasee.ui.drawer.chat.MainChatActivity;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.PasswordHelp;
 import com.example.hasee.utils.PerfectClickListener;
@@ -38,6 +40,10 @@ import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.widget.MaterialDialog;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import es.dmoral.toasty.Toasty;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -79,6 +85,14 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
      */
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
+        //测试异步
+//        AsyncLayoutLoader layoutLoader = AsyncLayoutLoader.getLayoutLoader(R.layout.activity_main);
+//        View realView = layoutLoader.getRealView();
+//        if(realView != null){
+//            System.out.print("不为空");
+//            View viewById = realView.findViewById(R.id.bottomBar);
+//            setContentView(R.layout.activity_main);
+//        }
         contentContainer = (FrameLayout) find(R.id.contentContainer);
         bottomBar = (BottomBar) find(R.id.bottomBar);
         navView = (NavigationView) find(R.id.nav_view);
@@ -92,8 +106,7 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
             baseFragments[0] = (SupportFragment) ARouter.getInstance().build("/home/NewsFragment").navigation();
 
 
-
-           // baseFragments[1] = (SupportFragment) ARouter.getInstance().build("/home/BookFragment").navigation();
+            // baseFragments[1] = (SupportFragment) ARouter.getInstance().build("/home/BookFragment").navigation();
             //baseFragments[2] = (SupportFragment) ARouter.getInstance().build("/home/MovieFragment").navigation();
             //baseFragments[1] = (SupportFragment) ARouter.getInstance().build("/home/MyFragment").navigation();
 
@@ -111,8 +124,8 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
         }
 
         bottomBar.addItem(new BottomBarTab(this, R.mipmap.bootom_news, "新闻"))
-              //  .addItem(new BottomBarTab(this, R.mipmap.bootom_book, "书籍"))
-               // .addItem(new BottomBarTab(this, R.mipmap.bootom_movie, "电影"))
+                //  .addItem(new BottomBarTab(this, R.mipmap.bootom_book, "书籍"))
+                // .addItem(new BottomBarTab(this, R.mipmap.bootom_movie, "电影"))
                 .addItem(new BottomBarTab(this, R.mipmap.bootom_my, "我的"))
                 .setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
                     @Override
@@ -143,9 +156,10 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
                 super.onFragmentStopped(fm, f);
                 Log.i("MainActivity", "onFragmentStopped--->" + f.getClass().getSimpleName());
             }
-        },true);
+        }, true);
 
         initData();
+        MyApplication.setIsLeng(false);
     }
 
     /**
@@ -164,6 +178,7 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
 
 
     public void initData() {
+        EventBus.getDefault().register(this);
         initToolbar();
         initHttpData();
         initNav();
@@ -182,18 +197,18 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
                 .compose(bindToLifecycle())
                 .subscribe(event -> {
 
-                        mClLogin.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (event.login) {
-                                    mClLogin.setVisibility(View.GONE);
-                                    navView.getMenu().findItem(R.id.item_loginout).setVisible(true);
-                                }else {
-                                    mClLogin.setVisibility(View.VISIBLE);
-                                    navView.getMenu().findItem(R.id.item_loginout).setVisible(false);
-                                }
+                    mClLogin.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (event.login) {
+                                mClLogin.setVisibility(View.GONE);
+                                navView.getMenu().findItem(R.id.item_loginout).setVisible(true);
+                            } else {
+                                mClLogin.setVisibility(View.VISIBLE);
+                                navView.getMenu().findItem(R.id.item_loginout).setVisible(false);
                             }
-                        });
+                        }
+                    });
 
                 });
 
@@ -201,17 +216,16 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
     }
 
 
-
     /**
      * 初始化登录状态
      */
     private void initLoginStatus() {
 
-        if(PasswordHelp.readLoginStatus()){
+        if (PasswordHelp.readLoginStatus()) {
             //登录了
             mClLogin.setVisibility(View.GONE);
             navView.getMenu().findItem(R.id.item_loginout).setVisible(true);
-        }else {
+        } else {
             mClLogin.setVisibility(View.VISIBLE);
             navView.getMenu().findItem(R.id.item_loginout).setVisible(false);
         }
@@ -234,14 +248,14 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
     private void initNav() {
         navView.setNavigationItemSelectedListener(this);
         View headerView = navView.getHeaderView(0);
-        mClHeader = (ConstraintLayout)headerView.findViewById(R.id.cl_header);
-        mTvName = (TextView)headerView.findViewById(R.id.tv_name);
-        mTvLv = (TextView)headerView.findViewById(R.id.tv_lv);
-        mTvState = (TextView)headerView.findViewById(R.id.tv_state);
-        mTvIcon = (TextView)headerView.findViewById(R.id.tv_icon);
-        mTvB = (TextView)headerView.findViewById(R.id.tv_b);
-        mIvHeadNoftiy = (ImageView)headerView.findViewById(R.id.iv_head_noftiy);
-        mIvHeadSwitchMode = (ImageView)headerView.findViewById(R.id.iv_head_switch_mode);
+        mClHeader = (ConstraintLayout) headerView.findViewById(R.id.cl_header);
+        mTvName = (TextView) headerView.findViewById(R.id.tv_name);
+        mTvLv = (TextView) headerView.findViewById(R.id.tv_lv);
+        mTvState = (TextView) headerView.findViewById(R.id.tv_state);
+        mTvIcon = (TextView) headerView.findViewById(R.id.tv_icon);
+        mTvB = (TextView) headerView.findViewById(R.id.tv_b);
+        mIvHeadNoftiy = (ImageView) headerView.findViewById(R.id.iv_head_noftiy);
+        mIvHeadSwitchMode = (ImageView) headerView.findViewById(R.id.iv_head_switch_mode);
         mIcUser = (ImageView) headerView.findViewById(R.id.ic_user);
         mClLogin = (ConstraintLayout) headerView.findViewById(R.id.cl_login);
         mIvLogin = (ImageView) headerView.findViewById(R.id.iv_login);
@@ -256,6 +270,7 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
         mIvHeadNoftiy.setOnClickListener(listener);
         mIvHeadSwitchMode.setOnClickListener(listener);
         mIcUser.setOnClickListener(listener);
+
     }
 
     /**
@@ -264,6 +279,8 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
     private void initHttpData() {
 
     }
+
+
 
     /**
      * 初始化头部
@@ -281,6 +298,7 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -301,6 +319,14 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
         return true;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(LoginEvent loginEvent) {
+       if(loginEvent != null){
+
+       }
+
+    }
+
     /**
      * 侧边栏监听事件
      *
@@ -315,14 +341,19 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
             public void run() {
                 switch (item.getItemId()) {
                     case R.id.item_vip:
+                        startActivity(new Intent(MainActivity.this, BluetoothActivity.class));
+                        break;
+                    case R.id.item_point:
+                        startActivity(new Intent(MainActivity.this, MainChatActivity.class));
+
                         break;
 
                     case R.id.item_down:
-                      //  startActivity(new Intent(MainActivity.this, TestXidingActivity.class));
+                        //  startActivity(new Intent(MainActivity.this, TestXidingActivity.class));
                         break;
                     case R.id.item_led:
                         //显示led字幕
-                    //    startActivity(new Intent(MainActivity.this, LEDSettingActivity.class));
+                        //    startActivity(new Intent(MainActivity.this, LEDSettingActivity.class));
                         break;
                     case R.id.item_theme:
 
@@ -331,7 +362,7 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
                         //退出登录
                         MaterialDialog materialDialog = new MaterialDialog(MainActivity.this);
                         materialDialog.content("您是否确定退出登录")
-                                .btnText("取消","确定")
+                                .btnText("取消", "确定")
                                 .showAnim(new BounceTopEnter())
                                 .dismissAnim(new SlideBottomExit())
                                 .show();
@@ -384,9 +415,8 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
                     Intent intent = new Intent();
                     switch (view.getId()) {
                         case R.id.iv_login:
-                           // ARouter.getInstance().build("/app/LoginActivity").navigation();
+                            ARouter.getInstance().build("/login/LoginActivity").navigation();
                             //跳登录
-                            startActivity(new Intent(MainActivity.this, MainLoginActivity.class));
                             break;
                         default:
                             break;

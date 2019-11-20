@@ -1,7 +1,5 @@
 package com.example.hasee.login;
 
-import android.util.Log;
-
 import com.example.hasee.common.net.NetError;
 import com.example.hasee.common.net.subscriber.BaseSubscriber;
 import com.example.hasee.common.net.subscriber.IResponse;
@@ -28,9 +26,13 @@ public class LoginSubscriber<T extends IResponse> extends BaseSubscriber<T> {
             if (response != null && response.isSuccess()) {
                 mSubscriberOnNextListener.onSuccess(response.getData());
             } else {
-                if (response.checkReLogin())
+                if (response.checkReLogin()){
                     mSubscriberOnNextListener.checkReLogin("请先登陆", "请先登陆");
-                mSubscriberOnNextListener.onFail(new NetError("请先登陆", NetError.ErrorType.AuthError));
+                }
+                if(response != null){
+                    mSubscriberOnNextListener.onFail(new NetError(response.getErrorMsg(), NetError.ErrorType.AuthError));
+                }
+
             }
         }
     }

@@ -1,18 +1,13 @@
 package com.example.hasee.login;
 
-import android.app.Application;
-
 import com.example.hasee.common.Constants;
 import com.example.hasee.common.base.app.BaseApplication;
 import com.example.hasee.common.net.IDataHelper;
-import com.example.hasee.common.utils.AppUtil;
-
-import okhttp3.Interceptor;
-import retrofit2.Converter;
 
 /**
  * 该模块的业务功能初始化
  */
+//@Route(path = "/login/application2")
 public class LoginApplication extends BaseApplication {
 
 

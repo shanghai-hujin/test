@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ExpandedTitleTextAppearance.Inverse">
+        <item name="android:maxLines">2</item>
+        <item name="android:singleLineTitle">false</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+</resources>

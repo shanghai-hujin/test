@@ -14,6 +14,8 @@ import com.example.hasee.common.base.ui.BaseActivity;
 import com.example.hasee.http.ComPath;
 import com.example.hasee.ui.main.MainActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
@@ -58,31 +60,50 @@ public class WelcomeActivity extends BaseActivity {
             }
         });
 
+
         initData();
+        initSp();
+
     }
+
+    private void initSp() {
+        EventBus.getDefault().post(new WelEvent());
+    }
+
+
 
     public void initData() {
         //回调在主线程
-        mDisposable = Flowable.intervalRange(0, 5, 0, 1, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())//回调在主线程
-                .doOnNext(new Consumer<Long>() {
-                    @Override
-                    public void accept(Long aLong) throws Exception {
-                        mTvWelcomeFlash.setText("直接跳过：" + (5-aLong));
-                    }
-                })
-                .doOnComplete(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        if(WelcomeActivity.this.isFinishing()){
-                            return;
+        if(MyApplication.isIsLeng()){
+            mDisposable = Flowable.intervalRange(0, 5, 0, 1, TimeUnit.SECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())//回调在主线程
+                    .doOnNext(new Consumer<Long>() {
+                        @Override
+                        public void accept(Long aLong) throws Exception {
+                            mTvWelcomeFlash.setText("直接跳过：" + (5-aLong));
                         }
-                        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                        finish();
-                    }
-                })
-                .subscribe();
+                    })
+                    .doOnComplete(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            if(WelcomeActivity.this.isFinishing()){
+                                return;
+                            }
+                            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                            finish();
+                        }
+                    })
+                    .subscribe();
+        }else {
+            if(WelcomeActivity.this.isFinishing()){
+                return;
+            }
+            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
+        }
+
 
     }
 
@@ -107,8 +128,9 @@ public class WelcomeActivity extends BaseActivity {
         if (mDisposable != null) {
             mDisposable.dispose();
         }
-
     }
+
+
 
     @Override
     public int getLayoutId() {

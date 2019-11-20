@@ -10,12 +10,14 @@ import java.io.Serializable;
  * errorCode = 0 代表执行成功，不建议依赖任何非0的 errorCode.
  * errorCode = -1001 代表登录失效，需要重新登录。
  * @param <T>
+ *  各自的可以自己处理
  */
 public class WanResponseWapper<T> implements IResponse<T>, Serializable {
 
     @SerializedName("data")
     private T data;
 
+    @Override
     public String getErrorMsg() {
         return errorMsg;
     }

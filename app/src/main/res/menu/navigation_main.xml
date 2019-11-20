@@ -13,19 +13,19 @@
             android:id="@+id/item_vip"
             android:checkable="false"
             android:icon="@mipmap/bootom_book_sel"
-            android:title="我的大会员"/>
+            android:title="蓝牙测试"/>
 
         <item
             android:id="@+id/item_point"
             android:checkable="false"
             android:icon="@mipmap/bootom_book_sel"
-            android:title="会员积分"/>
+            android:title="蓝牙手机通讯"/>
 
         <item
             android:id="@+id/item_down"
             android:checkable="false"
             android:icon="@mipmap/bootom_book_sel"
-            android:title="离线缓存"/>
+            android:title="测试3"/>
     </group>
 
     <group

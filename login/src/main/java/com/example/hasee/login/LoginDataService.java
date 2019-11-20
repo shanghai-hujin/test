@@ -1,7 +1,6 @@
 package com.example.hasee.login;
 
 import com.example.hasee.common.net.HttpHelper;
-import com.example.hasee.common.net.bean.request.LoginRequest;
 import com.example.hasee.common.net.bean.response.LoginResponce;
 import com.example.hasee.common.net.bean.wapper.WanResponseWapper;
 import com.example.hasee.common.utils.RxUtils;
@@ -35,9 +34,6 @@ public class LoginDataService implements ILoginContract.IModle {
 
     @Override
     public Flowable<WanResponseWapper<LoginResponce>> getLoginData(String username, String password) {
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUsername(username);
-        loginRequest.setPassword(password);
         Flowable<WanResponseWapper<LoginResponce>> compose = httpHelper.createApi(LoginApi.class).getLoginData(username,password)
                 .compose(RxUtils.<WanResponseWapper<LoginResponce>>rxSchedulerHelperNoRetry());
         return compose;

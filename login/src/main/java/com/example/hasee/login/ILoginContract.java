@@ -11,9 +11,9 @@ import io.reactivex.Flowable;
 public interface ILoginContract {
 
     interface IView extends IBaseView{
-        void showLoginSucess();
+        void showLoginSucess(LoginResponce response);
 
-        void showLoginFaile();
+        void showLoginFaile(String message);
     }
 
     interface IPrensenter extends IBasePresenter<IView>{

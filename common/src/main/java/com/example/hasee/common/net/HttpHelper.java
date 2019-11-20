@@ -80,15 +80,12 @@ public class HttpHelper implements IDataHelper {
                 //找serviceClass里面是否有baseurl变量  一定是共有的
                 Field baseUrlField = serviceClass.getField("baseUrl");
                 baseUrl = (String) baseUrlField.get(serviceClass);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-                baseUrl = netConfig.baseURL;
-            } catch (NoSuchFieldException e) {
+            } catch (IllegalAccessException | NoSuchFieldException e) {
                 e.printStackTrace();
                 baseUrl = netConfig.baseURL;
             }
             if (TextUtils.isEmpty(baseUrl)) {
-                throw new RuntimeException("hujin de xiangmu : baseurl is null or empt,未设置netconfig");
+                throw new RuntimeException("hujin de 项目 : baseurl is 空的 or empt,未设置netconfig");
             }
         }
         //需要比较  上次的retrofit 和这次的retrofit 的baseurl 是否一致

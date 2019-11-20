@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">news</string>
+    <string name="media_url_mp4">https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4</string>
+    <string name="media_url_mp5">asset:///video.mp4</string>
 </resources>

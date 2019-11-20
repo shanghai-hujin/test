@@ -10,6 +10,8 @@ android {
         javaCompileOptions {
 
             annotationProcessorOptions {
+                includeCompileClasspath true
+                arguments = [ eventBusIndex : 'com.example.hasee.EBIndex' ]
                 arguments = [moduleName: project.getName()]
             }
 
@@ -30,6 +32,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
 }
 
 allprojects {
@@ -39,6 +46,7 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 }
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -62,7 +70,7 @@ dependencies {
     //Flycotablayout
     api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
-    api 'com.google.dagger:dagger:2.14.1'
+
     /*compile 'com.google.dagger:dagger-android:2.14.1'
     compile 'com.google.dagger:dagger-android-support:2.14.1'
     compile 'com.google.dagger:dagger-android-processor:2.14.1'*/
@@ -78,5 +86,14 @@ dependencies {
 
 
     implementation "io.github.prototypez:app-joint-core:1.6.1"
+    implementation 'org.jetbrains:annotations:15.0'
+    implementation 'com.android.support:support-annotations:27.0.1'
+    implementation 'org.jetbrains:annotations:15.0'
+
+    implementation 'com.vise.xiaoyaoyou:baseble:2.0.5'
+
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
 
 }
+
