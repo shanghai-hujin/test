@@ -149,7 +149,6 @@ public class HttpHelper implements IDataHelper {
     }
 
     private OkHttpClient getOkHttpClent() {
-
         File cacheFile = new File(FileUtil.getCacheDirectory(context), "Cache");//缓存路径
         cacheFile = FileUtil.makeDirs(cacheFile);
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
@@ -172,7 +171,7 @@ public class HttpHelper implements IDataHelper {
                // builder.cookieJar(new CookiesManager(context));
                 break;
             case 2:
-                //默认这套 穿透
+                //默认这套
                 //开源方案
                 ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));//对cooke自动管理管理
                 builder.cookieJar(cookieJar);

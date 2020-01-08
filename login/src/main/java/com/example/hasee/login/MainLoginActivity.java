@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.hasee.common.base.mvp.XDaggerActivity;
 import com.example.hasee.common.net.bean.response.LoginResponce;
 import com.example.hasee.login.di.LoginDiHelper;
+import com.tencent.mmkv.MMKV;
 
 import es.dmoral.toasty.Toasty;
 
@@ -81,6 +82,9 @@ public class MainLoginActivity extends XDaggerActivity<LoginPresenter> implement
                 mPresenter.goToLogin(userName.getText().toString().trim(), password.getText().toString().trim());
             }
         });
+
+     //   MMKV.initialize(this);
+
     }
 
     @Override
@@ -91,6 +95,9 @@ public class MainLoginActivity extends XDaggerActivity<LoginPresenter> implement
     @Override
     public void showLoginSucess(LoginResponce response) {
         //登陆成功
+
+        MMKV kv = MMKV.defaultMMKV();
+        kv.encode("username", response.getUsername());
         Toasty.success(this,"登陆成功").show();
         finish();
 

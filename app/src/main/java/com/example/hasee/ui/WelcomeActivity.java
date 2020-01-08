@@ -47,7 +47,6 @@ public class WelcomeActivity extends BaseActivity {
                 .load("https://i.meizitu.net/2019/04/26c03.jpg")
                 .into(mSdvWelcome);
 
-
         mTvWelcomeFlash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +58,6 @@ public class WelcomeActivity extends BaseActivity {
                 finish();
             }
         });
-
 
         initData();
         initSp();

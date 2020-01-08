@@ -1,15 +1,26 @@
 package com.example.hasee.ui.main;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -40,12 +51,26 @@ import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.widget.MaterialDialog;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.NetworkInterface;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+
 import es.dmoral.toasty.Toasty;
+import io.reactivex.functions.Consumer;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -83,6 +108,7 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
      * 加载布局
      * view 返回的布局view
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void bindView(View view, Bundle savedInstanceState) {
         //测试异步
@@ -160,7 +186,203 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
 
         initData();
         MyApplication.setIsLeng(false);
+
+
     }
+
+    /**
+     * 返回一个xx..16位..xx-xx..16位..xx-xx..16位..xx的id
+     * @return
+     */
+    public String  getDeviceId(){
+        StringBuilder sbDeviceId = new StringBuilder();
+        //mac地址 如果mac == 02:00:00:00:00:0 视为未获取到
+        String wifiMac = md5Decode16(getWifiMac()).toUpperCase();
+        sbDeviceId.append(wifiMac);
+        sbDeviceId.append("-");
+
+
+        //imei地址 如果imeiId == "" 视为未获取到
+        String imeiId = md5Decode16(getImeiId());
+        sbDeviceId.append(imeiId);
+        sbDeviceId.append("-");
+
+
+        //几个核心硬件参数生成的uuid  分辨率 cpu核心数 cpu型号 屏幕尺寸 存储
+        //这些是不会随刷机或者返厂设置而改变 但是这些参数单独作为设备id 会大量重复
+        String deviceBuildID = md5Decode16(getBuildUUid());
+        sbDeviceId.append(deviceBuildID);
+        sbDeviceId.append("-");
+
+
+        //型号 制造商 版本号 android_id
+        //会随刷机放生变化
+        String deviceBuildIDChange = md5Decode16(getBuildUUidTwo());
+        sbDeviceId.append(deviceBuildIDChange);
+
+        return sbDeviceId.toString();
+
+        /**
+         * 区分几个纬度，来定义你的需求（假设 wifiMac 和 imeiId 正常获取下 ）
+         *      如果mac地址 或者 deviceBuildIDChange 改变 ，而 imeiId deviceBuildID没发生改变
+         *      是不是可判断 同一用户下该设备刷机了，视为同一用户，羊毛党屏蔽掉
+         *
+         *      如果 imeiId 发生改变，换手机了（imeiId 还是作为比较强的 设备映射）
+         *
+         *      各种策略都可以自己后端定制
+         */
+
+    }
+
+    private String getBuildUUidTwo() {
+        return null;
+    }
+
+    private String getBuildUUid() {
+        return null;
+    }
+
+    private String getImeiId() {
+        return null;
+    }
+
+    public String md5Decode32(String content) {
+        byte[] hash;
+        try {
+            hash = MessageDigest.getInstance("MD5").digest(content.getBytes("UTF-8"));
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("NoSuchAlgorithmException",e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("UnsupportedEncodingException", e);
+        }
+        //对生成的16字节数组进行补零操作
+        StringBuilder hex = new StringBuilder(hash.length * 2);
+        for (byte b : hash) {
+            if ((b & 0xFF) < 0x10){
+                hex.append("0");
+            }
+            hex.append(Integer.toHexString(b & 0xFF));
+        }
+        return hex.toString();
+    }
+
+    /**
+     * 16位MD5加密
+     * 实际是截取的32位加密结果的中间部分(8-24位)
+     * @param content
+     * @return
+     */
+    public String md5Decode16(String content) {
+        if(TextUtils.isEmpty(md5Decode32(content).substring(8, 24))){
+            return "0000000000000000";
+        }
+        return md5Decode32(content).substring(8, 24);
+    }
+
+
+    private void rxPermissionTest() {
+        String androidID1 = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        UUID deviceUuid = new UUID(androidID1.hashCode(), ((long)androidID1.hashCode() << 32));
+
+        String randomUUID = UUID.randomUUID().toString();
+        //存储在本地
+
+
+        String ANDROID_ID = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+        String androidID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
+
+
+        getWifiMac();
+
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.READ_PHONE_STATE).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean granted) throws Exception {
+                if (granted) {
+
+                    TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                    //不同的手机设备返回IMEI，MEID或者ESN码
+                    String deviceId = tm.getDeviceId();
+                    //返回IMEI
+                    String imei = tm.getImei();
+                    //返回MEID
+                    String meid = tm.getMeid();
+                    //手机SIM卡唯一标识
+                    String simSerialNumber = tm.getSimSerialNumber();
+                    //返回例如独特的用户ID，一个GSM手机的号码。
+                    String subscriberId = tm.getSubscriberId();
+                    //手机号码
+                    String line1Number = tm.getLine1Number();
+                } else {
+
+                }
+            }
+        });
+    }
+
+    private  String getMacAddress() {
+        String WifiAddress = "02:00:00:00:00:00";
+        try {
+            WifiAddress = new BufferedReader(new FileReader(new File("/sys/class/net/wlan0/address"))).readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return WifiAddress;
+    }
+
+    public  String getWifiMac() {
+        //默认的值
+        String mac = "02:00:00:00:00:00";
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+            if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_WIFI_STATE)
+                    != PackageManager.PERMISSION_GRANTED){
+                // 小于6.0手机
+                WifiManager wifi = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                WifiInfo winfo = wifi.getConnectionInfo();
+                mac =  winfo.getMacAddress();
+            }
+        }else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
+            try {
+                mac = new BufferedReader(new FileReader(new File("/sys/class/net/wlan0/address"))).readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else {
+            if(ActivityCompat.checkSelfPermission(this,Manifest.permission.INTERNET)
+                    != PackageManager.PERMISSION_GRANTED){
+                WifiManager wifi = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                WifiInfo winfo = wifi.getConnectionInfo();
+                mac =  winfo.getMacAddress();
+                try {
+                    List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+                    for (NetworkInterface nif : all) {
+                        if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                        byte[] macBytes = nif.getHardwareAddress();
+                        if (macBytes == null) {
+                            return mac;
+                        }
+
+                        StringBuilder res1 = new StringBuilder();
+                        for (byte b : macBytes) {
+                            res1.append(String.format("%02X:", b));
+                        }
+
+                        if (res1.length() > 0) {
+                            res1.deleteCharAt(res1.length() - 1);
+                        }
+                        return res1.toString();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        return mac;
+    }
+
 
     /**
      * 去掉滚动条
@@ -281,7 +503,6 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
     }
 
 
-
     /**
      * 初始化头部
      */
@@ -321,9 +542,9 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(LoginEvent loginEvent) {
-       if(loginEvent != null){
+        if (loginEvent != null) {
 
-       }
+        }
 
     }
 
@@ -353,6 +574,7 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
                         break;
                     case R.id.item_led:
                         //显示led字幕
+                        rxPermissionTest();
                         //    startActivity(new Intent(MainActivity.this, LEDSettingActivity.class));
                         break;
                     case R.id.item_theme:

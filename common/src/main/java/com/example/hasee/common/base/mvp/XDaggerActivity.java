@@ -50,8 +50,9 @@ public abstract class XDaggerActivity<T extends IBasePresenter> extends BaseActi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null)
+        if (mPresenter != null){
             mPresenter.detachView();
+        }
     }
 
 

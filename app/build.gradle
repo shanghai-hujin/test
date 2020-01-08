@@ -11,10 +11,22 @@ android {
 
             annotationProcessorOptions {
                 includeCompileClasspath true
-                arguments = [ eventBusIndex : 'com.example.hasee.EBIndex' ]
                 arguments = [moduleName: project.getName()]
             }
 
+        }
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++14"
+                abiFilters 'armeabi-v7a','armeabi','arm64-v8a','x86','x86_64'
+                arguments "-DANDROID_STL=c++_shared", "-DANDROID_CPP_FEATURES=rtti exceptions"
+            }
+        }
+
+
+        ndk {
+            abiFilters "armeabi-v7a","armeabi"
         }
 
         multiDexEnabled true
@@ -33,19 +45,19 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    packagingOptions {
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
-    }
 
 }
 
 allprojects {
     repositories {
         jcenter()
+        mavenCentral()
         maven { url 'https://dl.google.com/dl/android/maven2/' }
         maven { url "https://jitpack.io" }
     }
 }
+
+
 
 
 dependencies {
@@ -61,6 +73,7 @@ dependencies {
     implementation project(':commonui')
     implementation project(':news')
     implementation project(':login')
+    implementation project(':permissions')
 
     //图片加载
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
@@ -93,7 +106,6 @@ dependencies {
     implementation 'com.vise.xiaoyaoyou:baseble:2.0.5'
 
     implementation 'org.greenrobot:eventbus:3.1.1'
-
 
 }
 
