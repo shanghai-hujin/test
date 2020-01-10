@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
     compileSdkVersion 27
@@ -41,6 +42,15 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    greendao {
+        //数据库版本号，升级时修改
+        schemaVersion 1
+        //生成的DAO，DaoMaster和DaoSession的包路径。默认与表实体所在的包路径相同
+        daoPackage 'com.example.hasee.db'
+        //生成源文件的路径。默认源文件目录是在build目录中的(build/generated/source/greendao)
+        //targetGenDir 'src/main/java'
     }
 
 }
@@ -129,5 +139,7 @@ dependencies {
 
     api 'com.android.support:support-compat:27.1.1'
     api 'android.arch.lifecycle:extensions:1.1.1'
+    //数据库
+    api 'org.greenrobot:greendao:3.2.2'
 
 }

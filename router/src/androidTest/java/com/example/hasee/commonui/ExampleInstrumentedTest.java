@@ -1,4 +1,4 @@
-package com.example.hasee.login;
+package com.example.hasee.commonui;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.hasee.login.test", appContext.getPackageName());
+        assertEquals("com.example.hasee.commonui.test", appContext.getPackageName());
     }
 }

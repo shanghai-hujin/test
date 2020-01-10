@@ -12,21 +12,26 @@
     android:paddingTop="25dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/ic_user"
-        android:layout_width="74dp"
-        android:layout_height="74dp"
-    />
+    <com.example.hasee.commonui.CircleImageView
+        android:id="@+id/cv_head"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="67dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_height="67dp"
+        app:civ_border_color="#ededed"
+        app:civ_border_width="0.5dp"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="17dp"
         android:text="hujin"
         android:textColor="@color/white"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@+id/ic_user"/>
+        app:layout_constraintTop_toBottomOf="@+id/cv_head"/>
 
     <TextView
         android:id="@+id/tv_lv"
@@ -46,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:padding="3dp"
-        android:text="普通会员"
+        android:text="码农十级"
         android:textSize="10sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_name"/>
 
@@ -79,7 +84,7 @@
         android:layout_marginEnd="25dp"
         android:src="@mipmap/ic_navigation_header_notification"
         app:layout_constraintEnd_toStartOf="@+id/iv_head_switch_mode"
-        app:layout_constraintTop_toTopOf="@+id/ic_user"/>
+        app:layout_constraintTop_toTopOf="@+id/cv_head"/>
 
 
     <ImageView
@@ -89,7 +94,7 @@
         android:layout_marginEnd="10dp"
         android:src="@mipmap/ic_switch_night"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ic_user"/>
+        app:layout_constraintTop_toTopOf="@+id/cv_head"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl_login"
@@ -97,6 +102,9 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
         android:visibility="visible">
+
+
+
         <ImageView
             android:id="@+id/iv_login"
             android:layout_width="wrap_content"

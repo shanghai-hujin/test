@@ -1,12 +1,23 @@
 package com.example.hasee.common.net.bean.response;
 
+import com.example.hasee.common.db.propertyconverter.IntegerConverter;
 import com.google.gson.annotations.SerializedName;
+
+import org.greenrobot.greendao.annotation.Convert;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 import java.io.Serializable;
 import java.util.List;
 
+@Entity
 public class LoginResponce implements Serializable {
 
+    @Id
+    private Long id;
+
+    private static final long serialVersionUID = 1994L;
     /**
      * admin : false
      * chapterTops : []
@@ -26,8 +37,6 @@ public class LoginResponce implements Serializable {
     private String email;
     @SerializedName("icon")
     private String icon;
-    @SerializedName("id")
-    private int id;
     @SerializedName("password")
     private String password;
     @SerializedName("token")
@@ -36,13 +45,46 @@ public class LoginResponce implements Serializable {
     private int type;
     @SerializedName("username")
     private String username;
-    @SerializedName("chapterTops")
-    private List<?> chapterTops;
+    //    @SerializedName("chapterTops")
+//    private List<?> chapterTops;
+
+    @Convert(columnType = String.class, converter = IntegerConverter.class)
     @SerializedName("collectIds")
     private List<Integer> collectIds;
 
-    public boolean isAdmin() {
-        return admin;
+
+
+    @Generated(hash = 1575517983)
+    public LoginResponce(Long id, boolean admin, String email, String icon,
+            String password, String token, int type, String username,
+            List<Integer> collectIds) {
+        this.id = id;
+        this.admin = admin;
+        this.email = email;
+        this.icon = icon;
+        this.password = password;
+        this.token = token;
+        this.type = type;
+        this.username = username;
+        this.collectIds = collectIds;
+    }
+
+    @Generated(hash = 352940109)
+    public LoginResponce() {
+    }
+
+
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean getAdmin() {
+        return this.admin;
     }
 
     public void setAdmin(boolean admin) {
@@ -50,7 +92,7 @@ public class LoginResponce implements Serializable {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -58,23 +100,15 @@ public class LoginResponce implements Serializable {
     }
 
     public String getIcon() {
-        return icon;
+        return this.icon;
     }
 
     public void setIcon(String icon) {
         this.icon = icon;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -82,7 +116,7 @@ public class LoginResponce implements Serializable {
     }
 
     public String getToken() {
-        return token;
+        return this.token;
     }
 
     public void setToken(String token) {
@@ -90,7 +124,7 @@ public class LoginResponce implements Serializable {
     }
 
     public int getType() {
-        return type;
+        return this.type;
     }
 
     public void setType(int type) {
@@ -98,26 +132,19 @@ public class LoginResponce implements Serializable {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public List<?> getChapterTops() {
-        return chapterTops;
-    }
-
-    public void setChapterTops(List<?> chapterTops) {
-        this.chapterTops = chapterTops;
-    }
-
     public List<Integer> getCollectIds() {
-        return collectIds;
+        return this.collectIds;
     }
 
     public void setCollectIds(List<Integer> collectIds) {
         this.collectIds = collectIds;
     }
+
 }

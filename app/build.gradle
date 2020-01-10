@@ -74,6 +74,7 @@ dependencies {
     implementation project(':news')
     implementation project(':login')
     implementation project(':permissions')
+    implementation project(':router')
 
     //图片加载
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'

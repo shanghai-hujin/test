@@ -31,8 +31,12 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bumptech.glide.Glide;
 import com.example.hasee.R;
+import com.example.hasee.common.GlideApp;
 import com.example.hasee.common.base.mvp.XDaggerActivity;
+import com.example.hasee.common.db.DBManager;
+import com.example.hasee.commonui.CircleImageView;
 import com.example.hasee.di.ClientDiHelper;
 import com.example.hasee.http.ComPath;
 import com.example.hasee.http.cookies.CookiesManager;
@@ -40,6 +44,7 @@ import com.example.hasee.news.ui.main.NewsFragment;
 import com.example.hasee.ui.MyApplication;
 import com.example.hasee.ui.drawer.BluetoothActivity;
 import com.example.hasee.ui.drawer.chat.MainChatActivity;
+import com.example.hasee.utils.AccountInfo;
 import com.example.hasee.utils.Event;
 import com.example.hasee.utils.PasswordHelp;
 import com.example.hasee.utils.PerfectClickListener;
@@ -102,6 +107,7 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
     private ImageView mIcUser;
     private ConstraintLayout mClLogin;
     private ImageView mIvLogin;
+    private CircleImageView cvHeadView;
 
 
     /**
@@ -422,13 +428,7 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
                     mClLogin.post(new Runnable() {
                         @Override
                         public void run() {
-                            if (event.login) {
-                                mClLogin.setVisibility(View.GONE);
-                                navView.getMenu().findItem(R.id.item_loginout).setVisible(true);
-                            } else {
-                                mClLogin.setVisibility(View.VISIBLE);
-                                navView.getMenu().findItem(R.id.item_loginout).setVisible(false);
-                            }
+                            initLoginStatus();
                         }
                     });
 
@@ -443,13 +443,17 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
      */
     private void initLoginStatus() {
 
-        if (PasswordHelp.readLoginStatus()) {
+        if (AccountInfo.isLogin()) {
             //登录了
             mClLogin.setVisibility(View.GONE);
             navView.getMenu().findItem(R.id.item_loginout).setVisible(true);
+            cvHeadView.setVisibility(View.VISIBLE);
+            Glide.with(this).load(AccountInfo.getHeadUrl()).into(cvHeadView);
         } else {
             mClLogin.setVisibility(View.VISIBLE);
             navView.getMenu().findItem(R.id.item_loginout).setVisible(false);
+            cvHeadView.setVisibility(View.GONE);
+
         }
     }
 
@@ -478,9 +482,10 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
         mTvB = (TextView) headerView.findViewById(R.id.tv_b);
         mIvHeadNoftiy = (ImageView) headerView.findViewById(R.id.iv_head_noftiy);
         mIvHeadSwitchMode = (ImageView) headerView.findViewById(R.id.iv_head_switch_mode);
-        mIcUser = (ImageView) headerView.findViewById(R.id.ic_user);
         mClLogin = (ConstraintLayout) headerView.findViewById(R.id.cl_login);
         mIvLogin = (ImageView) headerView.findViewById(R.id.iv_login);
+        cvHeadView = (CircleImageView) headerView.findViewById(R.id.cv_head);
+
 
         mIvLogin.setOnClickListener(listener);
         mClLogin.setOnClickListener(listener);
@@ -491,7 +496,6 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
         mTvB.setOnClickListener(listener);
         mIvHeadNoftiy.setOnClickListener(listener);
         mIvHeadSwitchMode.setOnClickListener(listener);
-        mIcUser.setOnClickListener(listener);
 
     }
 
@@ -620,6 +624,16 @@ public class MainActivity extends XDaggerActivity<MainPresenter> implements Main
         Event.LoginStausEvent event = new Event.LoginStausEvent();
         event.login = false;
         RxBus.INSTANCE.post(event);
+
+        DBManager.getInstance(this).updateLoginResponce(null);
+        initLoginStatus();
+        Toasty.warning(this,"退出成功").show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initLoginStatus();
     }
 
     /**

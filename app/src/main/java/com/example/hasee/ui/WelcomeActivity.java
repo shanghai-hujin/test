@@ -44,7 +44,7 @@ public class WelcomeActivity extends BaseActivity {
       //  StatusBarUtil.setTranslucentForImageView(this, 0, mSdvWelcome);
 
         Glide.with(this)
-                .load("https://i.meizitu.net/2019/04/26c03.jpg")
+                .load("https://api.ooopn.com/image/beauty/api.php")
                 .into(mSdvWelcome);
 
         mTvWelcomeFlash.setOnClickListener(new View.OnClickListener() {

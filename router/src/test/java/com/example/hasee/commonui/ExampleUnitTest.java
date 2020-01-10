@@ -1,4 +1,4 @@
-package com.example.hasee.login;
+package com.example.hasee.commonui;
 
 import org.junit.Test;
 
