@@ -2,6 +2,7 @@ package com.example.hasee.news.ui.main;
 
 import com.example.hasee.common.net.HttpHelper;
 import com.example.hasee.common.net.bean.response.WanHomeBannerResponse;
+import com.example.hasee.common.net.bean.response.WanWenZhangResponse;
 import com.example.hasee.common.net.bean.wapper.WanResponseWapper;
 import com.example.hasee.common.utils.RxUtils;
 import com.example.hasee.news.net.NewsApi;
@@ -37,5 +38,11 @@ public class NewsService implements INewsContract.IModle {
 
         return httpHelper.createApi(NewsApi.class).getWanHomeBanner()
                 .compose(RxUtils.<WanResponseWapper<List<WanHomeBannerResponse>>>rxSchedulerHelperNoRetry());
+    }
+
+    @Override
+    public Flowable<WanResponseWapper<WanWenZhangResponse>> getWanHomeWenZhang(String curpage) {
+        return httpHelper.createApi(NewsApi.class).getWanHomeWenZhang(curpage)
+                .compose(RxUtils.<WanResponseWapper<WanWenZhangResponse>>rxSchedulerHelperNoRetry());
     }
 }

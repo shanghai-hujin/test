@@ -18,37 +18,18 @@
             android:id="@+id/nh_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_news"
+            android:overScrollMode="never"
+            android:scrollbars="none"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent" />
 
-            <com.youth.banner.Banner
-                android:id="@+id/banner_news"
-                android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:background="@color/antiquewhite" />
+        <com.scwang.smartrefresh.layout.footer.BallPulseFooter
+            app:srlAnimatingColor="@color/blue"
 
-            <com.example.hasee.common.weight.banner.BannerView
-                android:id="@+id/bv_best"
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"/>
-            <com.google.android.exoplayer2.ui.PlayerView
-                android:id="@+id/video_view"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"/>
-
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_news"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
-
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 

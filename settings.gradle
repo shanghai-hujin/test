@@ -1,4 +1,4 @@
-include ':app', ':login', ':news', ':data', ':mmkv-1.0.23',':router'
+include ':app', ':login', ':news',  ':mmkv-1.0.23',':router'
 include 'common', ':commonui', ':fabandcalendar',":permissions"
 include 'standalone:loginmodule'
 include 'standalone:newsmodule'

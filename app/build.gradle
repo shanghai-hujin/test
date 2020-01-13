@@ -79,8 +79,7 @@ dependencies {
     //图片加载
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
 
-    //adapter
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+
     //Flycotablayout
     api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
