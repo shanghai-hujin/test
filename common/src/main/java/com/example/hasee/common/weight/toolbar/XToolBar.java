@@ -1,17 +1,50 @@
 package com.example.hasee.common.weight.toolbar;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.hasee.common.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class XToolBar {
-    private XAbstractToolBar xAbstractToolBar;
 
-    public XToolBar(XAbstractToolBar xAbstractToolBar) {
-        this.xAbstractToolBar = xAbstractToolBar;
+    private final static Map<View, XToolBar> TITLE_MAP = new HashMap<>();
+
+
+    private Builder builder;
+    public XToolBar(View view, Builder builder) {
+        this.builder = builder;
+        XToolBarImpl  xToolBarImpl = new XToolBarImpl(view);
+    }
+    private static class XToolBarImpl{
+
+
+        private  ImageView leftImg;
+        private  ImageView rightImg;
+        private  TextView leftTitle;
+        private  TextView mlideTitle;
+        private  TextView rightTitle;
+
+        public XToolBarImpl(View view) {
+            leftImg = (ImageView) view.findViewById(R.id.img_left_img);
+            rightImg = (ImageView) view.findViewById(R.id.img_right_img);
+
+            leftTitle = (TextView) view.findViewById(R.id.tv_left_title);
+            mlideTitle = (TextView) view.findViewById(R.id.tv_mlide_title);
+            rightTitle = (TextView) view.findViewById(R.id.tv_right_title);
+
+
+
+        }
     }
 
-
     public static class Builder{
+
         View.OnClickListener leftClickerListener;
         View.OnClickListener middleClickerListener;
         View.OnClickListener rightClickerListener;
@@ -24,9 +57,32 @@ public class XToolBar {
         int middleImgResId;
         int rightImgResId;
 
-        public XToolBar build(Activity mContext, XAbstractToolBar xAbstractToolBar){
 
-            return null;
+        public XToolBar build(Activity activity){
+            return build(activity.getWindow().getDecorView());
+        }
+
+        public XToolBar build(Fragment fragment){
+            return build(fragment.getView());
+        }
+
+        private XToolBar build(View view) {
+            // 多个一一对应
+            synchronized (TITLE_MAP) {
+                if (TITLE_MAP.containsKey(view)) {
+                    XToolBar cachedTitleX = TITLE_MAP.get(view);
+                    cachedTitleX.builder.updateWith(this);
+                    return cachedTitleX;
+                } else {
+                    XToolBar newTitleX = new XToolBar(view, this);
+                    TITLE_MAP.put(view, newTitleX);
+                    return newTitleX;
+                }
+            }
+        }
+
+        private void updateWith(Builder builder) {
+
         }
 
         public View.OnClickListener getLeftClickerListener() {
@@ -111,5 +167,19 @@ public class XToolBar {
         }
 
 
+    }
+
+    public static class XToolBarParame{
+        int leftImgResId;
+        int middleImgResId;
+        int rightImgResId;
+
+        View.OnClickListener leftClickerListener;
+        View.OnClickListener middleClickerListener;
+        View.OnClickListener rightClickerListener;
+
+        String leftText;
+        String middleText;
+        String rightText;
     }
 }
